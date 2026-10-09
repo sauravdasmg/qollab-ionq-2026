@@ -1,0 +1,2573 @@
+{
+  "case_id": 3,
+  "generation_seed": 2026100103,
+  "manifest": {
+    "blocks": {
+      "impostor_A": {
+        "offset": 16,
+        "parity_maps": [
+          {
+            "bits": [
+              0,
+              1,
+              2
+            ],
+            "generator": 0,
+            "sign": 1
+          },
+          {
+            "bits": [
+              3,
+              2
+            ],
+            "generator": 3,
+            "sign": 1
+          }
+        ],
+        "width": 4
+      },
+      "impostor_B": {
+        "offset": 20,
+        "parity_maps": [
+          {
+            "bits": [
+              1,
+              0
+            ],
+            "generator": 1,
+            "sign": 1
+          },
+          {
+            "bits": [
+              2,
+              3,
+              0
+            ],
+            "generator": 2,
+            "sign": 1
+          }
+        ],
+        "width": 4
+      },
+      "impostor_Z": {
+        "offset": 4,
+        "parity_maps": [],
+        "width": 4
+      },
+      "target_A": {
+        "offset": 8,
+        "parity_maps": [
+          {
+            "bits": [
+              0,
+              1,
+              2
+            ],
+            "generator": 0,
+            "sign": 1
+          },
+          {
+            "bits": [
+              3,
+              2
+            ],
+            "generator": 3,
+            "sign": 1
+          }
+        ],
+        "width": 4
+      },
+      "target_B": {
+        "offset": 12,
+        "parity_maps": [
+          {
+            "bits": [
+              1,
+              0
+            ],
+            "generator": 1,
+            "sign": 1
+          },
+          {
+            "bits": [
+              2,
+              3,
+              0
+            ],
+            "generator": 2,
+            "sign": 1
+          }
+        ],
+        "width": 4
+      },
+      "target_Z": {
+        "offset": 0,
+        "parity_maps": [],
+        "width": 4
+      }
+    },
+    "case_id": 3,
+    "decoding_maps": {
+      "impostor_A": [
+        {
+          "bits": [
+            0,
+            1,
+            2
+          ],
+          "generator": 0,
+          "sign": 1
+        },
+        {
+          "bits": [
+            3,
+            2
+          ],
+          "generator": 3,
+          "sign": 1
+        }
+      ],
+      "impostor_B": [
+        {
+          "bits": [
+            1,
+            0
+          ],
+          "generator": 1,
+          "sign": 1
+        },
+        {
+          "bits": [
+            2,
+            3,
+            0
+          ],
+          "generator": 2,
+          "sign": 1
+        }
+      ],
+      "impostor_Z": [],
+      "target_A": [
+        {
+          "bits": [
+            0,
+            1,
+            2
+          ],
+          "generator": 0,
+          "sign": 1
+        },
+        {
+          "bits": [
+            3,
+            2
+          ],
+          "generator": 3,
+          "sign": 1
+        }
+      ],
+      "target_B": [
+        {
+          "bits": [
+            1,
+            0
+          ],
+          "generator": 1,
+          "sign": 1
+        },
+        {
+          "bits": [
+            2,
+            3,
+            0
+          ],
+          "generator": 2,
+          "sign": 1
+        }
+      ],
+      "target_Z": []
+    },
+    "exact_Z_reference": false,
+    "generated_parameters": {
+      "diagonal_preparation_noise": 0.0,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "frame_radians": [
+        1.5707963267948966,
+        3.141592653589793,
+        -1.5707963267948966,
+        0.0
+      ],
+      "product_angles_radians": [
+        0.15,
+        0.75,
+        1.25,
+        1.95
+      ]
+    },
+    "ordered_blocks": [
+      "target_Z",
+      "impostor_Z",
+      "target_A",
+      "target_B",
+      "impostor_A",
+      "impostor_B"
+    ],
+    "recipe_identity": {
+      "audited16": false
+    },
+    "seed": 2026100103,
+    "smoke_controls": [
+      "impostor_Z",
+      "impostor_A",
+      "impostor_B"
+    ],
+    "source_assumptions": [
+      "ideal graph preparation",
+      "equatorial product preparation",
+      "arbitrary diagonal frame inverse applied before witness basis",
+      "declared diagonal preparation noise 0"
+    ],
+    "total_width": 24
+  },
+  "manifest_hash": "155271a439e0fa183dc32913b3dccdba0554aa0470d63019f2260a6fa128a8d1",
+  "noise_results": [
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3977,
+          "f_lower_sum": -1507.9471718277714,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 977,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9657235493377733,
+              0.9846257230670071
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5079471718277715,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.977
+          }
+        },
+        "graph": {
+          "baseline_certificates": 1000,
+          "certificates": 1000,
+          "coverage": 4000,
+          "f_lower_sum": 802.05847103241,
+          "false_certificates": 0,
+          "inconclusive": 0,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 1000,
+          "summary": {
+            "certification_interval": [
+              0.9963179161031344,
+              1.0
+            ],
+            "certification_rate": 1.0,
+            "coverage_interval": [
+              0.9963179161031344,
+              1.0
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.0,
+            "mean_F_lower": 0.80205847103241,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 1.0
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3981,
+          "f_lower_sum": -1508.2880280030183,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 981,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9705155440876868,
+              0.9878031142492091
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5082880280030184,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.981
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": null,
+        "name": "ideal",
+        "scale": 0.0
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3976,
+          "f_lower_sum": -1513.8060585380763,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 976,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9645370943883885,
+              0.9838198315333629
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5138060585380764,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.976
+          }
+        },
+        "graph": {
+          "baseline_certificates": 1000,
+          "certificates": 1000,
+          "coverage": 4000,
+          "f_lower_sum": 703.6914752064632,
+          "false_certificates": 0,
+          "inconclusive": 0,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 1000,
+          "summary": {
+            "certification_interval": [
+              0.9963179161031344,
+              1.0
+            ],
+            "certification_rate": 1.0,
+            "coverage_interval": [
+              0.9963179161031344,
+              1.0
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.0,
+            "mean_F_lower": 0.7036914752064632,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 1.0
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3976,
+          "f_lower_sum": -1499.2046500968427,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 976,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9645370943883885,
+              0.9838198315333629
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.4992046500968426,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.976
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "aria",
+        "name": "aria@0.5",
+        "scale": 0.5
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3981,
+          "f_lower_sum": -1508.0420972830605,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 982,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9717267448294926,
+              0.9885842599904322
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5080420972830604,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.982
+          }
+        },
+        "graph": {
+          "baseline_certificates": 997,
+          "certificates": 997,
+          "coverage": 4000,
+          "f_lower_sum": 659.3488432888436,
+          "false_certificates": 0,
+          "inconclusive": 3,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 1000,
+          "summary": {
+            "certification_interval": [
+              0.9912169859464969,
+              0.9989792161188614
+            ],
+            "certification_rate": 0.997,
+            "coverage_interval": [
+              0.9963179161031344,
+              1.0
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.003,
+            "mean_F_lower": 0.6593488432888436,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 1.0
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3973,
+          "f_lower_sum": -1503.8918368276477,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 973,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9610012692469598,
+              0.9813786172257051
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5038918368276477,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.973
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "aria",
+        "name": "aria@0.75",
+        "scale": 0.75
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3976,
+          "f_lower_sum": -1508.8091289540616,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 976,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9645370943883885,
+              0.9838198315333629
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5088091289540617,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.976
+          }
+        },
+        "graph": {
+          "baseline_certificates": 966,
+          "certificates": 966,
+          "coverage": 4000,
+          "f_lower_sum": 617.7263147012463,
+          "false_certificates": 0,
+          "inconclusive": 34,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 1000,
+          "summary": {
+            "certification_interval": [
+              0.9528648097546889,
+              0.9755686513367737
+            ],
+            "certification_rate": 0.966,
+            "coverage_interval": [
+              0.9963179161031344,
+              1.0
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.034,
+            "mean_F_lower": 0.6177263147012464,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 1.0
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3977,
+          "f_lower_sum": -1506.094186899821,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 977,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9657235493377733,
+              0.9846257230670071
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.506094186899821,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.977
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "aria",
+        "name": "aria@1",
+        "scale": 1.0
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3982,
+          "f_lower_sum": -1507.3367553442906,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 982,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9717267448294926,
+              0.9885842599904322
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5073367553442907,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.982
+          }
+        },
+        "graph": {
+          "baseline_certificates": 907,
+          "certificates": 907,
+          "coverage": 4000,
+          "f_lower_sum": 577.5649124392053,
+          "false_certificates": 0,
+          "inconclusive": 93,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 1000,
+          "summary": {
+            "certification_interval": [
+              0.8874087442345036,
+              0.9234762743582547
+            ],
+            "certification_rate": 0.907,
+            "coverage_interval": [
+              0.9963179161031344,
+              1.0
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.093,
+            "mean_F_lower": 0.5775649124392053,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 1.0
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3972,
+          "f_lower_sum": -1507.3481556454262,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 972,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9598298168024069,
+              0.9805577231872291
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5073481556454262,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.972
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "aria",
+        "name": "aria@1.25",
+        "scale": 1.25
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3976,
+          "f_lower_sum": -1507.1693433913872,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 976,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9645370943883885,
+              0.9838198315333629
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5071693433913873,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.976
+          }
+        },
+        "graph": {
+          "baseline_certificates": 762,
+          "certificates": 762,
+          "coverage": 4000,
+          "f_lower_sum": 539.5748603136637,
+          "false_certificates": 0,
+          "inconclusive": 238,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 1000,
+          "summary": {
+            "certification_interval": [
+              0.7346343310291412,
+              0.787360447524428
+            ],
+            "certification_rate": 0.762,
+            "coverage_interval": [
+              0.9963179161031344,
+              1.0
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.238,
+            "mean_F_lower": 0.5395748603136638,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 1.0
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3967,
+          "f_lower_sum": -1503.9024916046233,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 969,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9563345039877078,
+              0.9780759965528414
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5039024916046233,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.969
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "aria",
+        "name": "aria@1.5",
+        "scale": 1.5
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3978,
+          "f_lower_sum": -1507.7454560481478,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 978,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9669143266526004,
+              0.985427292235209
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5077454560481478,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.978
+          }
+        },
+        "graph": {
+          "baseline_certificates": 548,
+          "certificates": 548,
+          "coverage": 3993,
+          "f_lower_sum": 502.70736854873877,
+          "false_certificates": 0,
+          "inconclusive": 452,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 993,
+          "summary": {
+            "certification_interval": [
+              0.5170282252037207,
+              0.5786044059816661
+            ],
+            "certification_rate": 0.548,
+            "coverage_interval": [
+              0.9856216845342334,
+              0.9966051315990092
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.452,
+            "mean_F_lower": 0.5027073685487388,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.993
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3976,
+          "f_lower_sum": -1505.3631207305655,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 976,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9645370943883885,
+              0.9838198315333629
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5053631207305656,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.976
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "aria",
+        "name": "aria@1.75",
+        "scale": 1.75
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3977,
+          "f_lower_sum": -1505.7857502320899,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 977,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9657235493377733,
+              0.9846257230670071
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.50578575023209,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.977
+          }
+        },
+        "graph": {
+          "baseline_certificates": 335,
+          "certificates": 335,
+          "coverage": 3999,
+          "f_lower_sum": 462.77605659804595,
+          "false_certificates": 0,
+          "inconclusive": 665,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 999,
+          "summary": {
+            "certification_interval": [
+              0.30642688114062866,
+              0.3648359491596046
+            ],
+            "certification_rate": 0.335,
+            "coverage_interval": [
+              0.9943574414020421,
+              0.9998234536293739
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.665,
+            "mean_F_lower": 0.46277605659804594,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.999
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3974,
+          "f_lower_sum": -1506.9687450059089,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 975,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9633547107321566,
+              0.9830098687065659
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5069687450059088,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.975
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "aria",
+        "name": "aria@2",
+        "scale": 2.0
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3975,
+          "f_lower_sum": -1506.2189550276805,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 975,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9633547107321566,
+              0.9830098687065659
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5062189550276806,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.975
+          }
+        },
+        "graph": {
+          "baseline_certificates": 986,
+          "certificates": 986,
+          "coverage": 4000,
+          "f_lower_sum": 637.4600493490057,
+          "false_certificates": 0,
+          "inconclusive": 14,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 1000,
+          "summary": {
+            "certification_interval": [
+              0.9766379658824644,
+              0.9916424248695761
+            ],
+            "certification_rate": 0.986,
+            "coverage_interval": [
+              0.9963179161031344,
+              1.0
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.014,
+            "mean_F_lower": 0.6374600493490057,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 1.0
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3967,
+          "f_lower_sum": -1505.9951201895033,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 967,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9540187355329184,
+              0.9764070720415732
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5059951201895032,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.967
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "forte",
+        "name": "forte@0.5",
+        "scale": 0.5
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3968,
+          "f_lower_sum": -1508.6400297069051,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 968,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9551752619162314,
+              0.9772428921412891
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5086400297069051,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.968
+          }
+        },
+        "graph": {
+          "baseline_certificates": 842,
+          "certificates": 842,
+          "coverage": 4000,
+          "f_lower_sum": 564.8305717758678,
+          "false_certificates": 0,
+          "inconclusive": 158,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 1000,
+          "summary": {
+            "certification_interval": [
+              0.8180901541085861,
+              0.8632923430872941
+            ],
+            "certification_rate": 0.842,
+            "coverage_interval": [
+              0.9963179161031344,
+              1.0
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.158,
+            "mean_F_lower": 0.5648305717758678,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 1.0
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3966,
+          "f_lower_sum": -1506.8501156764642,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 966,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9528648097546889,
+              0.9755686513367737
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5068501156764642,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.966
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "forte",
+        "name": "forte@0.75",
+        "scale": 0.75
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3966,
+          "f_lower_sum": -1508.7428244783368,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 966,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9528648097546889,
+              0.9755686513367737
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5087428244783367,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.966
+          }
+        },
+        "graph": {
+          "baseline_certificates": 509,
+          "certificates": 509,
+          "coverage": 3998,
+          "f_lower_sum": 499.5873861555645,
+          "false_certificates": 0,
+          "inconclusive": 491,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 998,
+          "summary": {
+            "certification_interval": [
+              0.47804015149447454,
+              0.5398909668527856
+            ],
+            "certification_rate": 0.509,
+            "coverage_interval": [
+              0.9927371921365079,
+              0.9994513564118793
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.491,
+            "mean_F_lower": 0.49958738615556453,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.998
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3982,
+          "f_lower_sum": -1509.166313010124,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 982,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9717267448294926,
+              0.9885842599904322
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.509166313010124,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.982
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "forte",
+        "name": "forte@1",
+        "scale": 1.0
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3975,
+          "f_lower_sum": -1505.487749589943,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 975,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9633547107321566,
+              0.9830098687065659
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.505487749589943,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.975
+          }
+        },
+        "graph": {
+          "baseline_certificates": 198,
+          "certificates": 198,
+          "coverage": 3998,
+          "f_lower_sum": 432.8405506374206,
+          "false_certificates": 0,
+          "inconclusive": 802,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 998,
+          "summary": {
+            "certification_interval": [
+              0.1744775624311303,
+              0.22383379969414505
+            ],
+            "certification_rate": 0.198,
+            "coverage_interval": [
+              0.9927371921365079,
+              0.9994513564118793
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.802,
+            "mean_F_lower": 0.4328405506374206,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.998
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3973,
+          "f_lower_sum": -1505.3660992029825,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 973,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9610012692469598,
+              0.9813786172257051
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5053660992029825,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.973
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "forte",
+        "name": "forte@1.25",
+        "scale": 1.25
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3984,
+          "f_lower_sum": -1513.498594048577,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 984,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.97416793978826,
+              0.9901277579977227
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.513498594048577,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.984
+          }
+        },
+        "graph": {
+          "baseline_certificates": 65,
+          "certificates": 65,
+          "coverage": 3986,
+          "f_lower_sum": 376.38571333855685,
+          "false_certificates": 0,
+          "inconclusive": 935,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 986,
+          "summary": {
+            "certification_interval": [
+              0.051323770569062045,
+              0.0820055093133709
+            ],
+            "certification_rate": 0.065,
+            "coverage_interval": [
+              0.9766379658824644,
+              0.9916424248695761
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.935,
+            "mean_F_lower": 0.37638571333855686,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.986
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3971,
+          "f_lower_sum": -1510.8859190324588,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 971,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9586616416633058,
+              0.9797335518433012
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5108859190324588,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.971
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "forte",
+        "name": "forte@1.5",
+        "scale": 1.5
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3978,
+          "f_lower_sum": -1510.3024323686918,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 979,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9681097049387625,
+              0.9862242604320758
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5103024323686918,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.979
+          }
+        },
+        "graph": {
+          "baseline_certificates": 15,
+          "certificates": 15,
+          "coverage": 3993,
+          "f_lower_sum": 325.28814060122113,
+          "false_certificates": 0,
+          "inconclusive": 985,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 993,
+          "summary": {
+            "certification_interval": [
+              0.009110978804081668,
+              0.024600976926906798
+            ],
+            "certification_rate": 0.015,
+            "coverage_interval": [
+              0.9856216845342334,
+              0.9966051315990092
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.985,
+            "mean_F_lower": 0.32528814060122113,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.993
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3991,
+          "f_lower_sum": -1510.9529169776686,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 991,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.982984183834662,
+              0.9952579393325229
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5109529169776685,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.991
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "forte",
+        "name": "forte@1.75",
+        "scale": 1.75
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3979,
+          "f_lower_sum": -1507.8795437918375,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 979,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9681097049387625,
+              0.9862242604320758
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5078795437918375,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.979
+          }
+        },
+        "graph": {
+          "baseline_certificates": 3,
+          "certificates": 3,
+          "coverage": 3980,
+          "f_lower_sum": 265.8718873878231,
+          "false_certificates": 0,
+          "inconclusive": 997,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 983,
+          "summary": {
+            "certification_interval": [
+              0.0010207838811386186,
+              0.008783014053503173
+            ],
+            "certification_rate": 0.003,
+            "coverage_interval": [
+              0.9729440411597701,
+              0.9893593101431837
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.997,
+            "mean_F_lower": 0.2658718873878231,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.983
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3974,
+          "f_lower_sum": -1510.1220537809652,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 974,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9621761711573101,
+              0.9821960617983837
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5101220537809652,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.974
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "forte",
+        "name": "forte@2",
+        "scale": 2.0
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3979,
+          "f_lower_sum": -1506.33700319515,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 979,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9681097049387625,
+              0.9862242604320758
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.50633700319515,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.979
+          }
+        },
+        "graph": {
+          "baseline_certificates": 735,
+          "certificates": 735,
+          "coverage": 4000,
+          "f_lower_sum": 539.6992973172756,
+          "false_certificates": 0,
+          "inconclusive": 265,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 1000,
+          "summary": {
+            "certification_interval": [
+              0.7067846797715454,
+              0.7614167437402437
+            ],
+            "certification_rate": 0.735,
+            "coverage_interval": [
+              0.9963179161031344,
+              1.0
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.265,
+            "mean_F_lower": 0.5396992973172756,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 1.0
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3976,
+          "f_lower_sum": -1506.4695951913552,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 976,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9645370943883885,
+              0.9838198315333629
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5064695951913551,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.976
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "forte-enterprise",
+        "name": "forte-enterprise@0.5",
+        "scale": 0.5
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3983,
+          "f_lower_sum": -1511.774746859006,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 983,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9729440411597701,
+              0.9893593101431837
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.511774746859006,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.983
+          }
+        },
+        "graph": {
+          "baseline_certificates": 171,
+          "certificates": 171,
+          "coverage": 3986,
+          "f_lower_sum": 426.26988850757306,
+          "false_certificates": 0,
+          "inconclusive": 829,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 986,
+          "summary": {
+            "certification_interval": [
+              0.14893385518054872,
+              0.19558415190294662
+            ],
+            "certification_rate": 0.171,
+            "coverage_interval": [
+              0.9766379658824644,
+              0.9916424248695761
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.829,
+            "mean_F_lower": 0.4262698885075731,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.986
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3969,
+          "f_lower_sum": -1509.4289516601823,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 970,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9574965858524128,
+              0.9789062611711653
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5094289516601822,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.97
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "forte-enterprise",
+        "name": "forte-enterprise@0.75",
+        "scale": 0.75
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3976,
+          "f_lower_sum": -1510.785656793713,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 977,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9657235493377733,
+              0.9846257230670071
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.510785656793713,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.977
+          }
+        },
+        "graph": {
+          "baseline_certificates": 17,
+          "certificates": 17,
+          "coverage": 3989,
+          "f_lower_sum": 317.2528353469551,
+          "false_certificates": 0,
+          "inconclusive": 983,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 989,
+          "summary": {
+            "certification_interval": [
+              0.010640689856816328,
+              0.027055958840229925
+            ],
+            "certification_rate": 0.017,
+            "coverage_interval": [
+              0.9804106042992137,
+              0.9938468259019134
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.983,
+            "mean_F_lower": 0.31725283534695514,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.989
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3975,
+          "f_lower_sum": -1511.8336629649139,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 975,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9633547107321566,
+              0.9830098687065659
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5118336629649138,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.975
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "forte-enterprise",
+        "name": "forte-enterprise@1",
+        "scale": 1.0
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3984,
+          "f_lower_sum": -1509.965773391863,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 984,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.97416793978826,
+              0.9901277579977227
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.509965773391863,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.984
+          }
+        },
+        "graph": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3994,
+          "f_lower_sum": 229.27896053882708,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 994,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9869718317581478,
+              0.9972473308581237
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": 0.22927896053882707,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.994
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3978,
+          "f_lower_sum": -1506.4602843790667,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 978,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9669143266526004,
+              0.985427292235209
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5064602843790666,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.978
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "forte-enterprise",
+        "name": "forte-enterprise@1.25",
+        "scale": 1.25
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3974,
+          "f_lower_sum": -1509.9710496026173,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 974,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9621761711573101,
+              0.9821960617983837
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5099710496026173,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.974
+          }
+        },
+        "graph": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3979,
+          "f_lower_sum": 136.50714733784224,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 979,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9681097049387625,
+              0.9862242604320758
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": 0.13650714733784225,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.979
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3980,
+          "f_lower_sum": -1505.6460541443753,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 980,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9693099947702822,
+              0.987016317083585
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5056460541443752,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.98
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "forte-enterprise",
+        "name": "forte-enterprise@1.5",
+        "scale": 1.5
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3982,
+          "f_lower_sum": -1506.4591223562984,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 983,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9729440411597701,
+              0.9893593101431837
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5064591223562984,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.983
+          }
+        },
+        "graph": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3987,
+          "f_lower_sum": 53.7811748038436,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 987,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9778855576244203,
+              0.9923871796106489
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": 0.0537811748038436,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.987
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3981,
+          "f_lower_sum": -1505.8985320390984,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 981,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9705155440876868,
+              0.9878031142492091
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5058985320390985,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.981
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "forte-enterprise",
+        "name": "forte-enterprise@1.75",
+        "scale": 1.75
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3978,
+          "f_lower_sum": -1507.7679184200879,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 978,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9669143266526004,
+              0.985427292235209
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5077679184200878,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.978
+          }
+        },
+        "graph": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3983,
+          "f_lower_sum": -31.2038719324406,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 983,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9729440411597701,
+              0.9893593101431837
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -0.031203871932440598,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.983
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3974,
+          "f_lower_sum": -1504.8761161060154,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 975,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9633547107321566,
+              0.9830098687065659
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.5048761161060153,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.975
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "forte-enterprise",
+        "name": "forte-enterprise@2",
+        "scale": 2.0
+      },
+      "shots_per_block": 100
+    },
+    {
+      "controls": {
+        "biseparable": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3980,
+          "f_lower_sum": -1359.6769503411688,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 981,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9705155440876868,
+              0.9878031142492091
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.3596769503411688,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.981
+          }
+        },
+        "graph": {
+          "baseline_certificates": 1000,
+          "certificates": 1000,
+          "coverage": 3998,
+          "f_lower_sum": 727.1361491765377,
+          "false_certificates": 0,
+          "inconclusive": 0,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 998,
+          "summary": {
+            "certification_interval": [
+              0.9963179161031344,
+              1.0
+            ],
+            "certification_rate": 1.0,
+            "coverage_interval": [
+              0.9927371921365079,
+              0.9994513564118793
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 0.0,
+            "mean_F_lower": 0.7271361491765378,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.998
+          }
+        },
+        "product": {
+          "baseline_certificates": 0,
+          "certificates": 0,
+          "coverage": 3978,
+          "f_lower_sum": -1359.1087723440676,
+          "false_certificates": 0,
+          "inconclusive": 1000,
+          "paired_difference_sum": 0,
+          "simultaneous_coverage": 978,
+          "summary": {
+            "certification_interval": [
+              0.0,
+              0.00368208389686564
+            ],
+            "certification_rate": 0.0,
+            "coverage_interval": [
+              0.9669143266526004,
+              0.985427292235209
+            ],
+            "false_certificates": 0,
+            "inconclusive_rate": 1.0,
+            "mean_F_lower": -1.3591087723440676,
+            "paired_difference_mean": 0.0,
+            "simultaneous_coverage_rate": 0.978
+          }
+        }
+      },
+      "draws": 1000,
+      "exact_reference": {
+        "graph_stabilizer_expectations": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stabilizer_max_error": 0.0,
+        "z_tv": 4.3021142204224816e-16,
+        "z_uniform_max_error": 6.938893903907228e-17
+      },
+      "noise": {
+        "bias": 0.0,
+        "model": "aria",
+        "name": "aria@1",
+        "scale": 1.0
+      },
+      "purpose": "g1_cloud_projection",
+      "shots_per_block": 200
+    }
+  ],
+  "sampling_seed": 2026100103
+}

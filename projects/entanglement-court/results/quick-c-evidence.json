@@ -1,0 +1,1047 @@
+{
+  "created_utc": "2026-10-09T23:29:11.821330+00:00",
+  "machine": "Windows-11-10.0.26300-SP0",
+  "noise_source": "local IonQ-like approximation",
+  "note": "Quick smoke only: the aria configuration is declared for label/configuration plumbing; draws are ideal mathematical probabilities and do not simulate its channels.",
+  "numpy": "2.5.3",
+  "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+  "records": [
+    {
+      "analysis": {
+        "assumptions": [
+          "ideal graph preparation",
+          "equatorial product preparation",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "declared diagonal preparation noise 0"
+        ],
+        "blocks": {
+          "impostor_A": [
+            {
+              "bits": [
+                0,
+                1
+              ],
+              "estimate": 0.4,
+              "generator": 0,
+              "shots": 10,
+              "sign": 1,
+              "successes": 7
+            },
+            {
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "estimate": -0.2,
+              "generator": 2,
+              "shots": 10,
+              "sign": 1,
+              "successes": 4
+            }
+          ],
+          "impostor_B": [
+            {
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "estimate": -0.2,
+              "generator": 1,
+              "shots": 10,
+              "sign": 1,
+              "successes": 4
+            },
+            {
+              "bits": [
+                3,
+                2
+              ],
+              "estimate": -0.4,
+              "generator": 3,
+              "shots": 10,
+              "sign": 1,
+              "successes": 3
+            }
+          ],
+          "target_A": [
+            {
+              "bits": [
+                0,
+                1
+              ],
+              "estimate": 0.2,
+              "generator": 0,
+              "shots": 10,
+              "sign": 1,
+              "successes": 6
+            },
+            {
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "estimate": -0.2,
+              "generator": 2,
+              "shots": 10,
+              "sign": 1,
+              "successes": 4
+            }
+          ],
+          "target_B": [
+            {
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "estimate": -0.2,
+              "generator": 1,
+              "shots": 10,
+              "sign": 1,
+              "successes": 4
+            },
+            {
+              "bits": [
+                3,
+                2
+              ],
+              "estimate": -0.2,
+              "generator": 3,
+              "shots": 10,
+              "sign": 1,
+              "successes": 4
+            }
+          ]
+        },
+        "case_id": 0,
+        "impostor_control": "product preparation is separable; inconclusive witness does not certify separability",
+        "matched_distribution_reference": {
+          "basis": "computational Z",
+          "exact_total_variation": 0.0,
+          "impostor_Z_uniform": true,
+          "target_Z_uniform": true
+        },
+        "simultaneous_witness": {
+          "F_lower": -2.555698391385332,
+          "alpha_round": 0.05,
+          "conditional_gme": false,
+          "per_generator_alpha": 0.00625,
+          "receipt": "inconclusive; this witness does not prove separability",
+          "scope": "per two-preparation round; shared histograms use union bound; no independence required",
+          "terms": [
+            {
+              "L_lower": -0.6014563083941441,
+              "bias_bound": 0.0,
+              "estimate": 0.19999999999999996,
+              "index": 0,
+              "p_lower": 0.19927184580292795
+            },
+            {
+              "L_lower": -0.8366468247921734,
+              "bias_bound": 0.0,
+              "estimate": -0.19999999999999996,
+              "index": 1,
+              "p_lower": 0.0816765876039133
+            },
+            {
+              "L_lower": -0.8366468247921734,
+              "bias_bound": 0.0,
+              "estimate": -0.19999999999999996,
+              "index": 2,
+              "p_lower": 0.0816765876039133
+            },
+            {
+              "L_lower": -0.8366468247921734,
+              "bias_bound": 0.0,
+              "estimate": -0.19999999999999996,
+              "index": 3,
+              "p_lower": 0.0816765876039133
+            }
+          ],
+          "threshold": 0.5,
+          "trust_flag": false
+        },
+        "two_color_comparator": {
+          "F_lower": -2.555698391385332,
+          "alpha_round": 0.05,
+          "conditional_gme": false,
+          "per_generator_alpha": 0.00625,
+          "receipt": "inconclusive; this witness does not prove separability",
+          "scope": "per two-preparation round; shared histograms use union bound; no independence required",
+          "terms": [
+            {
+              "L_lower": -0.6014563083941441,
+              "bias_bound": 0.0,
+              "estimate": 0.19999999999999996,
+              "index": 0,
+              "p_lower": 0.19927184580292795
+            },
+            {
+              "L_lower": -0.8366468247921734,
+              "bias_bound": 0.0,
+              "estimate": -0.19999999999999996,
+              "index": 1,
+              "p_lower": 0.0816765876039133
+            },
+            {
+              "L_lower": -0.8366468247921734,
+              "bias_bound": 0.0,
+              "estimate": -0.19999999999999996,
+              "index": 2,
+              "p_lower": 0.0816765876039133
+            },
+            {
+              "L_lower": -0.8366468247921734,
+              "bias_bound": 0.0,
+              "estimate": -0.19999999999999996,
+              "index": 3,
+              "p_lower": 0.0816765876039133
+            }
+          ],
+          "threshold": 0.5,
+          "trust_flag": false
+        }
+      },
+      "baseline_same_counts": "two-color witness consumes the identical target_A/target_B histograms",
+      "case_id": 0,
+      "draws": 10,
+      "generation_seed": 2026100100,
+      "label": "development-only local ideal multinomial smoke; not Qollab evidence",
+      "manifest": {
+        "blocks": {
+          "impostor_A": {
+            "offset": 16,
+            "parity_maps": [
+              {
+                "bits": [
+                  0,
+                  1
+                ],
+                "generator": 0,
+                "sign": 1
+              },
+              {
+                "bits": [
+                  2,
+                  3,
+                  1
+                ],
+                "generator": 2,
+                "sign": 1
+              }
+            ],
+            "width": 4
+          },
+          "impostor_B": {
+            "offset": 20,
+            "parity_maps": [
+              {
+                "bits": [
+                  1,
+                  2,
+                  0
+                ],
+                "generator": 1,
+                "sign": 1
+              },
+              {
+                "bits": [
+                  3,
+                  2
+                ],
+                "generator": 3,
+                "sign": 1
+              }
+            ],
+            "width": 4
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "parity_maps": [],
+            "width": 4
+          },
+          "target_A": {
+            "offset": 8,
+            "parity_maps": [
+              {
+                "bits": [
+                  0,
+                  1
+                ],
+                "generator": 0,
+                "sign": 1
+              },
+              {
+                "bits": [
+                  2,
+                  3,
+                  1
+                ],
+                "generator": 2,
+                "sign": 1
+              }
+            ],
+            "width": 4
+          },
+          "target_B": {
+            "offset": 12,
+            "parity_maps": [
+              {
+                "bits": [
+                  1,
+                  2,
+                  0
+                ],
+                "generator": 1,
+                "sign": 1
+              },
+              {
+                "bits": [
+                  3,
+                  2
+                ],
+                "generator": 3,
+                "sign": 1
+              }
+            ],
+            "width": 4
+          },
+          "target_Z": {
+            "offset": 0,
+            "parity_maps": [],
+            "width": 4
+          }
+        },
+        "case_id": 0,
+        "decoding_maps": {
+          "impostor_A": [
+            {
+              "bits": [
+                0,
+                1
+              ],
+              "generator": 0,
+              "sign": 1
+            },
+            {
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "generator": 2,
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "generator": 1,
+              "sign": 1
+            },
+            {
+              "bits": [
+                3,
+                2
+              ],
+              "generator": 3,
+              "sign": 1
+            }
+          ],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "bits": [
+                0,
+                1
+              ],
+              "generator": 0,
+              "sign": 1
+            },
+            {
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "generator": 2,
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "generator": 1,
+              "sign": 1
+            },
+            {
+              "bits": [
+                3,
+                2
+              ],
+              "generator": 3,
+              "sign": 1
+            }
+          ],
+          "target_Z": []
+        },
+        "exact_Z_reference": false,
+        "generated_parameters": {
+          "diagonal_preparation_noise": 0.0,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "frame_radians": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "product_angles_radians": [
+            0.37,
+            0.81,
+            1.13,
+            1.71
+          ]
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "seed": 2026100100,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "source_assumptions": [
+          "ideal graph preparation",
+          "equatorial product preparation",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "declared diagonal preparation noise 0"
+        ],
+        "total_width": 24
+      },
+      "manifest_hash": "1f667cb783499b80445e1df81bb5aa7ed95c3f91173aed566e7326dc4eb31550",
+      "marginals": {
+        "impostor_A": {
+          "0011": 3,
+          "0101": 1,
+          "0111": 1,
+          "1000": 2,
+          "1010": 1,
+          "1011": 1,
+          "1101": 1
+        },
+        "impostor_B": {
+          "0000": 1,
+          "0001": 1,
+          "0100": 2,
+          "0101": 1,
+          "0110": 1,
+          "0111": 1,
+          "1001": 1,
+          "1011": 1,
+          "1111": 1
+        },
+        "impostor_Z": {
+          "0001": 1,
+          "0010": 1,
+          "0100": 1,
+          "0101": 1,
+          "0111": 2,
+          "1010": 2,
+          "1100": 1,
+          "1101": 1
+        },
+        "target_A": {
+          "0000": 2,
+          "0011": 1,
+          "0100": 2,
+          "0101": 1,
+          "0111": 1,
+          "1001": 2,
+          "1101": 1
+        },
+        "target_B": {
+          "0001": 2,
+          "0100": 2,
+          "1000": 1,
+          "1001": 1,
+          "1011": 2,
+          "1100": 1,
+          "1110": 1
+        },
+        "target_Z": {
+          "0000": 2,
+          "0010": 1,
+          "0011": 1,
+          "0100": 2,
+          "1001": 2,
+          "1011": 1,
+          "1110": 1
+        }
+      },
+      "noise_configurations": [
+        {
+          "assumption": "Raw gate errors approximate server-compiled noise; not official calibration.",
+          "label": "local IonQ-like approximation",
+          "model": "aria",
+          "one_qubit_error": 0.0005,
+          "readout_bias": 0.0,
+          "scale": 1.0,
+          "two_qubit_error": 0.007
+        }
+      ]
+    },
+    {
+      "analysis": {
+        "assumptions": [
+          "ideal graph preparation",
+          "equatorial product preparation",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "declared diagonal preparation noise 0"
+        ],
+        "blocks": {
+          "impostor_A": [
+            {
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "estimate": 0.0,
+              "generator": 0,
+              "shots": 10,
+              "sign": 1,
+              "successes": 5
+            }
+          ],
+          "impostor_B": [
+            {
+              "bits": [
+                1,
+                0
+              ],
+              "estimate": -0.2,
+              "generator": 1,
+              "shots": 10,
+              "sign": 1,
+              "successes": 4
+            },
+            {
+              "bits": [
+                2,
+                0
+              ],
+              "estimate": -0.6,
+              "generator": 2,
+              "shots": 10,
+              "sign": 1,
+              "successes": 2
+            },
+            {
+              "bits": [
+                3,
+                0
+              ],
+              "estimate": 0.4,
+              "generator": 3,
+              "shots": 10,
+              "sign": 1,
+              "successes": 7
+            }
+          ],
+          "target_A": [
+            {
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "estimate": -0.6,
+              "generator": 0,
+              "shots": 10,
+              "sign": 1,
+              "successes": 2
+            }
+          ],
+          "target_B": [
+            {
+              "bits": [
+                1,
+                0
+              ],
+              "estimate": 0.4,
+              "generator": 1,
+              "shots": 10,
+              "sign": 1,
+              "successes": 7
+            },
+            {
+              "bits": [
+                2,
+                0
+              ],
+              "estimate": 0.2,
+              "generator": 2,
+              "shots": 10,
+              "sign": 1,
+              "successes": 6
+            },
+            {
+              "bits": [
+                3,
+                0
+              ],
+              "estimate": -0.6,
+              "generator": 3,
+              "shots": 10,
+              "sign": 1,
+              "successes": 2
+            }
+          ]
+        },
+        "case_id": 1,
+        "impostor_control": "product preparation is separable; inconclusive witness does not certify separability",
+        "matched_distribution_reference": {
+          "basis": "computational Z",
+          "exact_total_variation": 0.0,
+          "impostor_Z_uniform": true,
+          "target_Z_uniform": true
+        },
+        "simultaneous_witness": {
+          "F_lower": -2.5015998868469147,
+          "alpha_round": 0.05,
+          "conditional_gme": false,
+          "per_generator_alpha": 0.00625,
+          "receipt": "inconclusive; this witness does not prove separability",
+          "scope": "per two-preparation round; shared histograms use union bound; no independence required",
+          "terms": [
+            {
+              "L_lower": -0.9756516599774712,
+              "bias_bound": 0.0,
+              "estimate": -0.6,
+              "index": 0,
+              "p_lower": 0.012174170011264418
+            },
+            {
+              "L_lower": -0.4504401453447433,
+              "bias_bound": 0.0,
+              "estimate": 0.3999999999999999,
+              "index": 1,
+              "p_lower": 0.27477992732762835
+            },
+            {
+              "L_lower": -0.6014563083941441,
+              "bias_bound": 0.0,
+              "estimate": 0.19999999999999996,
+              "index": 2,
+              "p_lower": 0.19927184580292795
+            },
+            {
+              "L_lower": -0.9756516599774712,
+              "bias_bound": 0.0,
+              "estimate": -0.6,
+              "index": 3,
+              "p_lower": 0.012174170011264418
+            }
+          ],
+          "threshold": 0.5,
+          "trust_flag": false
+        },
+        "two_color_comparator": {
+          "F_lower": -2.5015998868469147,
+          "alpha_round": 0.05,
+          "conditional_gme": false,
+          "per_generator_alpha": 0.00625,
+          "receipt": "inconclusive; this witness does not prove separability",
+          "scope": "per two-preparation round; shared histograms use union bound; no independence required",
+          "terms": [
+            {
+              "L_lower": -0.9756516599774712,
+              "bias_bound": 0.0,
+              "estimate": -0.6,
+              "index": 0,
+              "p_lower": 0.012174170011264418
+            },
+            {
+              "L_lower": -0.4504401453447433,
+              "bias_bound": 0.0,
+              "estimate": 0.3999999999999999,
+              "index": 1,
+              "p_lower": 0.27477992732762835
+            },
+            {
+              "L_lower": -0.6014563083941441,
+              "bias_bound": 0.0,
+              "estimate": 0.19999999999999996,
+              "index": 2,
+              "p_lower": 0.19927184580292795
+            },
+            {
+              "L_lower": -0.9756516599774712,
+              "bias_bound": 0.0,
+              "estimate": -0.6,
+              "index": 3,
+              "p_lower": 0.012174170011264418
+            }
+          ],
+          "threshold": 0.5,
+          "trust_flag": false
+        }
+      },
+      "baseline_same_counts": "two-color witness consumes the identical target_A/target_B histograms",
+      "case_id": 1,
+      "draws": 10,
+      "generation_seed": 2026100101,
+      "label": "development-only local ideal multinomial smoke; not Qollab evidence",
+      "manifest": {
+        "blocks": {
+          "impostor_A": {
+            "offset": 16,
+            "parity_maps": [
+              {
+                "bits": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "generator": 0,
+                "sign": 1
+              }
+            ],
+            "width": 4
+          },
+          "impostor_B": {
+            "offset": 20,
+            "parity_maps": [
+              {
+                "bits": [
+                  1,
+                  0
+                ],
+                "generator": 1,
+                "sign": 1
+              },
+              {
+                "bits": [
+                  2,
+                  0
+                ],
+                "generator": 2,
+                "sign": 1
+              },
+              {
+                "bits": [
+                  3,
+                  0
+                ],
+                "generator": 3,
+                "sign": 1
+              }
+            ],
+            "width": 4
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "parity_maps": [],
+            "width": 4
+          },
+          "target_A": {
+            "offset": 8,
+            "parity_maps": [
+              {
+                "bits": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "generator": 0,
+                "sign": 1
+              }
+            ],
+            "width": 4
+          },
+          "target_B": {
+            "offset": 12,
+            "parity_maps": [
+              {
+                "bits": [
+                  1,
+                  0
+                ],
+                "generator": 1,
+                "sign": 1
+              },
+              {
+                "bits": [
+                  2,
+                  0
+                ],
+                "generator": 2,
+                "sign": 1
+              },
+              {
+                "bits": [
+                  3,
+                  0
+                ],
+                "generator": 3,
+                "sign": 1
+              }
+            ],
+            "width": 4
+          },
+          "target_Z": {
+            "offset": 0,
+            "parity_maps": [],
+            "width": 4
+          }
+        },
+        "case_id": 1,
+        "decoding_maps": {
+          "impostor_A": [
+            {
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "generator": 0,
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "bits": [
+                1,
+                0
+              ],
+              "generator": 1,
+              "sign": 1
+            },
+            {
+              "bits": [
+                2,
+                0
+              ],
+              "generator": 2,
+              "sign": 1
+            },
+            {
+              "bits": [
+                3,
+                0
+              ],
+              "generator": 3,
+              "sign": 1
+            }
+          ],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "generator": 0,
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "bits": [
+                1,
+                0
+              ],
+              "generator": 1,
+              "sign": 1
+            },
+            {
+              "bits": [
+                2,
+                0
+              ],
+              "generator": 2,
+              "sign": 1
+            },
+            {
+              "bits": [
+                3,
+                0
+              ],
+              "generator": 3,
+              "sign": 1
+            }
+          ],
+          "target_Z": []
+        },
+        "exact_Z_reference": false,
+        "generated_parameters": {
+          "diagonal_preparation_noise": 0.0,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "frame_radians": [
+            1.5707963267948966,
+            -1.5707963267948966,
+            1.5707963267948966,
+            -1.5707963267948966
+          ],
+          "product_angles_radians": [
+            0.2,
+            0.9,
+            1.4,
+            2.1
+          ]
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "seed": 2026100101,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "source_assumptions": [
+          "ideal graph preparation",
+          "equatorial product preparation",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "declared diagonal preparation noise 0"
+        ],
+        "total_width": 24
+      },
+      "manifest_hash": "74f2b763fd2223776397f1c4c71ccf4892c8b4c87e931845c8da4cc73c02168a",
+      "marginals": {
+        "impostor_A": {
+          "0000": 1,
+          "0001": 1,
+          "0100": 2,
+          "0101": 1,
+          "0110": 1,
+          "0111": 1,
+          "1001": 1,
+          "1011": 1,
+          "1111": 1
+        },
+        "impostor_B": {
+          "0011": 1,
+          "0100": 1,
+          "0110": 1,
+          "1001": 1,
+          "1011": 2,
+          "1101": 2,
+          "1110": 2
+        },
+        "impostor_Z": {
+          "0000": 2,
+          "0011": 1,
+          "0100": 2,
+          "0101": 1,
+          "0111": 1,
+          "1001": 2,
+          "1101": 1
+        },
+        "target_A": {
+          "0001": 2,
+          "0100": 2,
+          "1000": 1,
+          "1001": 1,
+          "1011": 2,
+          "1100": 1,
+          "1110": 1
+        },
+        "target_B": {
+          "0011": 3,
+          "0101": 1,
+          "0111": 1,
+          "1000": 2,
+          "1010": 1,
+          "1011": 1,
+          "1101": 1
+        },
+        "target_Z": {
+          "0001": 1,
+          "0010": 1,
+          "0100": 1,
+          "0101": 1,
+          "0111": 2,
+          "1010": 2,
+          "1100": 1,
+          "1101": 1
+        }
+      },
+      "noise_configurations": [
+        {
+          "assumption": "Raw gate errors approximate server-compiled noise; not official calibration.",
+          "label": "local IonQ-like approximation",
+          "model": "aria",
+          "one_qubit_error": 0.0005,
+          "readout_bias": 0.0,
+          "scale": 1.0,
+          "two_qubit_error": 0.007
+        }
+      ]
+    }
+  ],
+  "schema_version": "1.0",
+  "science_verdict": null,
+  "suite": "quick-development-only"
+}

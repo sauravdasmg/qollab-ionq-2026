@@ -1,0 +1,2 @@
+# Bundled dependencies only: Qiskit 2.x, NumPy, SciPy and Matplotlib come with the Qollab runtime.
+# No additional pure-Python wheels are required by this project.

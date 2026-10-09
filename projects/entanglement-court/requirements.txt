@@ -1,0 +1,1 @@
+# Bundled dependencies only: Qiskit 2.x, NumPy, SciPy and Matplotlib.

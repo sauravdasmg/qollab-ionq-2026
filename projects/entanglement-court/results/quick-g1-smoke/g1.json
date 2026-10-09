@@ -1,0 +1,14 @@
+{
+  "criteria": {
+    "200_shot_cloud_projection_at_least_80_percent": true,
+    "coverage_at_least_1000_draws_per_case": false,
+    "local_easy_case_power_at_least_60_percent": false,
+    "valid_witness_frame_math": true
+  },
+  "metrics": {
+    "cloud_projection_mean": 1.0,
+    "local_easy_certification_mean": null
+  },
+  "overall": false,
+  "suite": "development"
+}
