@@ -121,7 +121,7 @@ def _record_date(record):
 
 
 def get_recorded():
-    """Parsed RECORDED IonQ anchors (aria-1, forte-1, forte-enterprise-1)."""
+    """Parsed RECORDED IonQ anchors: 6 legacy receipts plus cloud slots T01-T08."""
     records, statuses = recorded_ionq.parse_records()
     anchors, issues = [], []
     for record in records:
@@ -130,12 +130,14 @@ def get_recorded():
             item = {'game': anchor['game'], 'model': anchor['model'],
                     'shots': int(anchor['shots']), 'advantage': float(anchor['advantage']),
                     'label': 'RECORDED IonQ simulator', 'date': date,
-                    'case_id': anchor.get('case_id'),
+                    'case_id': anchor.get('case_id'), 'slot': record.get('slot'),
                     'source_file': anchor.get('source_file'),
                     'receipt_schema': record.get('schema_version')}
             item['cloud_sampling'] = anchor['cloud_sampling']
             if anchor['game'] == 'W':
                 item['detail'] = 'joint word error %.5f' % anchor['word_error']
+                if anchor.get('oneway_word_error') is not None:
+                    item['detail'] += '; physical one-way word error %.5f' % anchor['oneway_word_error']
             else:
                 metrics = anchor['metrics']
                 item['detail'] = ('hedge FF %.5f / product FF %.5f; mean passes hedge %.4f / product %.4f'

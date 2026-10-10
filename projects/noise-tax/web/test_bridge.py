@@ -70,30 +70,36 @@ def test_ideal_theory_values():
 
 def test_recorded_anchors():
     recorded = tax_bridge.get_recorded()
-    assert recorded['records'] == 6
+    assert recorded['records'] == 14
     assert recorded['issues'] == []
     anchors = recorded['anchors']
-    assert len(anchors) == 6
+    assert len(anchors) == 14
     by_game = {'W': [], 'N': []}
     for anchor in anchors:
         by_game[anchor['game']].append(anchor)
         assert anchor['label'] == 'RECORDED IonQ simulator'
-        assert anchor['model'] in MODELS
+        assert anchor['model'] in MODELS + ('aria-2',)
         assert anchor['date'] is not None and '2026-10-' in anchor['date']
         assert anchor['shots'] in (1000, 4000)
         assert math.isfinite(anchor['advantage'])
         assert anchor['cloud_sampling']['uncertainty_source'] == 'CLOUD SAMPLING'
         ci = anchor['cloud_sampling']['advantage_interval']
         assert ci[0] <= anchor['advantage'] <= ci[1]
-    assert len(by_game['W']) == 3 and len(by_game['N']) == 3
+    assert len(by_game['W']) == 7 and len(by_game['N']) == 7
+    legacy = [a for a in anchors if a['slot'] is None]
+    slots = sorted(a['slot'] for a in anchors if a['slot'] is not None)
+    assert slots == ['T0%d' % i for i in range(1, 9)]
     for model in MODELS:
-        wmodel = [a for a in by_game['W'] if a['model'] == model]
-        nmodel = [a for a in by_game['N'] if a['model'] == model]
+        wmodel = [a for a in legacy if a['game'] == 'W' and a['model'] == model]
+        nmodel = [a for a in legacy if a['game'] == 'N' and a['model'] == model]
         assert len(wmodel) == 1 and len(nmodel) == 1
         assert 'word error' in wmodel[0]['detail']
         assert 'hedge FF' in nmodel[0]['detail']
+    for a in anchors:
+        if a['slot'] is not None and a['game'] == 'W':
+            assert 'physical one-way' in a['detail']
     evidence_anchors = tax_bridge.get_evidence()['anchors']
-    assert len(evidence_anchors) == 6
+    assert len(evidence_anchors) == 14
 
 
 def test_w_web_does_not_present_sampling_ci():

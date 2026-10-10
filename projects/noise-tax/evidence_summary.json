@@ -1,0 +1,230 @@
+{
+  "project": "The Noise Tax",
+  "source": "Qollab IonQ simulator recorded runs",
+  "date_utc": "2026-10-10",
+  "campaign_slots": "T01-T08",
+  "export_files": [
+    "saurav-the-noise-tax-output-completed-2026-10-10T16-23-53.913Z.html",
+    "saurav-the-noise-tax-output-completed-2026-10-10T16-24-40.314Z.html",
+    "saurav-the-noise-tax-output-completed-2026-10-10T16-25-39.012Z.html",
+    "saurav-the-noise-tax-output-completed-2026-10-10T16-27-07.279Z.html",
+    "saurav-the-noise-tax-output-completed-2026-10-10T16-27-51.396Z.html",
+    "saurav-the-noise-tax-output-completed-2026-10-10T16-28-30.160Z.html",
+    "saurav-the-noise-tax-output-completed-2026-10-10T16-29-27.334Z.html",
+    "saurav-the-noise-tax-output-completed-2026-10-10T16-30-14.462Z.html"
+  ],
+  "runs": [
+    {
+      "slot": "T01",
+      "utc_start": "2026-10-10T16:23:41.644999+00:00",
+      "utc_end": "2026-10-10T16:23:53.876000+00:00",
+      "noise_model": "aria-2",
+      "shots": 1000,
+      "slot_config": {
+        "games": [
+          "W"
+        ],
+        "noise_model": "aria-2",
+        "purpose": "standard-frame/analytic-anchor corroboration",
+        "seed": null,
+        "shots": 1000,
+        "slot": "T01"
+      },
+      "job_id": "01a126a0-9a1c-73fa-928d-0aa5243b8755",
+      "source": "Qollab IonQ simulator run"
+    },
+    {
+      "slot": "T02",
+      "utc_start": "2026-10-10T16:24:28.300999+00:00",
+      "utc_end": "2026-10-10T16:24:40.304999+00:00",
+      "noise_model": "aria-2",
+      "shots": 4000,
+      "slot_config": {
+        "games": [
+          "N"
+        ],
+        "noise_model": "aria-2",
+        "purpose": "standard-frame/analytic-anchor corroboration",
+        "seed": null,
+        "shots": 4000,
+        "slot": "T02"
+      },
+      "job_id": "01a126a1-5035-7a73-b495-eaae8e8b4f74",
+      "source": "Qollab IonQ simulator run"
+    },
+    {
+      "slot": "T03",
+      "utc_start": "2026-10-10T16:25:17.166000+00:00",
+      "utc_end": "2026-10-10T16:25:38.992999+00:00",
+      "noise_model": "aria-1",
+      "shots": 1000,
+      "slot_config": {
+        "games": [
+          "W"
+        ],
+        "noise_model": "aria-1",
+        "purpose": "standard-frame/analytic-anchor corroboration",
+        "seed": null,
+        "shots": 1000,
+        "slot": "T03"
+      },
+      "job_id": "01a126a2-0f15-7cb9-b3c8-a071be7b6ea1",
+      "source": "Qollab IonQ simulator run"
+    },
+    {
+      "slot": "T04",
+      "utc_start": "2026-10-10T16:26:55.308000+00:00",
+      "utc_end": "2026-10-10T16:27:07.260000+00:00",
+      "noise_model": "aria-1",
+      "shots": 4000,
+      "slot_config": {
+        "games": [
+          "N"
+        ],
+        "noise_model": "aria-1",
+        "purpose": "standard-frame/analytic-anchor corroboration",
+        "seed": null,
+        "shots": 4000,
+        "slot": "T04"
+      },
+      "job_id": "01a126a3-8e76-7421-a95d-7fbc03785832",
+      "source": "Qollab IonQ simulator run"
+    },
+    {
+      "slot": "T07",
+      "utc_start": "2026-10-10T16:27:39.163000+00:00",
+      "utc_end": "2026-10-10T16:27:51.363000+00:00",
+      "noise_model": "aria-1",
+      "shots": 1000,
+      "slot_config": {
+        "games": [
+          "W"
+        ],
+        "noise_model": "aria-1",
+        "purpose": "fixed fresh corroboration",
+        "seed": 2026104100,
+        "shots": 1000,
+        "slot": "T07"
+      },
+      "job_id": "01a126a4-39c6-716f-b65d-cc13ed4bd4b2",
+      "source": "Qollab IonQ simulator run"
+    },
+    {
+      "slot": "T08",
+      "utc_start": "2026-10-10T16:28:18.207000+00:00",
+      "utc_end": "2026-10-10T16:28:30.150000+00:00",
+      "noise_model": "aria-1",
+      "shots": 4000,
+      "slot_config": {
+        "games": [
+          "N"
+        ],
+        "noise_model": "aria-1",
+        "purpose": "fixed fresh corroboration",
+        "seed": 2026104300,
+        "shots": 4000,
+        "slot": "T08"
+      },
+      "job_id": "01a126a4-d251-7883-b3d2-59d43b432fff",
+      "source": "Qollab IonQ simulator run"
+    },
+    {
+      "slot": "T05",
+      "utc_start": "2026-10-10T16:29:15.128000+00:00",
+      "utc_end": "2026-10-10T16:29:27.299000+00:00",
+      "noise_model": "forte-1",
+      "shots": 1000,
+      "slot_config": {
+        "games": [
+          "W"
+        ],
+        "noise_model": "forte-1",
+        "purpose": "standard-frame/analytic-anchor corroboration",
+        "seed": null,
+        "shots": 1000,
+        "slot": "T05"
+      },
+      "job_id": "01a126a5-b0ad-7d2d-964a-e20aa53cb14d",
+      "source": "Qollab IonQ simulator run"
+    },
+    {
+      "slot": "T06",
+      "utc_start": "2026-10-10T16:30:01.704000+00:00",
+      "utc_end": "2026-10-10T16:30:14.452000+00:00",
+      "noise_model": "forte-1",
+      "shots": 4000,
+      "slot_config": {
+        "games": [
+          "N"
+        ],
+        "noise_model": "forte-1",
+        "purpose": "standard-frame/analytic-anchor corroboration",
+        "seed": null,
+        "shots": 4000,
+        "slot": "T06"
+      },
+      "job_id": "01a126a6-6778-770b-b2a6-10443f204390",
+      "source": "Qollab IonQ simulator run"
+    }
+  ],
+  "outcomes": [
+    {
+      "slot": "T01",
+      "suite": "W",
+      "model": "aria-2",
+      "shots": 1000,
+      "signed_advantage": 0.0053
+    },
+    {
+      "slot": "T02",
+      "suite": "N",
+      "model": "aria-2",
+      "shots": 4000,
+      "signed_advantage": -0.0299
+    },
+    {
+      "slot": "T03",
+      "suite": "W",
+      "model": "aria-1",
+      "shots": 1000,
+      "signed_advantage": 0.0023
+    },
+    {
+      "slot": "T04",
+      "suite": "N",
+      "model": "aria-1",
+      "shots": 4000,
+      "signed_advantage": -0.0216
+    },
+    {
+      "slot": "T05",
+      "suite": "W",
+      "model": "forte-1",
+      "shots": 1000,
+      "signed_advantage": 0.0047
+    },
+    {
+      "slot": "T06",
+      "suite": "N",
+      "model": "forte-1",
+      "shots": 4000,
+      "signed_advantage": -0.0353
+    },
+    {
+      "slot": "T07",
+      "suite": "W",
+      "model": "aria-1",
+      "shots": 1000,
+      "signed_advantage": 0.0107
+    },
+    {
+      "slot": "T08",
+      "suite": "N",
+      "model": "aria-1",
+      "shots": 4000,
+      "signed_advantage": -0.022
+    }
+  ],
+  "interpretation": "Discrete cloud anchors: positive W favors joint measurement over the ideal one-way reference; negative N means the attained product strategy has lower fixed-prize loss than the published hedge. Not a cloud noise sweep or crossing.",
+  "deviations": "No project-specific cloud deviations or superseded Noise Tax runs were reported in the campaign provenance."
+}

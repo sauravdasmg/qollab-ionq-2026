@@ -1,7 +1,7 @@
 {
   "evidence_label": "Mixed evidence: LOCAL MODEL suites and RECORDED Qollab IonQ simulator cloud fits",
   "provenance": {
-    "generated_utc": "2026-10-10T16:09:29.915156Z",
+    "generated_utc": "2026-10-10T18:52:32.961442Z",
     "machine": "Saurav",
     "platform": "Windows-11-10.0.26300-SP0",
     "python": "3.14.6",
@@ -26,9 +26,9 @@
     "main.py": "8a4fe8e23bc77594cc18cd24280b67620c41fcd497a6b4bcc8997c7f78192b09",
     "circuit_pack.py": "190f029306a3a3f3dffbb5739e0f23b97e322e2668c2a9d2e6a6f84a87847701",
     "cloud_slots.py": "82102ec8b79667b7dc2cc295ae8448bd8a4fa2ce06df916fcd62af59eab45da7",
-    "web/eyes_bridge.py": "9c276d1ac6ffa6ad3873628c1c1273d11ad829eb301c147133c67f51e6606352",
-    "web/main.js": "eda336e1ef5366b9f2f3c6023f86f5585cacfe3599cea307e510fe123ade4f99",
-    "web/index.html": "36dc186f13678f978437b9be1b1399e63652012b1b928109d03b7c2409101d91",
+    "web/eyes_bridge.py": "083130186524e5af918f1a0731462441f886314d586b14f29c4562c6b4d800e4",
+    "web/main.js": "4e0bf3f4f44a3a08eb782ac49275583616f315267ee4ed72cfe000cc0a1f8701",
+    "web/index.html": "456f93d0666f8295fcbdfda68fb84e7f02806baa03a894449c69ba1be74094d4",
     "web/main.css": "873a2e1a6f5848028cd1c4acf575519c0468728e18858207b927fd87c3993bd7",
     "experiments/run.py": "f2f56126d6919a0a92e914d1d33e6df8b0404255b12f30e7d34e4d511a9bae7b",
     "experiments/make_summary.py": "888128f857269d252ccc8a4a28163eb7d6dcebd95264224c541445922c5c3c57"

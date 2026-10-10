@@ -82,7 +82,7 @@ def test_crossover_reports_left_censored():
 def test_recorded_ionq_parses_shipped_records():
     """recorded_ionq.parse_records() parses all RECORD_JSON lines."""
     records, statuses = recorded_ionq.parse_records()
-    assert len(records) == 6
+    assert len(records) == 14  # 6 legacy W/N receipts + 8 cloud slots T01-T08
     for i, (r, s) in enumerate(zip(records, statuses)):
         assert s['ok'] is True
         assert r.get('schema_version') in ('1.0', '1.0.0', 'noise-tax-1')

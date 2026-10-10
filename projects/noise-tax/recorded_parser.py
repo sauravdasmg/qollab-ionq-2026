@@ -89,6 +89,16 @@ def _summarize_record(r):
               'source_file': r.get('source_file', r.get('paths', {}).get('source_file')),
               'case_id': r.get('case_id'), 'label': 'RECORDED IonQ simulator'}
     if r.get('project') == 'The Noise Tax' or r.get('schema_version') == 'noise-tax-1':
+        common = dict(common, slot=r.get('slot'))
+        if set(manifest) == {'W'}:
+            # Cloud slot T01/T03/...: one W game, joint and physical one-way blocks interleaved.
+            wa = w.analyze_counts(marginals, manifest['W'])
+            return [dict(common, game='W', advantage=wa['advantage'], word_error=wa['joint']['word_error'],
+                         oneway_word_error=wa['oneway']['word_error'] if 'oneway' in wa else None)]
+        if set(manifest) == {'N'}:
+            # Cloud slot T02/T04/...: one N game, two arms.
+            na = n.analyze_probabilities(marginals, manifest['N'])
+            return [dict(common, game='N', advantage=na['advantage'], metrics=na)]
         wm, nm = manifest['W'], manifest['N']
         wa = w.analyze_counts(marginals[:3], wm)
         na = n.analyze_probabilities(marginals[3:], nm)
@@ -132,7 +142,12 @@ def summarize_record(r):
         rows = []
         if summary['game'] == 'W':
             blocks = r['manifest']['W']['ordered_blocks'] if merged else r['manifest']['ordered_blocks']
-            indices = list(range(3)) if merged else [i for i, b in enumerate(blocks) if b['family'] == 'textbook']
+            if not merged:
+                indices = [i for i, b in enumerate(blocks) if b['family'] == 'textbook']
+            elif 'N' in r['manifest']:
+                indices = list(range(3))
+            else:
+                indices = [i for i, b in enumerate(blocks) if b.get('arm', 'joint') == 'joint']
             bounds = []
             for i in indices:
                 b = blocks[i]; dist = marginals[i]; total = sum(dist.values())
