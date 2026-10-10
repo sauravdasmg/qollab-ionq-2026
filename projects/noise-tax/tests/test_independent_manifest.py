@@ -160,6 +160,38 @@ def test_implementation_compatibility_is_loader_only():
         harness.validate_independent_manifest(value, 'frozen')
 
 
+@pytest.mark.parametrize('filename,accepted', [('main.py', True), ('noise_channel.py', False)])
+def test_presentation_changes_allowed_evaluation_changes_rejected(tmp_path, monkeypatch, filename, accepted):
+    value = manifest()
+    for name in (*harness.IMPLEMENTATION_FILES, 'main.py'):
+        target = tmp_path/name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((ROOT/name).read_bytes())
+    changed = tmp_path/filename
+    changed.write_bytes(changed.read_bytes() + b'\n# changed after verification\n')
+    monkeypatch.setattr(harness, 'ROOT', tmp_path)
+    if accepted:
+        assert harness.validate_independent_manifest(value, 'frozen') is value['configuration']
+    else:
+        with pytest.raises(ValueError, match='implementation mismatch: noise_channel.py'):
+            harness.validate_independent_manifest(value, 'frozen')
+
+
+def test_legacy_loader_cannot_hide_evaluation_change(tmp_path, monkeypatch):
+    value = manifest()
+    for name in harness.IMPLEMENTATION_FILES:
+        target = tmp_path/name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((ROOT/name).read_bytes())
+    loader = tmp_path/'experiments/run.py'
+    loader.write_text(loader.read_text(encoding='utf-8').replace(
+        'scale = cfg[\'grid\'][j]; noise = channel.configuration(model, scale)',
+        'scale = cfg[\'grid\'][j]; noise = channel.configuration(model, 0)'), encoding='utf-8')
+    monkeypatch.setattr(harness, 'ROOT', tmp_path)
+    with pytest.raises(ValueError, match='evaluation functions mismatch'):
+        harness.validate_independent_manifest(value, 'frozen')
+
+
 @pytest.mark.parametrize('suite', ['frozen', 'fresh'])
 def test_full_loader_acceptance_stops_before_numerics(tmp_path, monkeypatch, suite):
     value = manifest(suite)

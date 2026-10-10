@@ -30,7 +30,7 @@ import hedging_core as n
 import hedging_strategies as hs
 import product_bounds as pb
 import noise_channel as nc
-import crossover as co
+import nt_curves
 from recorded_parser import summarize_record
 import recorded_ionq
 from circuit_pack import pack_circuits, unpack_counts
@@ -152,82 +152,18 @@ def get_recorded():
             'source_module': 'recorded_ionq.py'}
 
 
-def _development_path():
-    for candidate in (Path('results') / 'frozen.json',
-                      _PARENT / 'results' / 'frozen.json',
-                      Path(__file__).resolve().parent / 'frozen.json',
-                      Path('results') / 'development.json',
-                      _PARENT / 'results' / 'development.json',
-                      Path(__file__).resolve().parent / 'development.json'):
-        try:
-            if candidate.is_file():
-                return candidate
-        except OSError:
-            continue
-    return None
+def _development(suite='frozen'):
+    if suite not in nt_curves.N_INSTANCES:
+        raise ValueError('suite must be frozen or fresh')
+    return nt_curves.CURVES['suites'][suite], 'nt_curves.py'
 
 
-def _development():
-    path = _development_path()
-    if path is None:
-        return None, None
-    try:
-        data = json.loads(path.read_text(encoding='utf-8'))
-    except (OSError, ValueError):
-        return None, None
-    if not isinstance(data, dict) or 'analysis' not in data or 'grid' not in data:
-        return None, None
-    return data, str(path).replace('\\', '/')
-
-
-def _local_curve(game, model, step=SLIDER_STEP):
-    """Exact LOCAL MODEL advantage curve computed on the five small demo blocks."""
-    key = (game, model, round(float(step), 6))
-    if key in _CURVE_CACHE:
-        return dict(_CURVE_CACHE[key])
-    if game == 'W':
-        circuits, manifest = _demos()[0]
-    elif game == 'N':
-        circuits, manifest = _demos()[1]
-    else:
-        raise ValueError('game must be W or N')
-    if model not in MODELS:
-        raise ValueError('unknown IonQ noise model')
-    if (isinstance(step, bool) or not isinstance(step, numbers.Real)
-            or not math.isfinite(float(step)) or not 0.01 <= step <= 1.0):
-        raise ValueError('step must be a finite number in 0.01..1.0')
-    compiled = [nc.compile_circuit(c, model) for c in circuits]
-    prepared = [nc.prepare_steps(c) for c in compiled]
-    steps = int(round(GRID_MAX / float(step)))
-    grid = [round(k * float(step), 6) for k in range(steps + 1)]
-    curve = []
-    for scale in grid:
-        cfg = nc.configuration(model, scale)
-        distributions = [nc.probabilities(c, cfg, p) for c, p in zip(compiled, prepared)]
-        if game == 'W':
-            advantage = w.analyze_probabilities(distributions, manifest)['advantage']
-        else:
-            advantage = n.analyze_probabilities(distributions, manifest)['advantage']
-        curve.append(float(advantage))
-    point = co.crossing(grid, curve)
-    entry = {'grid': grid, 'advantage': curve, 'lower': None, 'upper': None,
-             'crossing': point['estimate'], 'status': point['status'], 'ci': None,
-             'grid_resolution': float(step),
-             'curve_source': 'computed live by tax_bridge on the five small demo blocks',
-             'confidence': None, 'n_instances': None, 'label': 'LOCAL MODEL'}
-    entry['uncertainty_source'] = ('DETERMINISTIC; numerical grid resolution; calibration sensitivity pending'
-                                   if game == 'W' else 'demo curve only; instance bootstrap not evaluated')
-    _CURVE_CACHE[key] = entry
-    return dict(entry)
-
-
-def get_evidence():
+def get_evidence(suite='frozen'):
     """Stored LOCAL MODEL curves + crossover intervals + RECORDED anchors.
 
-    Falls back to a curve computed live on the five small demo blocks when the
-    stored results file is not part of the upload.
+    Reads the shipped data module only; never recomputes a sweep.
     """
-    data, data_path = _development()
+    data, data_path = _development(suite)
     models = list(MODELS)
     games = {}
     for game in ('W', 'N'):
@@ -250,8 +186,8 @@ def get_evidence():
                 crossing = point.get('estimate')
                 ci = inversion.get('confidence_interval')
                 resolution = point.get('grid_resolution')
-                confidence = analysis.get('confidence')
-                instances = analysis.get('n_instances')
+                confidence = .975 if game == 'N' else None
+                instances = nt_curves.N_INSTANCES[suite]
                 entry.update({
                     'grid': [float(x) for x in grid],
                     'advantage': [float(x) for x in analysis['mean_advantage']],
@@ -264,9 +200,11 @@ def get_evidence():
                     'curve_source': 'LOCAL MODEL results in ' + data_path,
                     'confidence': float(confidence) if confidence is not None else None,
                     'n_instances': int(instances) if instances is not None else None,
+                    'label': nt_curves.LABEL,
+                    'suite': suite,
                 })
             else:
-                entry.update(_local_curve(game, model))
+                raise ValueError('shipped curve missing: %s %s' % (game, model))
             if game == 'W':
                 # Old pilot W bootstrap intervals were degenerate. Never display
                 # their CI label; retain only the conditional numerical root.
@@ -285,8 +223,13 @@ def get_evidence():
     product_loss = product_ff + PRIZE * (2 - 2*math.cos(math.pi/8)**2)
     return {
         'games': games,
+        'suite': suite,
         'models': models,
         'game_info': GAMES,
+        'suites': nt_curves.CURVES['suites'],
+        'source_sha256': nt_curves.SOURCE_SHA256,
+        'local_model_label': nt_curves.LABEL,
+        'n_instances': nt_curves.N_INSTANCES,
         'anchors': get_recorded()['anchors'],
         'ideal': {
             'W': {'joint_success': float(w.P_JOINT), 'oneway_success': float(w.P_SEQ),

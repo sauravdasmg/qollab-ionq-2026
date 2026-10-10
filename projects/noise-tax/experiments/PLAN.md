@@ -138,3 +138,30 @@ arm dependence and is not a binomial model of the nonbinary N loss itself.
 No cloud noise-scale crossing is fitted. Distinguish grid resolution, N instance
 bootstrap uncertainty, W calibration sensitivity and cloud shot sampling in
 JSON, figures and main output.
+
+
+## WP-NT-09 validation-scope amendment (2026-10-10T03:56:35.825313+00:00)
+
+Implementation comparison covers whispers_core.py, hedging_core.py,
+hedging_strategies.py, product_bounds.py, noise_channel.py,
+calibration_snapshot.py, crossover.py, receipt.py, and experiments/run.py.
+All evaluated module and channel-snapshot hashes must match exactly. _reuse.py
+is a one-time source-import tool and is not imported by evaluation.
+Presentation entries in existing verifier envelopes (main.py, web/*, nt_curves.py,
+cloud_slots.py, figures.py, experiments/PLAN.md) are ignored for implementation
+comparison. circuit_pack.py and recorded_ionq.py/recorded_parser.py are demo/anchor
+utilities outside seeded evaluation; their hashes likewise do not gate evaluation.
+The full original envelope digest is still validated and consumed unchanged.
+The existing pre-repair loader hash remains accepted for verifier-owned manifests;
+its unchanged scientific functions (sampling_seed, audit_compiled_strategy,
+gate_stats, ideal_oneway, evaluate_case, diagnostic_controls, calibration_sensitivity)
+are additionally pinned by an AST SHA-256, so loader compatibility cannot mask
+evaluation changes. No verifier manifest or numerical setting is rewritten.
+Web regression tests now exercise shipped nt_curves data for both suites and
+all three models, including deterministic W reporting and N bootstrap bands.
+No replacement live sweep is performed by the presentation adapter.
+
+WP-NT-09 quick validation: project .venv Python, pytest tests web -q
+with --basetemp .test-tmp-wp-nt-09 -p no:cacheprovider: 101 passed,
+4 existing non-interactive Matplotlib warnings, 4.05 seconds. Workspace
+basetemp avoids inaccessible shared Windows pytest temp directories.

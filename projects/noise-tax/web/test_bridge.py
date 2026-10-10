@@ -10,6 +10,7 @@ from pathlib import Path
 from qiskit.providers.basic_provider import BasicSimulator
 
 import tax_bridge
+import nt_curves
 
 MODELS = ('aria-1', 'forte-1', 'forte-enterprise-1')
 
@@ -31,7 +32,7 @@ def test_evidence_shape_and_labels():
     for game in ('W', 'N'):
         for model in MODELS:
             entry = evidence['games'][game][model]
-            assert entry['label'] == 'LOCAL MODEL'
+            assert entry['label'] == nt_curves.LABEL
             assert isinstance(entry['advantage'], list) and len(entry['advantage']) >= 2
             assert entry['grid'] and len(entry['grid']) == len(entry['advantage'])
             for value in entry['advantage']:
@@ -120,40 +121,46 @@ def test_web_preserves_revised_uncertainty_fields():
     assert evidence['games']['N']['aria-1']['ci'] == na['inversion']['confidence_interval']
 
 
-def test_fallback_w_curve_ideal_evenly_spaced():
-    curve = tax_bridge._local_curve('W', 'aria-1', step=0.25)
-    assert curve['grid'] == [0.0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0]
-    assert abs(curve['advantage'][0] - (0.5 + math.sqrt(2)/3 - 0.5 - math.sqrt(3)/4)) < 1e-6
-    assert curve['advantage'][-1] < 0
-    assert curve['status'] == 'resolved'
-    assert 1.0 < curve['crossing'] < 2.0
-    assert curve['ci'] is None
-    assert curve['lower'] is None and curve['upper'] is None
+def test_shipped_w_curves_ideal_evenly_spaced():
+    for suite in ('frozen', 'fresh'):
+        evidence = tax_bridge.get_evidence(suite)
+        source = nt_curves.CURVES['suites'][suite]
+        for model in MODELS:
+            curve = evidence['games']['W'][model]
+            assert curve['grid'] == [i / 40 for i in range(81)]
+            assert curve['advantage'] == source['analysis']['W'][model]['mean_advantage']
+            assert abs(curve['advantage'][0] - (math.sqrt(2)/3 - math.sqrt(3)/4)) < 1e-6
+            assert curve['advantage'][-1] < 0
+            assert curve['status'] == 'resolved'
+            assert 0 < curve['crossing'] < 2
+            assert curve['ci'] is None
+            assert curve['lower'] is None and curve['upper'] is None
 
 
-def test_fallback_n_curve_ideal_evenly_spaced():
-    curve = tax_bridge._local_curve('N', 'aria-1', step=0.25)
-    assert curve['grid'][0] == 0.0 and curve['grid'][-1] == 2.0
-    product_ff = (1 - math.cos(math.pi/8)**2)**2
-    product_loss = product_ff + 0.02 * (2 - 2*math.cos(math.pi/8)**2)
-    assert abs(curve['advantage'][0] - (product_loss - 0.02)) < 1e-6
-    assert curve['advantage'][-1] < 0
-    assert 0 < curve['crossing'] < 2
+def test_shipped_n_curves_and_bands():
+    for suite in ('frozen', 'fresh'):
+        evidence = tax_bridge.get_evidence(suite)
+        source = nt_curves.CURVES['suites'][suite]
+        for model in MODELS:
+            curve = evidence['games']['N'][model]
+            analysis = source['analysis']['N'][model]
+            assert curve['grid'] == [i / 40 for i in range(81)]
+            assert curve['advantage'] == analysis['mean_advantage']
+            assert curve['lower'] == analysis['lower_band']
+            assert curve['upper'] == analysis['upper_band']
+            assert curve['ci'] == analysis['inversion']['confidence_interval']
+            assert curve['advantage'][0] > 0 and curve['advantage'][-1] < 0
+            assert 0 < curve['crossing'] < 2
+            assert curve['n_instances'] == 24
 
 
-def test_fallback_curve_invalid():
+def test_shipped_curve_invalid_suite():
     try:
-        tax_bridge._local_curve('Z', 'aria-1')
+        tax_bridge.get_evidence('bogus-suite')
     except ValueError:
         pass
     else:
-        raise AssertionError('unknown game must raise ValueError')
-    try:
-        tax_bridge._local_curve('W', 'nope-model')
-    except ValueError:
-        pass
-    else:
-        raise AssertionError('unknown model must raise ValueError')
+        raise AssertionError('unknown suite must raise ValueError')
 
 
 def test_run_demo_builtin():

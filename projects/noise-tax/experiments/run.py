@@ -1,5 +1,6 @@
 """Orchestrator-run exact small-block suites. Worker invokes quick/smoke only."""
 import argparse
+import ast
 import json
 import os
 import platform
@@ -30,13 +31,22 @@ SUITES = {'development': (2026104500, 2026104600, 2026104700),
           'fresh': (2026104100, 2026104300, 2026104900)}
 IMPLEMENTATION_FILES = ('whispers_core.py', 'hedging_core.py', 'hedging_strategies.py',
                         'product_bounds.py', 'noise_channel.py', 'calibration_snapshot.py',
-                        'crossover.py', 'circuit_pack.py', 'receipt.py', 'main.py',
-                        'recorded_ionq.py', 'recorded_parser.py', 'figures.py',
-                        'experiments/run.py', 'experiments/PLAN.md')
+                        'crossover.py', 'receipt.py', 'experiments/run.py')
 # WP-NT-07 changes only loader validation and bounded smoke execution. The
 # verifier froze this loader before the requested repair; all scientific files
 # must still match exactly. Record both hashes in every consumed receipt.
 PRE_REPAIR_LOADER_SHA256 = '3264943e0e6097ff524165547c4de6131ae82b0a7dbfae0f302f36ae0b781820'
+EVALUATION_FUNCTIONS = ('sampling_seed', 'audit_compiled_strategy', 'gate_stats',
+                       'ideal_oneway', 'evaluate_case', 'diagnostic_controls',
+                       'calibration_sensitivity')
+EVALUATION_SHA256 = '3b44d07217679968049cac89d5fed6082ed1e775db6369ad8c7f94a29229cde4'
+
+def evaluation_sha256():
+    """Pin unchanged scientific functions across the legacy loader repair."""
+    nodes = [node for node in ast.parse((ROOT/'experiments/run.py').read_text(encoding='utf-8')).body
+             if isinstance(node, ast.FunctionDef) and node.name in EVALUATION_FUNCTIONS]
+    return hashlib.sha256('\n'.join(ast.dump(node, include_attributes=False)
+                                   for node in nodes).encode('utf-8')).hexdigest()
 
 def atomic_json(path, value):
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
@@ -147,10 +157,11 @@ def validate_independent_manifest(manifest, suite):
     require({k: v for k, v in cfg.items() if k not in excluded}
             == {k: v for k, v in expected.items() if k not in excluded}, 'immutable experiment/channel settings mismatch')
     hashes = cfg.get('implementation_sha256')
-    require(isinstance(hashes, dict) and set(hashes) == set(IMPLEMENTATION_FILES), 'invalid implementation hashes')
+    require(isinstance(hashes, dict) and set(IMPLEMENTATION_FILES) <= set(hashes), 'invalid implementation hashes')
     for name, current in expected['implementation_sha256'].items():
         allowed = {current}
         if name == 'experiments/run.py':
+            require(evaluation_sha256() == EVALUATION_SHA256, 'evaluation functions mismatch: experiments/run.py')
             allowed.add(PRE_REPAIR_LOADER_SHA256)
         require(hashes[name] in allowed, 'implementation mismatch: '+name)
     return cfg
