@@ -1,5 +1,6 @@
 """Lossless accessible text and strict raw cloud-record validation."""
 import json
+import re
 from datetime import datetime
 from eyes_core import digest, normalized_counts
 
@@ -15,6 +16,8 @@ def transcript(estimate, label):
 def validate_record(record):
     if not isinstance(record, dict):
         raise ValueError("record must be a JSON object")
+    if "slot" in record:
+        record = normalize_slot_record(record)
     if record.get("schema") != SCHEMA or record.get("noise_model") != "aria-1":
         raise ValueError("unknown schema or effective noise model")
     if record.get("label") != "recorded Qollab IonQ":
@@ -96,3 +99,31 @@ def make_record(counts, manifest, shots, phase_frame, noise_model, suite="frozen
             "manifest_sha256": digest(manifest),
             "utc": datetime.now(__import__("datetime").timezone.utc).isoformat().replace("+00:00", "Z"),
             "source_file": "results/exports/qollab-console.txt"}
+
+
+def normalize_slot_record(record):
+    """Validate slot output and derive metadata, preserving raw counts and source."""
+    from cloud_slots import SLOTS, build_slot
+    slot = record["slot"]
+    if slot not in SLOTS:
+        raise ValueError("unknown cloud slot")
+    spec = SLOTS[slot]
+    if (record.get("suite") != spec["suite"] or record.get("shots") != spec["shots"]
+            or record.get("manifest_hash") != spec["manifest_hash"]
+            or record.get("effective_noise_model") != "aria-1"):
+        raise ValueError("slot provenance/budget mismatch")
+    if record.get("manifest") != build_slot(slot)[1]:
+        raise ValueError("slot manifest mismatch")
+    source = record.get("source_file", "")
+    match = re.search(r"(\d{4}-\d{2}-\d{2})T(\d{2})-(\d{2})-(\d{2}\.\d+)Z", source)
+    utc = record.get("utc")
+    if not utc and match:
+        utc = "%sT%s:%s:%sZ" % match.groups()
+    derived = dict(record)
+    derived.update(schema=SCHEMA, label="recorded Qollab IonQ", noise_model="aria-1",
+                   phase_frame=spec["frame"], qubits=19 if slot == "E01" else 21,
+                   utc=utc, counts_sha256=digest(record["counts"]),
+                   manifest_sha256=digest(record["manifest"]),
+                   utc_basis="record UTC" if record.get("utc") else "original export filename completion timestamp")
+    # Derived hashes describe the preserved payload; provenance stays tied to its export.
+    return derived

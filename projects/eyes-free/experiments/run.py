@@ -4,6 +4,8 @@ import hashlib
 import json
 import sys
 import time
+import platform
+from datetime import datetime, timezone
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import numpy as np
@@ -209,6 +211,7 @@ def run(args):
         raise ValueError("full evidence already exists; preserve it before a separate orchestrator run")
     if not args.quick and not args.resume and any(outdir.glob(prefix+"-seed*")):
         raise ValueError("existing full artifacts must be preserved before rerunning")
+    acquired_utc = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     start = time.perf_counter()
     records = []
     completed = set()
@@ -296,6 +299,7 @@ def run(args):
                "fit_spec": SPEC, "seeds": seeds, "controls": controls, "records": records,
                "summary": summarize(records), "seed_summary": seed_summary, "seed_results": seed_rows,
                "independent_manifest_sha256": manifest_hash, "consumed_manifest": manifest, "configuration": config, "seconds": time.perf_counter()-start,
+               "provenance": {"started_utc": acquired_utc, "completed_utc": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"), "machine": platform.node(), "platform": platform.platform(), "python": platform.python_version()},
                "versions": {"numpy": np.__version__, "scipy": scipy.__version__, "qiskit": qiskit.__version__}}
     payload["config_sha256"] = digest(config)
     destination.parent.mkdir(parents=True, exist_ok=True)

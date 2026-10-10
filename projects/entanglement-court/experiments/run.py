@@ -464,14 +464,21 @@ def _save_figure(result, path):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    fig, ax = plt.subplots(figsize=(8, 4.5))
-    rows = [(r["case_id"], x["controls"]["graph"]["summary"]["certification_rate"])
-            for r in result["cases"] for x in r["noise_results"] if x["noise"]["name"] in ("ideal", "aria@1")]
-    if rows:
-        ax.bar([str(k) for k, _ in rows], [v for _, v in rows], color="#28345a")
+    fig, ax = plt.subplots(figsize=(10, 4.5))
+    cases = result["cases"]
+    for model, shift, color, label in (("ideal", -.2, "#28345a", "Ideal device channel"),
+                                      ("aria@1", .2, "#ad6334", "Aria-like scale 1")):
+        rows = [(i, x["controls"]["graph"]["summary"]["certification_rate"])
+                for i, r in enumerate(cases) for x in r["noise_results"] if x["noise"]["name"] == model]
+        if rows:
+            ax.bar([i + shift for i, _ in rows], [v for _, v in rows], width=.4, color=color, label=label)
+    ax.set_xticks(range(len(cases)), [str(r["case_id"])[-2:] for r in cases], fontsize=8)
+    ax.set_xlabel("Case ID suffix (full IDs and values in repository results)")
+    ax.legend(fontsize=8, loc="lower left")
     ax.set_ylim(0, 1); ax.set_ylabel("Graph certification fraction")
-    ax.set_title(f"{result['suite']} local evidence | {result['config']['shots']} shots")
-    fig.tight_layout(); fig.savefig(path, dpi=150); plt.close(fig)
+    ax.set_title(f"{result['suite']} LOCAL MODEL | {result['config']['shots']} shots/block")
+    fig.text(.02, .01, "Ideal disables device noise; deliberate preparation phase noise remains. Static saved-data chart.", fontsize=8)
+    fig.tight_layout(rect=(0, .04, 1, 1)); fig.savefig(path, dpi=150); plt.close(fig)
 
 
 def run_g1(result, output_dir):

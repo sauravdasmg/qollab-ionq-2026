@@ -1,6 +1,7 @@
 """Bounded ideal demo and single-job injected IonQ capture; no import-time run."""
 import json
 import platform
+import time
 import qiskit
 from cases import make_demo, analyze_counts
 from circuit_pack import demo_blocks, pack_circuits, unpack_counts, normalize_counts, digest, circuit_hash, circuit_description
@@ -20,6 +21,7 @@ def _effective_model(active):
 
 
 def main(case: int=0, shots: int=200, challenge: str="sealed", assume_trusted_measurements: bool=False, slot: str=""):
+    run_started = time.perf_counter()
     if type(slot) is not str: raise ValueError("slot must be a string")
     campaign_row = None
     if type(case) is not int or case not in range(4):
@@ -68,7 +70,7 @@ def main(case: int=0, shots: int=200, challenge: str="sealed", assume_trusted_me
     started = utc_now()
     assumptions = list(manifest['source_assumptions']) + [ASSUMPTIONS,
         'Packed blocks share one execution, not independent generated instances.',
-        ('Preregistered campaign slot ' + slot if campaign_row else 'Anchor demonstration is not the prescribed campaign; cloud budget/controls pending.')]
+        ('Preregistered campaign slot ' + slot if campaign_row else 'Anchor demonstration is separate from the recorded campaign; see loaded record status and deviations.')]
     record = dict(schema_version='1.0.0', source='Qollab IonQ simulator run', operator_environment=platform.platform(),
                   backend=name, noise_model=effective, shots=shots, settings={'manifest': manifest, 'challenge': challenge,
                   'packed_circuit': circuit_description(packed),
@@ -141,4 +143,7 @@ def main(case: int=0, shots: int=200, challenge: str="sealed", assume_trusted_me
         saved_trust = saved['settings'].get('assume_trusted_measurements', False)
         summary = analyze_counts(derived, saved_manifest, trusted=saved_trust)
         present(derived, summary, 'Recorded Qollab IonQ | ' + saved['backend'] + ' | ' + saved['noise_model'] + ' | UTC ' + saved['utc_end'], saved['shots'], saved_trust)
-    return {'manifest': manifest, 'layout': layout, 'marginals': marginals, 'analysis': analysis, 'record': record if ionq else None}
+    elapsed = time.perf_counter() - run_started
+    print('Run runtime: {:.2f} s ({}; includes analysis and displayed exhibits).'.format(
+        elapsed, 'LIVE Qollab IonQ' if ionq else 'LIVE built-in simulator'), flush=True)
+    return {'manifest': manifest, 'layout': layout, 'marginals': marginals, 'analysis': analysis, 'record': record if ionq else None, 'runtime_seconds': elapsed}

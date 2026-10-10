@@ -108,5 +108,7 @@ def test_slots_and_single_ionq_submission(monkeypatch):
     monkeypatch.setattr(app,"backend",b,raising=False)
     record=app.main(100,"ignored",slot="E01")
     assert record["slot"] == "E01" and record["suite"] == "smoke"
+    parsed, errors = parse_records("RECORD_JSON " + json.dumps(record))
+    assert len(parsed) == 1 and not errors
     assert {"manifest_hash","shots","effective_noise_model"} <= record.keys()
     assert b.calls==b.job.fetches==b.job.value.fetches==1

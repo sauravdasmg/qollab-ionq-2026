@@ -108,7 +108,18 @@ def load_records(text=None):
             status.append('Malformed recorded line ' + str(line_number) + ': ' + str(exc))
     if not valid:
         status.append('No recorded IonQ runs yet')
-    status.append('Readiness gap: prescribed cloud campaign and matched saved recipes are not yet supplied.')
+    from campaign import SLOTS
+    by_case = {str(row['case_id']): row['slot'] for row in SLOTS}
+    supplied = {by_case[r['case_id']] for r in valid if r['error'] is None and r['case_id'] in by_case}
+    missing = sorted({row['slot'] for row in SLOTS} - supplied)
+    status.append('Recorded campaign: ' + str(len(supplied)) + '/24 retained slots supplied.'
+                  + (' Missing: ' + ', '.join(missing) + '.' if missing else ''))
+    legacy = sorted({by_case[r['case_id']] for r in valid
+                     if r.get('evidence_deviation') and r['case_id'] in by_case})
+    if legacy:
+        status.append('Legacy preparation-noise deviation: ' + ', '.join(legacy)
+                      + '; historical circuit reproduction requires the pre-WP-C-14 revision documented in README.md.')
+    status.append('LOCAL MODEL retention limitation: saved local aggregates omit sampled draw-level counts and a hashed replay transcript.')
     return valid, status
 
 

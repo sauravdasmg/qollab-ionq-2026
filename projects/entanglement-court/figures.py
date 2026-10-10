@@ -26,7 +26,7 @@ def present(marginals, analysis, source, shots, trusted=False):
     print('Complete primitive analysis: ' + json.dumps(analysis, sort_keys=True), flush=True)
     print('Intervals: two-sided 95% parity intervals; simultaneous bound uses the stated per-round union allocation. Units: dimensionless.', flush=True)
     print('Finite-shot estimates can cross theoretical witness bounds; use intervals. Abstention does not establish separability.', flush=True)
-    print('Readiness gap: near-threshold and extension campaign receipts are not yet supplied; this is exact anchor/reference mode.', flush=True)
+    print('This exhibit shows its labeled source only; campaign availability and legacy deviations are reported by the receipt loader.', flush=True)
     fig, axes = plt.subplots(1, 3, figsize=(13, 4.8))
     fig.patch.set_facecolor('#f4ecd9')
     for ax in axes:
@@ -61,4 +61,5 @@ def present(marginals, analysis, source, shots, trusted=False):
     fig.text(.02, .01, ASSUMPTIONS, fontsize=8)
     fig.tight_layout(rect=(0, .05, 1, .92))
     plt.show()
+    plt.close(fig)
     return fig

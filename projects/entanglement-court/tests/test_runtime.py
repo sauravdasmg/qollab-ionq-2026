@@ -87,6 +87,9 @@ def test_dispatch_once(monkeypatch, capsys, ionq, challenge, n):
     assert 'No recorded IonQ runs yet' in text or 'Recorded:' in text
     assert 'systematic error unbounded' in text and 'Finite-shot' in text
     assert ('RECORD_JSON' in text) == ionq
+    assert 'Run runtime:' in text
+    assert result['runtime_seconds'] >= 0
+    assert not plt.get_fignums()
     if ionq:
         validate_record(result['record'])
         assert [b['qubit_offset'] for b in result['layout']] == list(range(0, 4*n, 4))

@@ -2,6 +2,9 @@
 
 import hashlib
 import json
+import platform
+import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +22,10 @@ def summarize_campaign(path):
         "source": path.relative_to(ROOT).as_posix(),
         "sha256": sha256(path),
         "suite": data.get("suite"),
+        "created_utc": data.get("created_utc"),
+        "versions": data.get("versions", {}),
+        "simulator": "local small-block density-channel approximation plus multinomial sampling",
+        "retention": "Aggregate counters, probabilities and seeds retained; sampled draw-level counts were discarded. No hashed replay transcript is retained.",
         "config": {key: data.get("config", {}).get(key) for key in (
             "seed", "sampled_case_ids", "staged_manifest_count", "draws", "shots",
             "models", "noise_scales", "noise_label", "alpha", "controls",
@@ -60,13 +67,26 @@ def summarize_gate(path):
     return {"source": path.relative_to(ROOT).as_posix(), "sha256": sha256(path), "result": data}
 
 
-def build_summary():
+def build_summary(generated_utc=None):
+    import numpy
+    import qiskit
+    import scipy
     campaigns = [summarize_campaign(ROOT / "results" / (name + ".json")) for name in SUITES]
     gate_path = ROOT / "results" / "g1.json"
     payload = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
+        "provenance": {
+            "generated_utc": generated_utc or datetime.now(timezone.utc).isoformat(),
+            "platform": platform.platform(),
+            "python": sys.version,
+            "qiskit": qiskit.__version__,
+            "numpy": numpy.__version__,
+            "scipy": scipy.__version__,
+            "generator": "experiments/make_summary.py",
+            "generator_sha256": sha256(Path(__file__)),
+        },
         "evidence_label": "LOCAL MODEL (calibrated IonQ-like approximation, not device)",
-        "description": "Compact statistics derived from included frozen, fresh, and development local results; full result files remain included.",
+        "description": "Compact LOCAL MODEL statistics derived from repository-only frozen, fresh and development result files. Full sources are repository evidence, not top-level Qollab uploads; source SHA-256s are included. Aggregates can be summed, but original sampled draws cannot be audited from retained counts.",
         "campaigns": campaigns,
         "gate_decisions": summarize_gate(gate_path),
         "sources": [

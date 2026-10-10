@@ -1,12 +1,37 @@
 {
-  "evidence_label": "LOCAL MODEL (calibrated IonQ-like approximation, not device)",
+  "evidence_label": "Mixed evidence: LOCAL MODEL suites and RECORDED Qollab IonQ simulator cloud fits",
+  "provenance": {
+    "generated_utc": "2026-10-10T16:09:29.915156Z",
+    "machine": "Saurav",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python": "3.14.6",
+    "qiskit": "2.5.2",
+    "numpy": "2.5.3",
+    "operation": "Summary generation from saved evidence; no new acquisition or verification",
+    "local_acquisition_metadata": "See suite provenance: original versions retained, date basis explicit; unknown original host/Python not invented."
+  },
+  "historical_status_note": "G1 FAIL and independent/cloud false flags preserve the earlier local acquisition stage. Later cloud fits are separate RECORDED evidence; this regeneration does not declare a new independent PASS.",
   "source_files_sha256": {
     "results/frozen-evidence.json": "cb5f98230ac64a7758154b2f78a8d620bc8c138956cba6a07902cc1dcc077e7b",
     "results/fresh-evidence.json": "870cd38189b5dd035305470987afd409323d8248788d1e73bdcf7793e96774b8",
     "review/manifests/frozen.json": "53438b090a1cba3ee6a442a6d4a84c8510c2512170c0096f0e299a46a4159d56",
     "review/manifests/fresh.json": "91482c10b3664cac2d7b5916489d0307a588b432ce55236190addc0472000269",
     "results/g1.json": "670ef9a4c6149167c73845946c0def3997613d886b20a39708aa98d4623bedbd",
-    "results/cloud_fit.json": "e8f0a7022ad3d4c3b5d466e22b39e8f8f1e3567fdc504bc01da592dbf7730c1f"
+    "results/cloud_fit.json": "e8f0a7022ad3d4c3b5d466e22b39e8f8f1e3567fdc504bc01da592dbf7730c1f",
+    "recorded_ionq.py": "c04b64145348213ebd70c8bb60946ac059b9872fc8df77f2a6bf9eead8680656",
+    "eyes_core.py": "b92f04e5882046dac9ebee9ee5ef01066a4a2b48f5d2b9dea9a70307e20fe76f",
+    "fit.py": "61efeea6ce61f3428efabf42da89f03ede0cc415c094733fd67bff95c9053693",
+    "sonify.py": "02fbc7a552c44d46a4cbe24a456cc9c67879da1492cb66261d66e94039da1e19",
+    "receipt.py": "9023280737745c7181d2d164c18513ddfb61821426035d939e4e3bcaca1c6ad2",
+    "main.py": "8a4fe8e23bc77594cc18cd24280b67620c41fcd497a6b4bcc8997c7f78192b09",
+    "circuit_pack.py": "190f029306a3a3f3dffbb5739e0f23b97e322e2668c2a9d2e6a6f84a87847701",
+    "cloud_slots.py": "82102ec8b79667b7dc2cc295ae8448bd8a4fa2ce06df916fcd62af59eab45da7",
+    "web/eyes_bridge.py": "9c276d1ac6ffa6ad3873628c1c1273d11ad829eb301c147133c67f51e6606352",
+    "web/main.js": "eda336e1ef5366b9f2f3c6023f86f5585cacfe3599cea307e510fe123ade4f99",
+    "web/index.html": "36dc186f13678f978437b9be1b1399e63652012b1b928109d03b7c2409101d91",
+    "web/main.css": "873a2e1a6f5848028cd1c4acf575519c0468728e18858207b927fd87c3993bd7",
+    "experiments/run.py": "f2f56126d6919a0a92e914d1d33e6df8b0404255b12f30e7d34e4d511a9bae7b",
+    "experiments/make_summary.py": "888128f857269d252ccc8a4a28163eb7d6dcebd95264224c541445922c5c3c57"
   },
   "manifests_sha256": {
     "frozen": "53438b090a1cba3ee6a442a6d4a84c8510c2512170c0096f0e299a46a4159d56",
@@ -63,10 +88,29 @@
         20261011519
       ]
     },
-    "shots_per_phase": null,
+    "shots_per_phase": 1000,
     "noise_models": "see per-record source evidence",
-    "noise_scales": null,
-    "grid": null,
+    "noise_scales": [
+      0,
+      0.5,
+      0.75,
+      1,
+      1.5,
+      2
+    ],
+    "grid": {
+      "grid_step": 0.025,
+      "range": [
+        0.5,
+        4.5
+      ],
+      "alpha": 0.008333333333333333,
+      "ties": "lowest frequency; separated profile components are inconclusive",
+      "interval": "profile LR chi-square(1); grid envelope plus one-step conservative padding",
+      "contrast": "profile-component union of joint Wald radii; grid-Bonferroni LR null required",
+      "offset": "abs(offset)+hypot(cos,sin)<=1-1e-8 (numerical guard)",
+      "reselection": "entire grid profiled every fit"
+    },
     "gate": {
       "gate": "g1",
       "criteria": [
@@ -134,6 +178,106 @@
   "suites": {
     "frozen": {
       "label": "LOCAL MODEL (calibrated IonQ-like approximation, not device)",
+      "provenance": {
+        "software_versions": {
+          "numpy": "2.5.3",
+          "scipy": "1.18.1",
+          "qiskit": "2.5.2"
+        },
+        "simulator": "eyes_core.py exact NumPy small-state density/channel simulation; calibrated Aria-like approximation",
+        "noise_settings": {
+          "r_1q": 0.0005,
+          "r_2q": 0.009,
+          "readout": 0.0,
+          "basis": [
+            "rz",
+            "sx",
+            "x",
+            "rxx"
+          ],
+          "noise_model": "aria-1"
+        },
+        "settings": {
+          "fit": {
+            "grid_step": 0.025,
+            "range": [
+              0.5,
+              4.5
+            ],
+            "alpha": 0.008333333333333333,
+            "ties": "lowest frequency; separated profile components are inconclusive",
+            "interval": "profile LR chi-square(1); grid envelope plus one-step conservative padding",
+            "contrast": "profile-component union of joint Wald radii; grid-Bonferroni LR null required",
+            "offset": "abs(offset)+hypot(cos,sin)<=1-1e-8 (numerical guard)",
+            "reselection": "entire grid profiled every fit"
+          },
+          "seeds": [
+            2026100500,
+            2026100501,
+            2026100502,
+            2026100503,
+            2026100504,
+            2026100505,
+            2026100506,
+            2026100507,
+            2026100508,
+            2026100509,
+            2026100510,
+            2026100511,
+            2026100512,
+            2026100513,
+            2026100514,
+            2026100515,
+            2026100516,
+            2026100517,
+            2026100518,
+            2026100519,
+            2026100520,
+            2026100521,
+            2026100522,
+            2026100523
+          ],
+          "scales": [
+            0,
+            0.5,
+            0.75,
+            1,
+            1.5,
+            2
+          ],
+          "shift": 0.0,
+          "shots": 1000,
+          "widths": [
+            1,
+            2,
+            4
+          ],
+          "phases_rad": [
+            0.0,
+            0.5235987755982988,
+            1.0471975511965976,
+            1.5707963267948966,
+            2.0943951023931953,
+            2.6179938779914944,
+            3.141592653589793,
+            3.665191429188092,
+            4.1887902047863905,
+            4.71238898038469,
+            5.235987755982989,
+            5.759586531581287
+          ],
+          "manifest_sha256": "53438b090a1cba3ee6a442a6d4a84c8510c2512170c0096f0e299a46a4159d56",
+          "truth_protocol": "WP-E-04-KL-projection-v1"
+        },
+        "acquisition": {
+          "date_utc": "2026-10-10",
+          "source_file_last_modified_utc": "2026-10-10T03:36:16.932627Z",
+          "date_basis": "Saved source file filesystem timestamp, not an embedded acquisition clock; exact original run start was not captured.",
+          "machine": "Original host identifier not captured by the saved harness",
+          "platform": "Windows 11 repository environment (supplied project context)",
+          "python": "Original Python version not captured; generation environment is reported separately."
+        }
+      },
       "suite_label": "local noise approximation; not cloud evidence",
       "seeds": [
         2026100500,
@@ -1748,6 +1892,102 @@
     },
     "fresh": {
       "label": "LOCAL MODEL (calibrated IonQ-like approximation, not device)",
+      "provenance": {
+        "software_versions": {
+          "numpy": "2.5.3",
+          "scipy": "1.18.1",
+          "qiskit": "2.5.2"
+        },
+        "simulator": "eyes_core.py exact NumPy small-state density/channel simulation; calibrated Aria-like approximation",
+        "noise_settings": {
+          "r_1q": 0.0005,
+          "r_2q": 0.009,
+          "readout": 0.0,
+          "basis": [
+            "rz",
+            "sx",
+            "x",
+            "rxx"
+          ],
+          "noise_model": "aria-1"
+        },
+        "settings": {
+          "fit": {
+            "grid_step": 0.025,
+            "range": [
+              0.5,
+              4.5
+            ],
+            "alpha": 0.008333333333333333,
+            "ties": "lowest frequency; separated profile components are inconclusive",
+            "interval": "profile LR chi-square(1); grid envelope plus one-step conservative padding",
+            "contrast": "profile-component union of joint Wald radii; grid-Bonferroni LR null required",
+            "offset": "abs(offset)+hypot(cos,sin)<=1-1e-8 (numerical guard)",
+            "reselection": "entire grid profiled every fit"
+          },
+          "seeds": [
+            20261011500,
+            20261011501,
+            20261011502,
+            20261011503,
+            20261011504,
+            20261011505,
+            20261011506,
+            20261011507,
+            20261011508,
+            20261011509,
+            20261011510,
+            20261011511,
+            20261011512,
+            20261011513,
+            20261011514,
+            20261011515,
+            20261011516,
+            20261011517,
+            20261011518,
+            20261011519
+          ],
+          "scales": [
+            0,
+            0.5,
+            0.75,
+            1,
+            1.5,
+            2
+          ],
+          "shift": 0.1308996938995747,
+          "shots": 1000,
+          "widths": [
+            1,
+            2,
+            4
+          ],
+          "phases_rad": [
+            0.1308996938995747,
+            0.6544984694978735,
+            1.1780972450961724,
+            1.7016960206944713,
+            2.22529479629277,
+            2.748893571891069,
+            3.2724923474893677,
+            3.7960911230876664,
+            4.319689898685965,
+            4.843288674284264,
+            5.366887449882563,
+            5.890486225480862
+          ],
+          "manifest_sha256": "91482c10b3664cac2d7b5916489d0307a588b432ce55236190addc0472000269",
+          "truth_protocol": "WP-E-04-KL-projection-v1"
+        },
+        "acquisition": {
+          "date_utc": "2026-10-10",
+          "source_file_last_modified_utc": "2026-10-10T03:37:42.669894Z",
+          "date_basis": "Saved source file filesystem timestamp, not an embedded acquisition clock; exact original run start was not captured.",
+          "machine": "Original host identifier not captured by the saved harness",
+          "platform": "Windows 11 repository environment (supplied project context)",
+          "python": "Original Python version not captured; generation environment is reported separately."
+        }
+      },
       "suite_label": "local noise approximation; not cloud evidence",
       "seeds": [
         20261011500,
@@ -6382,5 +6622,5 @@
     }
   },
   "recorded_ionq_file": "recorded_ionq.py",
-  "scope": "Saved local simulation evidence only; Qollab IonQ simulator records are in recorded_ionq.py."
+  "scope": "LOCAL MODEL suites summarize saved local simulations. cloud_fit contains RECORDED Qollab IonQ simulator fits; original raw records are in recorded_ionq.py."
 }

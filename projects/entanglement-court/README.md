@@ -2,10 +2,8 @@
 
 Entanglement Court is a small interactive courtroom for testing graph-state entanglement evidence.
 It pairs an entangled graph state with a separable product state that has the same ideal Z-basis distribution.
-**Key result (LOCAL MODEL):** across 24 frozen and 20 fresh cases, certification was 0.50/0.50 in ideal simulation;
-the Aria-like local model gave 0.42/0.43, with zero false certificates in product and biseparable controls.
-The two-color comparator is the same witness implementation, so it ties by construction.
-**Run it (judges): built-in simulator, default settings, press Run, about [[CLOUD: measured live built-in runtime will go here]] s; then check the matched Z exhibits and the conditional witness receipt.**
+**Result:** local-model graph certification was 0.50/0.50 in ideal simulation and 0.42/0.43 in the Aria-like model; RECORDED Qollab IonQ Aria 1 results certified 12/12 easy cases and abstained on all 12 near-threshold cases (200 shots, 2026-10-10).
+**Run it (judges): built-in simulator, default settings, press Run, about 4 s (local runner, 2026-10-10; 3.49-3.79 s, not a browser timing); then check the matched Z exhibits and the conditional witness receipt.**
 
 ## Summary
 
@@ -28,33 +26,61 @@ The simultaneous bound allocates error probability across generator parities and
 | Frozen and fresh local campaign, 24 + 20 cases | LOCAL MODEL | Graph certification fraction: 0.50 / 0.50 in ideal simulation; 0.42 / 0.43 in the aria-like approximation. |
 | Product and biseparable controls | LOCAL MODEL | Zero false certificates reported in the provenance summary. |
 | Comparator | LOCAL MODEL | Two-color comparator and simultaneous generator witness are implementation-identical and tie; this is not a stronger-baseline win. |
-| Qollab IonQ simulator subset | RECORDED | [[CLOUD: date, noise model, shots, and measured subset results will go here]] |
+| Qollab IonQ simulator subset | RECORDED | 2026-10-10; IonQ Aria 1 (`aria-1`), 200 shots per block; 12/12 easy cases certified and 0/12 near-threshold cases certified (C02-C25; see cloud table below). |
 
-The local noise model approximates IonQ-like errors and is not a device result. The cloud subset is pending; no cloud outcome is claimed here.
+Here, ideal disables only the approximate device channel and retains deliberate preparation phase noise; Aria-like means nominal scale 1.
 
-**Evidence files in this project:** `evidence_summary.json` contains compact LOCAL MODEL statistics and source hashes; `recorded_ionq.py` holds the Qollab IonQ runs. Regenerate the summary with `python experiments/make_summary.py`.
+**Local evidence retention limitation:** frozen/fresh/development files retain per-case aggregate counters, probability references, seeds and metadata; the harness discarded sampled draw-level counts and retained no separately hashed replay transcript. Published fractions can be independently summed from saved counters, but original draws cannot be reconstructed from retained observations in a quick audit. Full local commands generate a new replay, not an audit of retained raw draws. This explicitly departs from the original raw-count retention plan; no full independent rerun or complete raw-result reproduction is claimed here.
 
-![Frozen-case local campaign chart.](figures/frozen.png)
+## Cloud evidence (RECORDED, Qollab IonQ simulator)
 
-*Alt text: Frozen-case campaign figure; graph-state certification is higher for easy cases than near-threshold cases, where inconclusive outcomes are expected.*
+On 2026-10-10, slots C02-C25 ran on the Qollab IonQ Aria 1 simulator (`aria-1`), with 200 shots per block. The campaign included frozen easy cases (C02-C07), frozen near-threshold cases (C08-C13), fresh easy cases (C14-C19), and fresh near-threshold cases (C20-C25). A separate 100-shot C01 smoke run on 2026-10-09 is retained but excluded from campaign totals. These packed jobs measured the two witness color settings for target and product impostor; all current cloud slots (C08-C25, including fresh easy C14-C19) omitted the two Z histogram blocks and use the exact uniform-Z result as a mathematical reference.
 
-![Fresh-case local campaign chart.](figures/fresh.png)
+| Cloud evidence | Slots | Outcome |
+|---|---|---|
+| Frozen easy | C02-C07 | 6/6 certified; F_lower 0.75-0.86. These ran before the ancilla preparation-noise channel was added; retained with the documented easy-case deviation (per-wire p < 0.015). |
+| Fresh easy | C14-C19 | 6/6 certified; F_lower 0.67-0.75. |
+| Frozen near-threshold, corrected | C08-C13 | 0/6 certified; all inconclusive (appropriate abstention); F_lower 0.11-0.18. |
+| Fresh near-threshold | C20-C25 | 0/6 certified; all inconclusive (appropriate abstention); F_lower 0.07-0.25. |
+| **Campaign total** | **C02-C25** | **12/12 easy cases certified; 0/12 near-threshold cases certified.** |
 
-*Alt text: Fresh-case campaign figure; local-model certification is summarized across fresh instances and separated by case stratum.*
+**Exact circuit reproduction:** current code reproduces the saved recipes/circuit hashes for C08-C25: select **IonQ Aria 1**, set **Slot=C08** through **C25**, and **Shots=200**. New finite-shot counts will vary. C02-C07 are retained **LEGACY, preparation noise omitted** observations from the pre-WP-C-14 code, not executions of the current noisy factory. To reconstruct those historical circuits, use repository commit `3a0b99071655a50567990b84a9958596f94f3c29` (the version before WP-C-14), upload that revision's top-level Entanglement Court files in a separate project, select **IonQ Aria 1**, **Slot=C02** through **C07**, **Shots=200**, and keep other parameters at their defaults. Selecting C02-C07 in current code executes the corrected noisy recipe and does not reproduce the historical circuit. Reanalysis of archived raw counts uses the shipped `recorded_ionq.py` without rerunning any job.
 
-![Live built-in courtroom exhibit.](figures/development.png)
+**C01 is a smoke run, not an accepted Slot value:** select **IonQ Aria 1**, leave **Slot blank**, set **Case=0**, **Challenge=sealed** (default anchor mode), **Shots=100**, and keep the trust flag at its default false. It remains excluded from campaign totals.
 
-*Alt text: Development exhibit showing matched Z histograms, stabilizer parity intervals, and a conditional witness lower bound.*
+Complete receipts ship at top level in `recorded_ionq.py`; its `EXPORT_INDEX` maps every archived job ID and UTC end to its actual HTML export and SHA-256. Original exported source pointers are preserved separately as historical annotations. The immutable HTML console exports under `results/exports/` are **repository-only** archives, not Qollab upload files. The built-in demo reanalyzes the complete shipped receipts as RECORDED evidence.
+
+Deviation and superseded runs: C02-C07 omitted the declared per-wire preparation phase-flip channel; they are retained only as easy results, with p < 0.015 and the deviation labeled in each receipt. The first C08-C13 runs (13:37-13:42 UTC) also omitted this channel and are superseded; they remain in the exports and receipt archive labeled superseded, and are excluded from the near-threshold outcome above. Corrected C08-C13 reruns at 15:05-15:08 UTC used the ancilla phase-flip channel. C14-C25 also used that channel. In corrected runs, independent per-wire phase flips are implemented by measured ancillas that are marginalized; the added RY/CZ gates themselves incur simulator noise. All cloud witness claims remain conditional on trusted measurement rotations and readout; systematic measurement error is not bounded here.
+
+The local noise model approximates IonQ-like errors and is not a device result.
+
+**Evidence files in this project:** `evidence_summary.json` contains compact LOCAL MODEL statistics, original run UTC/platform/software versions, summary-generation provenance and source SHA-256s; `recorded_ionq.py` holds the Qollab IonQ runs. Full local results are repository-only evidence, not top-level Qollab uploads. Regenerate the summary in the repository with `python experiments/make_summary.py`.
+
+![Static LOCAL MODEL chart from saved frozen aggregates at 100 shots/block: 24 cases, ideal device channel versus Aria-like scale 1; easy cases certify more often than near-threshold cases. Deliberate preparation noise remains in both series.](figures/frozen.png)
+
+*Alt text: Static LOCAL MODEL chart from saved frozen aggregates at 100 shots/block: 24 cases, ideal device channel versus Aria-like scale 1; easy cases certify more often than near-threshold cases. Deliberate preparation noise remains in both series.*
+
+![Static LOCAL MODEL chart from saved fresh aggregates at 100 shots/block: 20 cases, ideal device channel versus Aria-like scale 1; easy cases certify more often than near-threshold cases. Deliberate preparation noise remains in both series.](figures/fresh.png)
+
+*Alt text: Static LOCAL MODEL chart from saved fresh aggregates at 100 shots/block: 20 cases, ideal device channel versus Aria-like scale 1; easy cases certify more often than near-threshold cases. Deliberate preparation noise remains in both series.*
+
+![Static LOCAL MODEL chart from saved development aggregates at 100 shots/block: four development cases, ideal device channel versus Aria-like scale 1, all certification fractions equal 1.0. This is a bar chart, not an interactive web screenshot.](figures/development.png)
+
+*Alt text: Static LOCAL MODEL chart from saved development aggregates at 100 shots/block: four development cases, ideal device channel versus Aria-like scale 1, all certification fractions equal 1.0. This is a bar chart, not an interactive web screenshot.*
+
+
+These three figures are static LOCAL charts. The companion interactive courtroom is implemented separately in `web/index.html`, `web/main.js`, `web/main.css` and `web/court_bridge.py`; its Z/parity/witness panels are not depicted in these PNGs. Short axis suffixes map to full case IDs in the repository results.
+Repository image links retain `figures/` paths. For publication, upload the three PNGs under flattened top-level names `frozen.png`, `fresh.png`, `development.png` and use the matching paths in PROJECT_PAGE.md, or replace them with the asset-upload URLs returned by Qollab. Verify the rendered images before publishing.
 
 ## How to run (and replicate)
 
 ### Built-in simulator
 
-Open the project in Qollab, select **Built-in simulator**, leave the form at its defaults, and press **Run**. Review the paired Z histograms, the two stabilizer exhibits, and the receipt's trusted-measurement condition. The runtime shown at the top will be updated from the saved live-run measurement.
+Open the project in Qollab, select **Built-in simulator**, leave the form at its defaults, and press **Run**. Review the paired Z histograms, the two stabilizer exhibits, and the receipt's trusted-measurement condition. The current local-runner built-in default measurement is about 4 s (3.49-3.79 s on 2026-10-10); main.py prints the elapsed time at the end of each run.
 
 ### IonQ simulator slots
 
-Cloud numbers are pending: [[CLOUD: list the actual recorded slot dates, noise model, shots, and results here]]. When a scheduled slot is available, choose the Qollab IonQ simulator and use its preregistered slot setting; each slot is one packed circuit and one job. Only report captured Qollab receipts as RECORDED evidence, with date, model, and shots.
+Use the version-specific cloud reproduction instructions above. Current C08-C25 use four witness blocks with ancillas, totaling 24 wires; the default anchor and legacy C02-C07 jobs use six four-wire blocks.
 
 ### Local reproduction
 
@@ -77,12 +103,12 @@ The contribution is the adversarial matched-preparation exhibit, its frozen case
 
 ## Limits
 
-The comparator uses the same witness measured in two ways, so results tie by construction. The local noise model is approximate. A successful cloud receipt is conditional on trusted measurement rotations and readout; systematic measurement error is otherwise unbounded. The local campaign's results do not establish hardware performance. Near-threshold cases can be inconclusive. Zero observed false certificates in finite controls is not proof of a zero population risk, and these per-round intervals do not create a campaign-wide guarantee.
+The comparator calls the same witness implementation twice on shared counts, so results tie by construction. The local noise model is approximate. A successful cloud receipt is conditional on trusted measurement rotations and readout; systematic measurement error is otherwise unbounded. The local campaign's results do not establish hardware performance. Near-threshold cases can be inconclusive. Zero observed false certificates in finite controls is not proof of a zero population risk, and these per-round intervals do not create a campaign-wide guarantee.
 
 ## Judging-criteria summary
 
 - **Novelty and creativity:** an adversarial courtroom pairs preparations that look identical in Z and invites a measurement challenge; the witness itself is established.
-- **Technical execution:** six measurement blocks are run together for the IonQ simulator's one-circuit-per-job constraint; evidence is computed from counts and confidence bounds.
+- **Technical execution:** six four-wire blocks are packed for the default anchor and legacy jobs; current cloud slots pack four witness blocks with ancillas (24 wires) into one IonQ circuit; evidence is computed from counts and confidence bounds.
 - **Impact potential:** the demo teaches the difference between matching samples and entanglement evidence, including when evidence is insufficient.
 - **Documentation quality:** run instructions, saved figures, result labels, assumptions, reproduction commands, and limitations are provided.
 
@@ -102,53 +128,3 @@ This effort is supported by Qollab & IonQ.
 
 **Repository:** https://github.com/sauravdasmg/Qollab  
 **Demo video:** [[VIDEO LINK]]
-
-## Preparation-channel correction (WP-C-14)
-
-Cloud campaign slots now prepare the manifest's independent per-wire phase-flip
-channel with an ancilla for each X-measured center, for both target and product
-impostor A/B blocks. Each ancilla starts in |0>, receives
-RY(2 asin sqrt(p)), then CZ to its data wire immediately after preparation and
-before the diagonal frame and measurement rotations. Measuring and ignoring the
-ancilla gives exactly (1-p) rho + p Z rho Z. The four data bits alone enter the
-parities; higher ancilla bits are marginalised.
-
-A Z flip on a Z-measured wire commutes with the frame and every measurement
-projector. Its two branches therefore have identical full outcome distributions,
-including their correlations with other measured wires. No ancilla is needed
-for those wires. Both Z exhibits are invariant under this preparation channel:
-their ideal distribution is uniform with probability 1/16 per outcome. The
-extra eight ancillas would raise the six-block cloud circuit to 32 qubits, so
-cloud slots omit both Z blocks and use 24 qubits. Built-in campaign runs retain
-the Z exhibits in separate small circuits in one list job. The measured ideal
-Z exhibits from a bounded 200-shot C08 built-in run are saved in
-`results/quick-wpc14-builtin-Z.txt` and `results/quick-wpc14-reference.json`.
-These sampled histograms fluctuate around the exact uniform reference.
-
-Historical C08-C13 records are **prep-noise omitted (superseded)** and are
-excluded from near-threshold evidence. C02-C07 are retained with the explicit
-label **prep-noise omitted (easy; small documented deviation)**. Their omitted
-per-wire p is below 0.015: each ideal target-generator mean changes by 2p < 0.03
-and the four-generator population fidelity bound changes by 4p < 0.06.
-This is a documented deviation, not exact execution of the declared manifest.
-`results/cloud_record_status.json` binds these labels to hashes of the original
-exports, whose raw contents remain preserved. Receipt loading excludes old
-near-threshold entries and labels retained easy entries. Corrected campaign
-RECORD_JSON lines include `prep_noise: "ancilla phase-flip channel"` and
-`prep_noise_per_wire_p`, with one probability for each of the four data wires.
-The frozen original manifest hash remains distinct from the implemented circuit
-manifest hash, which records ancillas and omitted Z blocks.
-
-Quick regression: exact reduced density matrices for all 24 cloud slots match
-the harness's measured block probabilities to absolute tolerance 1e-10 at
-ideal device noise; every cloud slot is 24 qubits. Under the same aggregate local
-Aria approximation, C08's expected F_lower is -0.0073394064 at 100 shots and
-0.1345209705 at 200 shots. The former agrees with the saved 1,000-draw harness
-mean (-0.0029472076) within sampling variation; that saved case has zero
-certificates. Ten bounded 200-shot regression draws also yield zero certificates.
-Those ten draws are only a smoke check. Added RY/CZ gates incur device noise;
-these local numbers do not model their server-compiled gate errors separately.
-Corrected cloud confirmation and independent verification remain pending.
-
-Reproduce focused checks:
-`../../.venv/Scripts/python.exe -m pytest tests/test_preparation_channel.py tests/test_campaign.py tests/test_runtime.py -q -p no:cacheprovider`.

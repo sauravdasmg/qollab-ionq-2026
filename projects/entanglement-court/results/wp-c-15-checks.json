@@ -1,0 +1,60 @@
+{
+  "task": "WP-C-15",
+  "created_utc": "2026-10-10T16:11:29.583363+00:00",
+  "scope": "Author fixes and quick checks only; not an independent verification PASS.",
+  "agent": "OpenAI Codex primary worker; no delegated agents",
+  "tests": [
+    {
+      "command": "../../.venv/Scripts/python.exe -m pytest tests -q --basetemp=.pytest-tmp-wpc15-tests",
+      "passed": 54,
+      "warnings": 1,
+      "warning": "Existing pytest cache path creation warning",
+      "seconds": 21.6
+    },
+    {
+      "command": "../../.venv/Scripts/python.exe -m pytest web -q --basetemp=.pytest-tmp-wpc15-web",
+      "passed": 125,
+      "warnings": 1,
+      "warning": "Existing pytest cache path creation warning",
+      "seconds": 1.71
+    }
+  ],
+  "default_local_check": {
+    "command": "../../.venv/Scripts/python.exe ../../tools/qollab_local.py run . --backend ideal",
+    "main_seconds": 2.76,
+    "runner_seconds": 3.32,
+    "contract_verified": true,
+    "kind": "LOCAL quick built-in smoke, not cloud/browser evidence"
+  },
+  "historical_reproduction": {
+    "commit": "3a0b99071655a50567990b84a9958596f94f3c29",
+    "slots": "C02-C07",
+    "recipe_and_circuit_hash_matches": 6,
+    "scope": "Top-level historical upload emulated without current repository review manifests; no backend jobs"
+  },
+  "archive_export_pairs_verified": 31,
+  "decisions": [
+    "F1-F8 disposition implemented; original review remains unchanged for independent recheck.",
+    "Local raw-draw retention deviation disclosed explicitly; no full experiment or independent rerun.",
+    "Static figures regenerated only from saved data; publication asset instructions included."
+  ],
+  "source_sha256": {
+    "README.md": "5d9f52da2c1c0316d67870d7ae7678a88425d7a6610885398087db75a8461071",
+    "PROJECT_PAGE.md": "9cbf5760c7ee6f85091722b5c77425fe0603c11832c7fec336e9ed3914d75580",
+    "main.py": "bda6fd4d1dc6a1fd3ee22ef8ccdba18d796f69037b3cf938f15cfdecc35541e8",
+    "receipt.py": "7742f9bb44cafb18e9e6219d4447c6e0d99a301bba7fb908ca82bd507afa0036",
+    "figures.py": "c15344d2a7a2243dae5725e47b2f040d17d82df659d192998d76eeeaae7f33a8",
+    "recorded_ionq.py": "91f367a381a99f817d722e4ad6d9eae96aff2dfb0b1d02ca9dc987b965dc1c74",
+    "evidence_summary.json": "88f9c0d0f63eeacf59276e8b5760a40e2bcef3fd449aeb7b7c567dacd150c6f1",
+    "experiments/PLAN.md": "5a8852a2cda05908b0a770d2e8d70d1b14cbf6c770f1718de3af3fd90b58e08c",
+    "experiments/make_summary.py": "ff569b02e5acab8945a0d4b2fd3af4a37a56b4a83e931bf84739d153925c485c",
+    "experiments/run.py": "76302093d234909c594c850f6d19c53c333a4655e0736bf85618ef3b622cc2b1",
+    "figures/frozen.png": "c8f8cc0b6dfdf95420a3d08c5d1c9fdfdf2cf354696d7d8b021ea2cadff2c5bf",
+    "figures/fresh.png": "584a68760dd5877e6cbae39a656f5699a8f37a83650d9cef544d9a6f31465ecd",
+    "figures/development.png": "a07fbd84f5ed1122c05bb0c58e1790b7de0210218c80f6d08bb16522159578c8",
+    "tests/test_evidence_summary.py": "fd556ed8053034fcb1a27659088b76622a903548eadb11f47d916e4c1ef9f0cd",
+    "tests/test_runtime.py": "01612ffa6b75473473e667555da5b88df5374fea0b431fa5be72b8dd35f0bbef",
+    "tests/test_verification_fixes.py": "dcdb3d954bcb5d08b2240c43b59bc345b05f363f71e0cd3dd69b62c1c90eb329"
+  },
+  "external_logging": "Workspace permits writes only in submission folder; orchestrator must append this receipt to repository process/state/provenance logs."
+}

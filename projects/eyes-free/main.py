@@ -1,5 +1,6 @@
 """Qollab invokes main itself. Backend and optional sendFile are injected."""
 import json
+from datetime import datetime, timezone
 import numpy as np
 from eyes_core import WIDTHS, PHASES, circuits, fringe
 from fit import fit_counts
@@ -21,6 +22,28 @@ def _submit_job(circuit_or_list, shots):
     """Single shared submission point for all paths."""
     job = backend.run(circuit_or_list, shots=shots)
     return job.result().get_counts()
+
+
+def recorded_estimates(raw=RECORDED):
+    records, errors = parse_records(raw)
+    sweeps = {}
+    for suite in ("frozen", "fresh"):
+        subset = [r for r in records if r["suite"] == suite]
+        shift = np.pi/24 if suite == "fresh" else 0.0
+        expected_frames = [k*np.pi/2+shift for k in range(4)]
+        if len(subset) != 4 or any(sum(abs(r["phase_frame"]-f)<1e-9 for r in subset) != 1
+                                   for f in expected_frames):
+            errors.append("Missing/duplicate recorded %s sweep; no complete fit." % suite)
+            continue
+        subset.sort(key=lambda r: r["phase_frame"])
+        by_width = {n: [] for n in WIDTHS}
+        for r in subset:
+            marginal = unpack(r["counts"], r["manifest"])
+            for b, c in zip(r["manifest"], marginal):
+                by_width[b["width"]].append(c)
+        cloud_estimates = [fit_counts(PHASES+shift, by_width[n]) for n in WIDTHS]
+        sweeps[suite] = cloud_estimates
+    return sweeps, records, errors
 
 
 def main(shots: int=256, phase_frame: float=0.0, slot: str = ""):
@@ -77,7 +100,9 @@ def main(shots: int=256, phase_frame: float=0.0, slot: str = ""):
         manifest = path_params["manifest"]
         effective = path_params["effective"]
         record = {"slot":slot,"suite":spec["suite"],"manifest_hash":spec["manifest_hash"],
-                  "shots":shots,"effective_noise_model":effective,"counts":counts,"manifest":manifest}
+                  "shots":shots,"effective_noise_model":effective,"counts":counts,"manifest":manifest,
+                  "utc":datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+                  "source_file":"results/exports/qollab-console.txt"}
         if slot != "E01":
             record["fits"] = {str(n): {"frequency":None,"frequency_ci":None,"contrast":None,
                 "contrast_ci":None,"phase_points_received":3,"status":"awaiting complete twelve-phase suite"} for n in WIDTHS}
@@ -108,27 +133,13 @@ def main(shots: int=256, phase_frame: float=0.0, slot: str = ""):
     print("mathematical reference (not measured counts): " + json.dumps(
         {str(n): {control: [fringe(n,p+phase_frame,control) for p in PHASES]
                   for control in ("ghz","product","incoherent")} for n in WIDTHS}),flush=True)
-    records, errors = parse_records(RECORDED)
+    sweeps, records, errors = recorded_estimates()
     for error in errors:
         print(error, flush=True)
-    print("Validated recorded packs: %d; these are not independent cloud instances." % len(records), flush=True)
-    for suite in ("frozen", "fresh"):
-        subset = [r for r in records if r["suite"] == suite]
-        shift = np.pi/24 if suite == "fresh" else 0.0
-        expected_frames = [k*np.pi/2+shift for k in range(4)]
-        if len(subset) != 4 or any(sum(abs(r["phase_frame"]-f)<1e-9 for r in subset) != 1
-                                   for f in expected_frames):
-            print("Missing/duplicate recorded %s sweep; no complete fit." % suite, flush=True)
-            continue
-        subset.sort(key=lambda r: r["phase_frame"])
-        by_width = {n: [] for n in WIDTHS}
-        for r in subset:
-            marginal = unpack(r["counts"], r["manifest"])
-            for b, c in zip(r["manifest"], marginal):
-                by_width[b["width"]].append(c)
-        cloud_estimates = [fit_counts(PHASES+shift, by_width[n]) for n in WIDTHS]
+    print("Validated RECORDED packs: %d; these are not independent cloud instances." % len(records), flush=True)
+    for suite, cloud_estimates in sweeps.items():
         for e in cloud_estimates:
-            print(transcript(e, "recorded Qollab IonQ aria-1 "+suite), flush=True)
+            print(transcript(e, "RECORDED Qollab IonQ aria-1 " + suite), flush=True)
     fig = chart(estimates, "live built-in ideal")
     import matplotlib.pyplot as plt
     plt.show()
@@ -143,7 +154,7 @@ def main(shots: int=256, phase_frame: float=0.0, slot: str = ""):
             sender("eyes-free-receipt.txt", "text/plain", text.encode("utf-8"))
             print("Audio download requested. Start at low volume; use player Stop. Verify download works.", flush=True)
         else:
-            print("Audio download unavailable: sendFile not injected; fallback needs operator verification.", flush=True)
+            print("Audio download unavailable: sendFile not injected; use the published JS page for browser playback.", flush=True)
     else:
         print("Inconclusive: no informative audio estimate available.", flush=True)
     return estimates
