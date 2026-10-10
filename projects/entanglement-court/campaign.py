@@ -19,9 +19,15 @@ def verify_manifests():
             if digest(manifest) != row["manifest_hash"] or manifest != row["manifest"]: raise ValueError("manifest hash mismatch for "+row["slot"])
     return True
 def slot_data(slot):
-    verify_manifests()
+    # review/manifests/*.json are not uploaded to Qollab (top-level files only): verify against them when present
+    # (local runs, tests); on Qollab verify each embedded manifest against its own frozen hash.
+    if (Path(__file__).parent / "review" / "manifests" / "frozen.json").exists():
+        verify_manifests()
     for row in SLOTS:
-        if row["slot"] == slot: return row
+        if row["slot"] == slot:
+            if digest(row["manifest"]) != row["manifest_hash"]:
+                raise ValueError("embedded manifest hash mismatch for " + slot)
+            return row
     raise ValueError("slot must be C02 through C25")
 def build_slot(slot):
     row=slot_data(slot); m=row["manifest"]; params=m["generated_parameters"]
