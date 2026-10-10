@@ -1,0 +1,18 @@
+:root { color-scheme: light; font: 17px/1.55 system-ui, sans-serif; background: #FAFAF7; color: #111111; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #FAFAF7; color: #111111; font-size: 17px; }
+.app { max-width: 1100px; margin: auto; padding: 1.25rem; color-scheme: light; background: #FAFAF7; min-height: 100vh; }
+header { padding: 1rem 0; } h1 { font-size: clamp(2rem, 6vw, 3.5rem); line-height: 1.12; margin: .2rem 0 .7rem; overflow-wrap: anywhere; }
+h2 { margin-top: 0; } h3 { margin-bottom: .2rem; } .eyebrow { color: #3F3F3B; font-weight: 700; } .lede { font-size: 1.15rem; }
+.panel { background: #FFFFFF; border: 1px solid #D4D4CF; border-radius: .7rem; padding: 1.1rem; margin: .8rem 0; }
+.layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(260px, 1fr); gap: .8rem; }
+label { display: block; font-weight: 700; margin: .7rem 0 .25rem; } select, button, input { font: inherit; }
+select, input[type=range] { width: 100%; } select { padding: .55rem; color: #111111; background: #FFFFFF; border: 1px solid #3F3F3B; border-radius: .3rem; }
+button { background: #4B2E83; color: #FFFFFF; border: 2px solid #4B2E83; border-radius: .35rem; padding: .55rem .8rem; cursor: pointer; }
+button:disabled { opacity: .65; cursor: wait; } button:focus-visible, select:focus-visible, input:focus-visible { outline: 3px solid #C2410C; outline-offset: 3px; }
+.buttons { display: flex; flex-wrap: wrap; gap: .5rem; margin: .7rem 0; } .summary { font-weight: 700; } .meaning { font-weight: 700; }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; background: #FAFAF7; padding: .8rem; border: 1px solid #D4D4CF; }
+.table-wrap { overflow-x: auto; } table { border-collapse: collapse; width: 100%; } caption { text-align: left; padding: .4rem 0; } th, td { border: 1px solid #D4D4CF; text-align: left; padding: .55rem; } th { background: #ECEBE6; }
+footer { background: #ECEBE6; color: #111111; margin: 1.2rem -1.25rem -1.25rem; padding: 1rem 1.25rem; }
+@media (max-width: 720px) { .layout { grid-template-columns: 1fr; } .app { padding: .8rem; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
