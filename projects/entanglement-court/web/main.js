@@ -44,6 +44,7 @@ function announce(message, type = "polite") {
 
 function showLoading(text = "Convening the court…") {
   loading.querySelector("#loading-text").textContent = text;
+  loading.setAttribute("aria-busy", "true");
   loading.hidden = false;
   errorDisplay.hidden = true;
   docket.hidden = true;
@@ -51,6 +52,7 @@ function showLoading(text = "Convening the court…") {
 }
 
 function hideLoading() {
+  loading.setAttribute("aria-busy", "false");
   loading.hidden = true;
 }
 
@@ -373,7 +375,7 @@ async function runDemo() {
 
     hideLoading();
     showDocket();
-    announce("Court convened. Two sealed preparations presented. Examine the Z histograms and render a tentative verdict.");
+    announce("Measurement complete. Court convened. Two sealed preparations presented. Examine the Z histograms and render a tentative verdict.");
   } catch (e) {
     showError("Failed to convene court", e.message);
     console.error(e);
@@ -463,11 +465,16 @@ function setupEventListeners() {
       renderParityChart("parity-B", "table-parity-B", intervals, "impostor_B");
       renderEvidenceStamp(results.analysis.simultaneous_witness);
       renderComparison(results, recordedData);
-      announce("Remeasure complete. New ideal samples drawn.");
+      announce("Measurement complete. Remeasure complete. New ideal samples drawn.");
     } catch (e) {
       showError("Remeasure failed", e.message);
     } finally {
       hideLoading();
+      if (currentVerdict) {
+        showEvidenceDocket();
+      } else {
+        showDocket();
+      }
     }
   });
 
@@ -573,7 +580,7 @@ async function init() {
 
           hideLoading();
           showDocket();
-          announce("IonQ job complete. Court convened with IonQ results.");
+          announce("Measurement complete. IonQ job complete. Court convened with IonQ results.");
         } catch (e) {
           showError("IonQ job failed", e.message);
           announce("IonQ job error", "assertive");

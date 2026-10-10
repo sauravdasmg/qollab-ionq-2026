@@ -84,16 +84,17 @@ def parse_records(text):
 
 def summarize_record(r):
     marginals = record_marginals(r)
-    manifest = r['manifest']; blocks = manifest['ordered_blocks']
+    manifest = r['manifest']
     common = {'model': r['noise_model'], 'shots': r['shots'],
               'source_file': r.get('source_file', r.get('paths', {}).get('source_file')),
               'case_id': r.get('case_id'), 'label': 'RECORDED IonQ simulator'}
-    if r.get('project') == 'The Noise Tax':
+    if r.get('project') == 'The Noise Tax' or r.get('schema_version') == 'noise-tax-1':
         wm, nm = manifest['W'], manifest['N']
         wa = w.analyze_counts(marginals[:3], wm)
         na = n.analyze_probabilities(marginals[3:], nm)
         return [dict(common, game='W', advantage=wa['advantage'], word_error=wa['joint']['word_error']),
                 dict(common, game='N', advantage=na['advantage'], metrics=na)]
+    blocks = manifest['ordered_blocks']
     if isinstance(blocks[0], dict):
         # Historical textbook arm is the fixed reference; don't choose synthesis
         # arm based on its observed counts. Preserve all raw original arms.

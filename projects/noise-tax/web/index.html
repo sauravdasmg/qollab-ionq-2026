@@ -1,0 +1,136 @@
+<div class="nt-root" id="noise-tax-app" lang="en">
+  <header class="nt-banner" role="banner">
+    <h1>The Noise Tax</h1>
+    <p class="tagline">How much noise erases a quantum advantage?</p>
+  </header>
+
+  <main class="nt-main">
+    <section class="controls" aria-label="Noise slider">
+      <div class="slider-block">
+        <h2 id="slider-heading">Noise scale <span class="slider-today">s = 0 noiseless &middot; s = 1 today's IonQ noise &middot; s = 2 twice today's noise</span></h2>
+        <div class="slider-row">
+          <input type="range" id="noise-slider" min="0" max="2" step="0.05" value="0"
+                 aria-labelledby="slider-heading" aria-valuetext="noise scale 0.00">
+          <output class="slider-value" for="noise-slider" id="slider-value">0.00</output>
+          <span class="value-label">LOCAL MODEL</span>
+        </div>
+        <div class="slider-ticks" aria-hidden="true">
+          <span>0</span><span>0.5</span><span>1 (today)</span><span>1.5</span><span>2</span>
+        </div>
+        <p class="hint">Which advantage flips first? Use the arrow keys or drag to set the noise level; each card reads its quantum advantage there. The slider re-reads the local model curve; it never starts a new job.</p>
+      </div>
+      <div class="model-block">
+        <label for="model-select">IonQ noise model</label>
+        <select id="model-select">
+          <option value="aria-1">Aria 1 (primary)</option>
+          <option value="forte-1">Forte 1</option>
+          <option value="forte-enterprise-1">Forte Enterprise 1</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="cards" aria-label="Two quantum advantage games">
+      <article class="card" id="card-W" aria-labelledby="card-W-title">
+        <header class="card-header">
+          <h2 id="card-W-title">Two Whispers <span class="subtitle">read both qubits together vs one at a time</span></h2>
+          <span class="badge tie" id="badge-W">LOADING</span>
+        </header>
+        <p class="advantage-line">
+          Quantum advantage <span class="mono" id="adv-W">&mdash;</span>
+          <span class="value-label">LOCAL MODEL</span>
+        </p>
+        <p class="comparator-line" id="live-W">LIVE run pending</p>
+        <p class="comparator-line">joint recipe minus the analytic noiseless one-way reference (word error)</p>
+        <p class="crossover-line" id="xstar-W">crossover s*: not measured</p>
+        <div class="chart" id="chart-box-W" role="img" aria-label="Two Whispers: quantum advantage versus noise scale; values are in the table below"></div>
+        <div class="legend" id="legend-W" aria-hidden="true"></div>
+        <details class="data-table-details">
+          <summary>Data table for this chart</summary>
+          <table class="data-table" id="table-W">
+            <caption>Two Whispers: noise scale s, advantage, band, crossover, and source label.</caption>
+            <thead><tr><th scope="col">s</th><th scope="col">advantage</th><th scope="col">band low</th><th scope="col">band high</th><th scope="col">crossing</th><th scope="col">source</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </details>
+      </article>
+
+      <article class="card" id="card-N" aria-labelledby="card-N-title">
+        <header class="card-header">
+          <h2 id="card-N-title">Never Lose Twice <span class="subtitle">quantum hedge vs normal play</span></h2>
+          <span class="badge tie" id="badge-N">LOADING</span>
+        </header>
+        <p class="advantage-line">
+          Quantum advantage <span class="mono" id="adv-N">&mdash;</span>
+          <span class="value-label">LOCAL MODEL</span>
+        </p>
+        <p class="comparator-line" id="live-N">LIVE run pending</p>
+        <p class="comparator-line">product-strategy loss minus hedge loss (fixed prize 0.02)</p>
+        <p class="crossover-line" id="xstar-N">crossover s*: not measured</p>
+        <div class="chart" id="chart-box-N" role="img" aria-label="Never Lose Twice: quantum advantage versus noise scale; values are in the table below"></div>
+        <div class="legend" id="legend-N" aria-hidden="true"></div>
+        <details class="data-table-details">
+          <summary>Data table for this chart</summary>
+          <table class="data-table" id="table-N">
+            <caption>Never Lose Twice: noise scale s, advantage, band, crossover, and source label.</caption>
+            <thead><tr><th scope="col">s</th><th scope="col">advantage</th><th scope="col">band low</th><th scope="col">band high</th><th scope="col">crossing</th><th scope="col">source</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </details>
+      </article>
+
+      <div class="loading" id="loading" aria-live="polite">
+        <div class="spinner" aria-hidden="true"></div>
+        <p id="loading-text">Loading the noise tax&hellip;</p>
+      </div>
+
+      <div class="error-display" id="error-display" hidden role="alert">
+        <h3>Something went wrong</h3>
+        <p id="error-text"></p>
+      </div>
+
+      <div class="run-panel" id="run-panel" hidden>
+        <p class="secondary" id="run-hint">IonQ backend selected: press the button to send exactly one packed job (both games) and keep the run open until it returns.</p>
+      </div>
+    </section>
+
+    <aside class="sidebar" aria-label="Circuit, gates and provenance">
+      <section class="sidebar-panel">
+        <h3>Meaning</h3>
+        <p id="meaning-text">Noise charges a tax on every quantum advantage; here is where the bill exceeds the gain.</p>
+      </section>
+
+      <section class="sidebar-panel">
+        <h3>Circuit as text</h3>
+        <div class="game-switch" role="group" aria-label="Choose which game's circuit to display">
+          <button type="button" class="game-btn selected" id="gamebtn-W" aria-pressed="true">Two Whispers</button>
+          <button type="button" class="game-btn" id="gamebtn-N" aria-pressed="false">Never Lose Twice</button>
+        </div>
+        <pre class="circuit-text" id="circuit-text" tabindex="0" aria-label="Selected game's circuit as text">Loading&hellip;</pre>
+      </section>
+
+      <section class="sidebar-panel">
+        <h3>Which gates cost most on IonQ</h3>
+        <p class="secondary" id="gate-summary">Loading&hellip;</p>
+        <ul class="gate-facts" id="gate-facts"></ul>
+      </section>
+
+      <section class="sidebar-panel">
+        <h3>LIVE vs RECORDED vs LOCAL MODEL</h3>
+        <p class="secondary">Every number on this page carries one of these labels.</p>
+        <dl class="label-list" id="label-legend"></dl>
+      </section>
+
+      <section class="sidebar-panel">
+        <h3>RECORDED IonQ receipts</h3>
+        <ul class="anchor-list" id="anchor-receipts"></ul>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="nt-footer" role="contentinfo">
+    <p>The Noise Tax &middot; Qollab &times; IonQ Hackathon 2026</p>
+    <p class="attribution">This effort is supported by Qollab &amp; IonQ.</p>
+  </footer>
+
+  <div class="status-region" id="status-region" role="status" aria-live="polite" aria-atomic="true"></div>
+</div>
