@@ -1,188 +1,85 @@
 VERDICT: FAIL
 
-# Final independent claim verification — The Noise Tax
+# Round-2 final independent claim verification: The Noise Tax
 
-Reviewed 2026-10-10 UTC against the working-folder contents and the supplied official-rule compilation. This reviewer wrote none of the implementation or submission documentation. Only this report is an intentional deliverable. No full experiment, parameter sweep, new seeded evidence campaign, or remote job was run. The checks below distinguish reproducible numbers from unmet scientific gates and inaccurate presentation claims.
+Reviewed 2026-10-10 against the working tree at commit 9d5d9de. The reviewer wrote none of the code or docs. Only this file was written. No full experiment was run. The only experiment-harness calls were the documented `--validate-only --draws 1` smoke checks, with output sent to a scratch directory outside the project.
 
-The numerical tables reproduce. The default Python run succeeds and the test suite passes with a permitted temporary directory. PASS is nevertheless blocked by F1–F9 below. In particular, the primary N precision and fresh-agreement requirements remain unmet; overlapping intervals do not satisfy the separate agreement tolerance.
+Round 1 found F1-F9. Eight are resolved (F2 is resolved as honest disclosure of a failed gate). One new, small, blocking documentation mismatch remains (R2-1). It is a two-line fix.
 
-## Checks performed and scope
+## Quick checks
 
-- Read README.md, PROJECT_PAGE.md, main.py, all scientific core modules, channel/calibration code, crossover analysis, packing and receipt/parser code, cloud_slots.py, reuse_sources.json, experiments/PLAN.md including both amendments, experiment/reproduction code, nt_curves.py, recorded_local.py, recorded_ionq.py, evidence_summary.json, both earlier review reports, independent manifests, and the parent merged plan and official hackathon rules.
-- Parsed the complete frozen/fresh result files (111,221,890 and 111,206,061 bytes), not just their summaries. Recomputed every mean advantage from saved outcome probabilities, every tabulated crossing by linear interpolation, all W sensitivity roots from saved edge curves, and all six N intervals from a separate vectorized implementation of the prescribed bootstrap over saved curves. This is quick reanalysis of existing evidence, not a new simulation campaign.
-- Decoded T01–T08 directly from raw packed bitstrings and layout offsets, independently of the project metric functions. Compared all eight embedded raw receipts to JSON extracted from their original HTML exports; every receipt was identical. Checked all indexed dates, models, shots, slot settings, job IDs and source labels against evidence_summary.json.
-- Read all nine HTML exports: eight cloud slots and the built-in default export ending `16-21-42.122Z.html`. Visually inspected frozen-curves.png and frozen-anchors.png and checked their plotting implementation.
-- Read project-related provenance entries, including the merge decision, G1 HOLD, frozen/fresh evidence, cloud campaign, parser repair and final documentation. The relevant dated events are inside the authorized window. This is an artifact audit, not independent authentication of the remote service or a logged-out publication check.
-
-## Required quick checks
-
-Commands use `../../.venv/Scripts/python.exe` from the submission folder.
-
-| Check | Reproduced result | Status |
+| Check | Result | Status |
 |---|---|---|
-| `../../tools/check_submission.py .` | All automated blockers pass except the then-missing PASS verifier report. Six human-only checks remain. The checker reports 27 files because its inventory includes `web/*` flattened at publication. | OK for the requested exclusion of this report and human-only items |
-| Checker noise-model recommendation | Reports an unguarded setting; inspection shows `main()` uses `cloud = name == 'ionq_simulator'`, and `run_slot()` rejects other backend names before setting options. | OK; static-check false positive |
-| `../../tools/qollab_local.py run . --backend ideal` | Exit 0; 0.7 seconds; `calls_main: true`, `contract_verified: true`; five small blocks, 512 shots/block; 14 validated receipts and zero receipt issues. | OK |
-| `python -m pytest tests -q -p no:cacheprovider` | Initial execution: 66 passed, 12 setup errors from Windows denying access to the shared pytest temporary directory. These were fixture/environment errors. | Resolved below |
-| Same tests with `--basetemp .verify-final-tmp --tb=short` | 78 passed, four expected noninteractive Matplotlib warnings, 3.86 seconds. | OK |
-| Frozen and fresh verifier-manifest validation | Both accepted by current `validate_independent_manifest`; owner, independent specifications, counts, seeds, digests and immutable settings checked. | OK |
-| Scientific implementation provenance | Current scientific modules match the recorded hashes. Loader/presentation changes are covered by the WP-NT-09 amendment; the pinned scientific-function AST digest still matches. | OK |
-| Calibration snapshot | Top-level snapshot bytes exactly equal the parent calibration JSON. | OK |
+| `python -m pytest tests web -q` | 103 passed, 4 expected non-interactive Matplotlib warnings, 7.1 s | OK |
+| `python ../../tools/check_submission.py .` | All BLOCKERs pass except "Verifier report says PASS" (this report). The recommended-only "unguarded noise_model" item is a static false positive: main.py:42 guards it with `cloud = name == 'ionq_simulator'`. Six human-only MANUAL items remain. 27 shipped files, none over 2 MB. | OK |
+| `qollab_local.py run . --backend ideal --shots 512` | Exit 0. 14 receipts validated, 0 issues. Prints LIVE, RECORDED and LOCAL MODEL lines. | OK |
+| `run.py --suite frozen\|fresh --independent-manifest review/manifests/<suite>.json --draws 1 --validate-only` (as in README:107-108) | Both exit 0 with "manifest validated; bounded smoke complete; no inference evidence". The documented commands now run as written. | OK |
+| `nt_curves.py` against `results/frozen.json` and `results/fresh.json` | `source_sha256` matches both files. All analysis arrays equal the full results (0 differences). Only the `gate.decision` label differs (see style note S1). | OK |
 
-Default execution imports its project data from top-level Python modules; it does not require results/, experiments/, review/, or an external project data file. Qiskit, NumPy, SciPy and Matplotlib are declared; no Aer, BackendSamplerV2, input prompt, credentials, or double invocation is needed. Cloud branches submit one packed circuit and fetch `job.result()` once. These checks do not establish that the separate web presentation has been flattened and published (F7).
+## Round-1 findings: disposition
 
-`noise_channel.py:16–23` intentionally uses the parent calibration JSON when available and the top-level snapshot otherwise; it is a local-analysis module, not imported by the default main. `_reuse.py` identifies itself as a one-time import tool and contains repository reads/writes; it is not imported by main and should remain excluded from an actual runtime upload. Neither is evidence of a failed default run.
-
-## Claims table: local numbers
-
-Sources for every row are `nt_curves.CURVES['suites'][suite]['analysis'][game][model]`, the matching complete `results/{suite}.json`, and the independent probability/curve reanalysis. All retained fields of nt_curves match the full analysis; the compact module deliberately omits some full-analysis fields. Its SHA-256 references match both complete result files.
-
-| Claim | Source in submission docs | Reproduced value | OK/FAIL |
+| # | Round-1 finding | Current evidence | Status |
 |---|---|---|---|
-| Two comparisons, three equally likely W labels, two four-qubit N arms | README 11, 23; PROJECT_PAGE 9 | Three joint W circuits of 2 qubits; two N circuits of 4 qubits. W's ideal reference is analytic in the default run. | OK, except “samples both arms” ambiguity/error F9 |
-| Defaults 512 shots, aria-1, about 1 second | README 7, 74; PROJECT_PAGE 3 | Signature agrees; local default 0.7 s. Existing Qollab built-in export also shows 512 shots/block. Wall time is machine/runtime dependent. | OK as approximate local runtime |
-| 24 frozen and 24 fresh instances, scales 0–2 by 0.025 | README 5, 25, 44; PROJECT_PAGE 5, 9 | Each game/model/suite has 24 cases and 81 points; frozen/fresh construction seeds are disjoint. 96 distinct specifications total, reused across the three model choices. | OK |
-| Fixed-prize coefficient 0.02 | README 25 | Independently decoded loss is `P(FF) + 0.02*(2 - mean_passes)`; all outcomes retained. | OK |
-| W aria-1 frozen/fresh 1.309; sensitivity 1.206–1.431 | README 33; PROJECT_PAGE 15 | 1.3090210649612195 / 1.3090210649612200; sensitivity 1.2062439116792891–1.4309278492650925 (fresh agrees to roundoff). | OK |
-| W forte-1 frozen/fresh 1.141; sensitivity 1.062–1.233 | README 34; PROJECT_PAGE 16 | 1.1411212795684418 / 1.1411212795684418; sensitivity 1.062191127350596–1.2327217550388907. | OK |
-| W forte-enterprise-1 frozen/fresh 0.684; sensitivity 0.655–0.716 | README 35; PROJECT_PAGE 17 | 0.6837939139632098 / 0.6837939139632088; sensitivity 0.6546402762877587–0.7156633135689505. | OK |
-| N aria-1 frozen 0.411 [0.250,0.575], fresh 0.295 [0.150,0.450] | README 36; PROJECT_PAGE 15 | 0.4110549014142178 [0.25,0.575]; 0.29525964619400413 [0.15,0.45]. | OK numbers; gate FAIL F2 |
-| N forte-1 frozen 0.339 [0.200,0.475], fresh 0.243 [0.125,0.375] | README 37; PROJECT_PAGE 16 | 0.3387383220152828 [0.2,0.475]; 0.2432722629836531 [0.125,0.375]. | OK |
-| N forte-enterprise-1 frozen 0.200 [0.100,0.300], fresh 0.144 [0.050,0.225] | README 38; PROJECT_PAGE 17 | 0.20012138608834365 [0.1,0.3]; 0.14369513780285453 [0.05,0.225]. | OK |
-| N 97.5% whole-instance simultaneous bootstrap bands | README 29; PROJECT_PAGE 11 | Reanalysis used PCG64 seed 2026104402, 4,000 whole-curve draws, maximum absolute deviation and higher 0.975 quantile. All six intervals match; radius discrepancies <=1.4e-17. Nominal bootstrap coverage is an assumption, not empirically certified coverage. | OK |
-| Frozen/fresh N intervals overlap in each model | README 29 | All three overlap. Aria root difference is nevertheless 0.11579525522021367 > 0.10. | OK literal overlap; omitted failure F2 |
-| W is deterministic, sensitivity is not a sampling CI | README 29, 104; PROJECT_PAGE 11, 59 | Maximum within-suite W curve differences <=8.9e-16; deterministic roots and +/-0.001 two-qubit-rate sensitivity are correctly distinguished. | OK |
-| Both mean margins cross zero | README 5; PROJECT_PAGE 5 | Exactly one positive-to-negative interior crossing in each of 12 game/model/suite curves. Saved-probability reanalysis agrees with stored means within 4.2e-17. | OK; does not imply every individual N case crosses |
-| No speedup, device threshold, universal classical superiority, noisy-global-product optimum or noise reduction | README 102–107; PROJECT_PAGE 59 | Those stronger claims are expressly excluded and are not needed to interpret the tables. | OK |
+| F1 | Sign rule reversed | README:15 and :29 and PROJECT_PAGE:13 say "positive favors joint for W and the published hedge for N; negative favors the ideal one-way reference and the attained product, respectively." web/index.html:5 says the same. "First-named" appears nowhere. Headings read "published hedge vs attained product" throughout. | RESOLVED |
+| F2 | N gates failed, undisclosed | README:7 and :33 and PROJECT_PAGE:7 and :17 say: "Preregistered N acceptance conditions were NOT met: frozen aria-1 N interval width 0.325 > 0.30, and frozen vs fresh aria-1 N crossover difference 0.116 > 0.10 (fresh comparison pass = false)... no tolerance or seed was changed." README:35 adds "overlap does not satisfy the separate 0.10 agreement tolerance". web/index.html:4 shows the same text at the top of the page and adds "This is not a G2/G3 pass". Recomputed: frozen aria-1 N CI [0.25, 0.575], width 0.325; fresh-vs-frozen difference 0.11579525522; `recorded_local.FRESH['fresh_comparison']['N']['pass']` is False and the tolerance is 0.1. `nt_curves.py` gate decisions now read "LOCAL_CONDITIONS_ONLY; N precision and frozen/fresh agreement gates not met". All N and W numbers, seeds and tolerances equal the frozen/fresh result files. Nothing in shipped text implies a G2/G3 pass. Whether to submit is a human decision. | RESOLVED (as disclosure) |
+| F3 | Reproduction commands broken | README:104-112 and PROJECT_PAGE:73-83 use one working directory. Each suite has its own manifest. The new-or-`--resume` output policy is stated. The make_curves/summary.json caveat is explained. The commands were verified, including `--resume` and `--validate-only`. | RESOLVED |
+| F4 | Fresh run metadata missing | `recorded_local.FRESH` (top level) has machine "Saurav", simulator "exact NumPy small-block density evolution", qiskit 2.5.2 / numpy 2.5.3 / python 3.14.6, start/end UTC, settings, manifest and configuration hashes and instance ids. README:37 and PROJECT_PAGE:19 point to it. | RESOLVED |
+| F5 | Reuse disclosure | The "project-specific" overclaim is gone. README:23 and :146 and PROJECT_PAGE:11 and :93 credit the retired Two Whispers / Never Lose Twice code and name the adapted files. The "see REUSE_MANIFEST.md" references are removed from `reuse_sources.json`. The `circuit_pack.py` header now matches the docs. | RESOLVED |
+| F6 | Figure descriptions wrong | README:48 and :50 and PROJECT_PAGE:29 now say solid/dashed/dotted identify Aria/Forte/Forte Enterprise, and that anchors appear only in frozen-anchors.png. I viewed the PNGs and they match, including N hatch bands 0.25-0.575 (frozen) and 0.15-0.45 (fresh). The anchors figure shows six archival receipts and is labelled so. README links use `results/figures/`, which resolves in the repository. PROJECT_PAGE:27 tells the human to upload the three PNGs as top-level assets. | RESOLVED (PNG upload is a human step, see S3) |
+| F7 | Interactive/accessibility claims | README:11 and PROJECT_PAGE:9 state that the published entry is the JS page flattened by `tools/package_project.py noise-tax --web`. The existing `uploads/noise-tax-web.zip` contains index.html, main.js, main.css, tax_bridge.py and main.py. README:140 and PROJECT_PAGE:91 describe the accessibility features as source-level and name browser acceptance as a human check. web/index.html has labels, a table per chart and `aria-live` regions. | RESOLVED |
+| F8 | Six archival runs unlabelled | A new "Archival anchors" section (README:77-90, PROJECT_PAGE:56-69) gives origin, date (00:15-00:38 UTC, 2026-10-10), model, shots, signed value and case=0, and says "NOT reproducible via T slots". Recomputed from `recorded_ionq.py`: W +0.0113/+0.0017/-0.0177 (1000 shots); N -0.0209 (4000), -0.0211 and -0.0377 (1000). All match. But see R2-1 for a mismatch in the same section. | RESOLVED, except R2-1 |
+| F9 | Default W samples only one arm | README:27 and PROJECT_PAGE:13 now say the default run samples the W joint arm only against the analytic ideal one-way reference, N samples both arms, and W one-way circuits run only in cloud slots. This matches main.py:49. | RESOLVED |
 
-For an explicit endpoint check, Aria W goes from +0.03839181889881236 to -0.0195050206201174; frozen N goes from +0.009017572620242198 to -0.032268509877639; fresh N goes from +0.006462691112714878 to -0.0345461534122232. These are LOCAL MODEL means, not observed cloud thresholds.
+## Remaining blocking finding
 
-## Claims table: recorded cloud numbers
+### R2-1: Two claims about the six archival receipts do not trace to shipped files
 
-All dates below are 2026-10-10 UTC. The eight records, their slot configurations, models and shots agree with `cloud_slots.py`, `recorded_ionq.py`, `evidence_summary.json` and the eight corresponding HTML exports. Outcome values in evidence_summary are rounded to four decimals; documentation values are correctly rounded to three decimals.
+- README.md:90 and PROJECT_PAGE.md:69 say: "These six raw receipts are stored in top-level `recorded_ionq.py`, indexed in `evidence_summary.json`; the original exported consoles are retained in repository `results/exports/`."
+- `evidence_summary.json` indexes only the eight T01-T08 runs. It has no archival entries. A search for "archiv" returns 0 hits, and the keys are project, source, date_utc, campaign_slots, export_files, runs, outcomes, interpretation and deviations.
+- This project's `results/exports/` holds only the nine Noise Tax exports (eight T slots plus the default run). The six archival console exports are in `projects/two-whispers/results/exports/` (W02, W03, W04) and `projects/never-lose-twice/results/exports/` (N02, N03, N04). `recorded_ionq.SOURCE_FILES` records exactly those paths.
 
-| Claim | Source | Independently reproduced value | OK/FAIL |
+Exact fix, either one:
+- Edit README:90 and PROJECT_PAGE:69 to read "stored in top-level `recorded_ionq.py` (provenance paths in `recorded_ionq.SOURCE_FILES`); the original console exports are in the retired projects' `results/exports/` (`two-whispers` W02-W04, `never-lose-twice` N02-N04)." Delete "indexed in `evidence_summary.json`".
+- Or add the six archival records to `evidence_summary.json` and keep the sentence, correcting the `results/exports/` location.
+
+## Claims table (recomputed; all prior numbers re-checked)
+
+| Claim | Source | Reproduced | Status |
 |---|---|---|---|
-| T01 W aria-2, 1,000/label, +0.005 | README 56; PROJECT_PAGE 31 | Success counts 955, 932, 928; mean success minus `(1/2+sqrt(3)/4)` = +0.005320631441114054. | OK |
-| T02 N aria-2, 4,000/arm, -0.030 | README 57; PROJECT_PAGE 32 | Product/hedge FF counts 97/158; pass totals 6795/3870; losses 0.030275/0.060150; difference -0.029875. | OK |
-| T03 W aria-1, 1,000/label, +0.002 | README 58; PROJECT_PAGE 33 | Success counts 941, 927, 938; +0.0023206314411140516. | OK |
-| T04 N aria-1, 4,000/arm, -0.022 | README 59; PROJECT_PAGE 34 | FF 82/110; passes 6841/3914; losses 0.026295/0.047930; difference -0.021635. | OK |
-| T05 W forte-1, 1,000/label, +0.005 | README 60; PROJECT_PAGE 35 | Success counts 950, 932, 931; +0.00465396477444735. | OK |
-| T06 N forte-1, 4,000/arm, -0.035 | README 61; PROJECT_PAGE 36 | FF 81/163; passes 6838/3870; losses 0.026060/0.061400; difference -0.035340. | OK |
-| T07 W aria-1 fixed fresh, 1,000/label, +0.011 | README 62; PROJECT_PAGE 37 | Success counts 950, 941, 940; +0.010653964774447355; seed 2026104100. | OK |
-| T08 N aria-1 fixed fresh, 4,000/arm, -0.022 | README 63; PROJECT_PAGE 38 | FF 87/115; passes 6921/3915; losses 0.027145/0.049175; difference -0.022030; seed 2026104300. | OK |
-| Eight slots; W range +0.002 to +0.011, N -0.035 to -0.022 | README 5, 48, 52; PROJECT_PAGE 5, 23, 27 | Four W and four N records; exact extrema +0.0023206314/+0.0106539648 and -0.03534/-0.021635. | OK |
-| Slot determines model and budget; choose free IonQ simulator | README 66, 78; PROJECT_PAGE 41, 47 | Slot configuration overrides the normal noise-model and shots settings: W 1,000; N 4,000; Aria-2/Aria-1/Forte-1 as documented. No exact repeat of random counts is promised. | OK |
-| No reported T-campaign cloud deviations or superseded runs | README 68; PROJECT_PAGE 43 | No contrary campaign entry found; all eight receipts are distinct and valid. Earlier LOCAL MODEL amendments and six legacy anchors are separate issues. | OK for the explicitly cloud-scoped statement |
-| Cloud signs are observed anchors, not a fitted cloud crossover | README 66; PROJECT_PAGE 41, 45 | All four W propagated 95% intervals include zero; all four T-slot N intervals lie below zero. Docs do not claim statistically certified W superiority. | OK |
-| Saved cloud data shipped at top level | README 66; PROJECT_PAGE 41 | Full raw packed counts are in recorded_ionq.py (164,124 bytes), not merely links to excluded results folders; evidence_summary.json is also top-level. | OK |
+| W crossings frozen = fresh: 1.309 / 1.141 / 0.684 (aria-1 / forte-1 / forte-enterprise-1) | README:41-43, PROJECT_PAGE:23-25 | `nt_curves` 1.30902106 / 1.14112128 / 0.68379391 (frozen and fresh) | OK |
+| W calibration sensitivity 1.206-1.431 / 1.062-1.233 / 0.655-0.716 | same | 1.20624-1.43093 / 1.06219-1.23272 / 0.65464-0.71566 | OK |
+| N frozen 0.411 [0.250, 0.575], 0.339 [0.200, 0.475], 0.200 [0.100, 0.300] | README:44-46, PROJECT_PAGE:23-25 | 0.41105 [0.25, 0.575], 0.33874 [0.2, 0.475], 0.20012 [0.1, 0.3] | OK |
+| N fresh 0.295 [0.150, 0.450], 0.243 [0.125, 0.375], 0.144 [0.050, 0.225] | same | 0.29526 [0.15, 0.45], 0.24327 [0.125, 0.375], 0.14370 [0.05, 0.225] | OK |
+| Gate misses: frozen aria-1 N width 0.325 > 0.30; frozen/fresh difference 0.116 > 0.10; fresh comparison pass = false | README:7, :33; PROJECT_PAGE:7, :17; web/index.html:4 | width 0.325; difference 0.11580; `pass` False; tolerance 0.1 | OK |
+| 24 frozen and 24 fresh instances; grid 0-2 in steps of 0.025; fixed-prize coefficient 0.02 | README:29 | consistent with the manifests and `nt_curves`; the default run prints "n=24" | OK |
+| Cloud T01-T08 signed values +0.005, -0.030, +0.002, -0.022, +0.005, -0.035, +0.011, -0.022 | README:64-71, PROJECT_PAGE:43-50 | +0.0053, -0.0299, +0.0023, -0.0216, +0.0047, -0.0353, +0.0107, -0.0220, from the parsed `recorded_ionq` receipts and `evidence_summary.json` | OK |
+| Ranges: W +0.002 to +0.011; N -0.035 to -0.022 | README:5, :56 | W +0.0023 to +0.0107; N -0.0353 to -0.0216 | OK |
+| Models, shots, slots and date for T01-T08 | README:62-71 | match `evidence_summary.json` runs and `slot_config`; all on 2026-10-10 UTC | OK |
+| Six archival values, dates, shots | README:83-88 | match the parsed receipts | OK |
+| Default run shows 14 stored receipts; 0 issues | README:90 | "14 validated historical receipts; 0 receipt issues" | OK |
+| "indexed in evidence_summary.json"; consoles "retained in repository results/exports/" | README:90, PROJECT_PAGE:69 | not found (see R2-1) | MISMATCH |
+| Local run about 1 s, 512 shots, aria-1 | README:9, PROJECT_PAGE:3 | `qollab_local` ideal run completes in about 1 s | OK |
+| No speedup, device-threshold or noise-reduction claims | README:124-129 | none made | OK |
+| MIT, attribution line, AI/library disclosure, theme, judging summary, accessibility, repo link | README:131-162, PROJECT_PAGE:89-100 | all present; `[[VIDEO LINK]]` remains (human step) | OK |
 
-For reference, T01–T08 N uncertainty bounds from the shipped conservative Clopper–Pearson/Bonferroni propagation are T02 [-0.0472352,-0.0124273], T04 [-0.0370600,-0.00614689], T06 [-0.0522386,-0.0183358], T08 [-0.0377781,-0.00621815]. Shared packed shots do not require independent arms for that union-bound construction. W success indicators are weighted equally over the three labels.
+## Baseline and scope audit
 
-## Blocking findings (exact source text)
-
-### F1 — Sign explanation reverses the loss/error comparison
-
-README.md:25 states: **“A positive sign favors the first-named recipe in each definition.”** The same paragraph defines W as ideal one-way error minus joint error and N as product loss minus hedge loss. Positive therefore favors the *second* term's strategy in those definitions: joint and hedge, respectively. PROJECT_PAGE.md:9 states **“Positive signed advantage favors the first-named strategy.”**, while its N table at line 32 labels the comparison **“N: product vs published hedge”**. That would tell a reader a positive N margin favors product, which is backwards.
-
-The later negative-N explanation at README:66 / PROJECT_PAGE:41 is correct but does not repair the contradiction. Replace the sign rule explicitly with “positive favors joint for W and published hedge for N; negative favors ideal one-way and attained product, respectively.” Keep comparison headings consistent.
-
-### F2 — Primary scientific gates fail and are not disclosed in the result narrative
-
-experiments/PLAN.md:73 requires **“finite CI width <=0.30”**; line 75 requires estimates **“resolve and agree within absolute 0.10 and their combined interval bounds;”**. The later amendment at line 127 expressly preserves **“<=0.30 remains explicit and a failure stays a failure.”**
-
-Frozen Aria N width is 0.575 - 0.25 = **0.325**, above 0.30. Frozen/fresh Aria N root difference is **0.11579525522021367**, above 0.10; `results/fresh.json.fresh_comparison.N.pass` is false. Fresh width is mathematically 0.300; its stored false precision flag comes from floating-point 0.30000000000000004 and should not be treated as an additional substantive precision miss. The frozen width and root-difference misses remain real.
-
-README.md:29 only reports **“The frozen and fresh N intervals overlap for each model.”** The summaries (README:5 / PROJECT_PAGE:5) present successful crossings without explaining the unmet acceptance conditions. `nt_curves.py:3477` and `:1699` contain **`'decision': 'PASS_LOCAL_CONDITIONS',`**, alongside false precision flags. The harness only includes precision in that decision when `--gate g2` is supplied and never folds fresh comparison failure into the decision. These generic flags are not G2/G3 passes.
-
-The parent plan explicitly makes failed primary gates a HOLD/drop decision unless the human revises scope. No such subsequent scope amendment was found in the reviewed project provenance. Preserve the negative result, disclose both misses, and have the orchestrator resolve the scientific admission/scope decision; do not reinterpret overlap as a pass or silently retune the seeds/tolerances.
-
-### F3 — Local reproduction instructions do not run as written
-
-README.md:82 says **“From the parent Qollab repository”**, but lines 85–87 give:
-
-```text
-..\..\.venv\Scripts\python.exe experiments\run.py --suite frozen
-..\..\.venv\Scripts\python.exe experiments\run.py --suite fresh
-..\..\.venv\Scripts\python.exe tools\qollab_local.py run projects\noise-tax --backend ideal --shots 512
-```
-
-These mix project-relative interpreter/experiment paths with repository-relative tool paths. PROJECT_PAGE.md:47 says **“Local reproduction from the repository root:”**, but lines 50–51 use `experiments\run.py` instead of `projects\noise-tax\experiments\run.py`.
-
-Even when run from the project with the correct interpreter, the first experiment command immediately fails with the exact error from experiments/run.py:315: **`ValueError: frozen/fresh evaluation requires a verifier-owned --independent-manifest`**. I reproduced that early error without running an experiment. README:94 / PROJECT_PAGE:55 show a frozen manifest then merely **“(and `--suite fresh`)”**; changing just the suite retains the wrong frozen manifest. Existing checkpoints also require `--resume` or a clean output directory.
-
-Provide complete commands with one explicit working directory, the correct frozen/fresh manifest for each suite, and a deliberate resume/clean-output policy. Also explain that `make_curves.py` reads results/summary.json: it does not rebuild that summary from newly generated full results, so the current advertised sequence can regenerate stale curves.
-
-### F4 — Fresh LOCAL MODEL bundle lacks required run metadata
-
-PROJECT_PAGE.md:9 states **“Frozen and fresh local runs each use 24 seeded instances.”** README.md:44 labels the figure **“the independent fresh 24-instance set”**. The fresh numbers are shipped in nt_curves.py, but that suite contains only `analysis`, `gate`, `grid`, and `source_sha256`. `recorded_local.LOCAL['suite']` is only `frozen`; it supplies no fresh receipt.
-
-The binding official-answer section requires local results to **“label each with machine, simulator, Qiskit version, settings and date.”** Fresh metadata exists only in excluded results/fresh.json: machine Saurav, exact NumPy small-block density evolution, Qiskit 2.5.2 / NumPy 2.5.3 / Python 3.14.6, 2026-10-10T03:49:37.041758+00:00 through 03:50:24.565050+00:00, plus manifest/settings. A content hash alone does not provide those fields to a top-level-only upload. Ship a compact fresh receipt/metadata record and point the docs to both local evidence modules.
-
-### F5 — Reuse disclosure is incomplete and conflicts with the project-specific claim
-
-README.md:124 says **“This project's game logic, noise analysis, UI, and results are project-specific. Other reused or adapted material, if any, is identified in `reuse_sources.json`.”** PROJECT_PAGE.md:65 similarly says **“Game logic, analysis, UI, and results are specific to this entry.”** Yet reuse_sources.json records direct in-window adaptation/copying of Two Whispers core.py into whispers_core.py and Never Lose Twice core.py, strategies.py and product_bounds.py into this entry's game modules.
-
-Six entries in reuse_sources.json at lines 40, 46, 52, 58, 64 and 70 use the exact destination **`"adapted algorithm/reference; see REUSE_MANIFEST.md"`**. REUSE_MANIFEST.md is absent. The earlier independent G1 review already identified that missing disclosure. The timestamps and hashes do provide useful traceability; this is not an allegation of undisclosed pre-window building. The unresolved issue is the inaccurate exclusivity implication and missing adaptation/reference explanation.
-
-Explicitly credit the retired W/N entries and reused theoretical/analysis material, distinguish the new merged contribution, and replace broken disclosure references with actual shipped explanations. Keep the shared-helper note consistent: the page lists Court/Eyes-Free/Noise Tax, whereas the helper's own opening note still lists the retired W/N names and Court.
-
-### F6 — Figure descriptions identify the wrong curves and unavailable uploaded assets
-
-README.md:40 says **“frozen solid and fresh dashed curves”**; README:44 says **“Dashed curves show the independent fresh 24-instance set”**. PROJECT_PAGE.md:19 describes **“solid frozen and dashed fresh lines”** in `results/figures/frozen-curves.png`. In the actual PNG, all three curves are frozen; solid/dashed/dotted distinguish Aria/Forte/Forte Enterprise. `figures.py:12` explicitly iterates **`for model, style in zip(colors, ('-', '--', ':')):`**. The combined main() figure uses different suite styling, but that is not the linked PNG.
-
-README.md:42 also says **“and separate anchor marks show recorded cloud observations”** in the frozen-curves image. That image has no cloud anchor marks; those are in the separate frozen-anchors.png. These are meaning-changing legend/alt-text errors, not style preferences. The anchor image shows the six earlier legacy observations, including Forte Enterprise, rather than T01–T08; identify that provenance explicitly (F8).
-
-All markdown figure URLs use excluded `results/figures/` paths. A top-level-only Qollab upload cannot resolve those relative assets. Flatten or otherwise publish the figures with matching links, or replace these references with the actually rendered figures and accurate descriptions.
-
-### F7 — Interactive/accessibility claims are not supplied by the inspected top-level entry
-
-README.md:118 states **“The interactive page supports keyboard operation and shows values and labeled controls alongside plots; contrast uses a light background with high-contrast text.”** PROJECT_PAGE.md:63 states **“Keyboard-operable controls, labeled values, a light high-contrast display, and textual results accompany plots”**. README:111 and PROJECT_PAGE:61 also claim an interactive comparison.
-
-The inspected top-level files contain main.py but no index.html, main.js, main.css or tax_bridge.py. The Python entry prints text and renders a static Matplotlib figure. Interactive assets exist only under web/. The checker assumes these will be flattened during publication, which explains why its general result does not catch this distinction; the user's requested top-level shipped-set audit cannot assume that future packaging step has happened.
-
-Provide an explicit flat interactive shipped artifact and verify that entry, or accurately describe the current Python presentation. Existing web source and Python tests are not proof of keyboard/screen-reader operation of the deployed interface. Publishing, logged-out acceptance and browser accessibility verification remain human/runtime steps.
-
-### F8 — Six displayed legacy cloud runs lack documented reproduction/provenance mapping
-
-README.md:66 / PROJECT_PAGE.md:41 document reproduction of **“these eight valid runs”** through T01–T08. However, main.py:79 executes **`for record in records:`** over all **14** receipts. Six are inherited W/N case-0 runs, and the linked frozen-anchors.png uses those earlier six. They are not invalid, but their identities and reproduction route are absent from both user-facing documents.
-
-The earlier receipts are dated 00:15–00:38 UTC on 2026-10-10. W uses 1,000 shots in Aria-1/Forte-1/Forte Enterprise; N uses 4,000 in Aria-1 and 1,000 in the two Forte models. Their signed values are W +0.0113206314, +0.0016539648, -0.0176793686; N -0.020910, -0.021120, -0.037700. No T slot selects Forte Enterprise, and the old receipts include extra packed recipe arms not reproduced by the current T-slot factory. “Run Txx” therefore cannot reproduce every recorded result shown to the judge.
-
-Label these as inherited archival anchors with date/model/shots/original case and a concrete source/setting/file reproduction route, or restrict the displayed/linked evidence to the documented campaign. Do not relabel them all as 4,000-shot N observations or as T-slot runs. The existing cloud-deviation statement is not itself false; the missing archival explanation is the failure.
-
-### F9 — The default does not sample both W comparison arms
-
-PROJECT_PAGE.md:9 says the live program **“samples both arms on the injected backend”** after describing both games. main.py:49 actually calls **`wc, wm = w.make_demo(); nc, nm = n.make_instance_demo()`**. W's default `include_oneway=False` supplies only the joint arm; its comparison is the analytic ideal one-way reference. N does sample both arms. Physical W one-way circuits are included only in cloud slots using `include_oneway=True`.
-
-Clarify the sentence to distinguish default W joint sampling against the analytic reference from N's two sampled arms and W cloud-slot physical diagnostics. This also aligns the page with its otherwise correctly scoped ideal-source W comparator.
-
-## Other required submission claims
-
-| Claim / requirement | Source | Reproduced result | OK/FAIL |
-|---|---|---|---|
-| MIT license | LICENSE; README 126, 140; PROJECT_PAGE 65 | Complete MIT text, copyright 2026 Saurav Das. | OK |
-| Exact attribution | README 130; PROJECT_PAGE 69 | `This effort is supported by Qollab & IonQ.` | OK |
-| AI tools and libraries disclosed | README 122, 126, 128; PROJECT_PAGE 65; requirements.txt | AgentMesh/OpenCode, OpenAI Codex, Claude Code; Qiskit, NumPy, SciPy, Matplotlib, Python standard library and template/platform consultation named. | OK presence; reused material still FAIL F5 |
-| Shared helper note | README 124; PROJECT_PAGE 65; circuit_pack.py opening | Purpose and in-window timing stated; names inconsistent across page/helper and other adaptations point to missing file. | FAIL F5 |
-| One theme | README 132; PROJECT_PAGE 67 | Quantum Unlocked. Actual platform tag is a human check. | OK presence |
-| Four judging criteria | README 109–114; PROJECT_PAGE 61 | All four appear. Interactive execution claim needs F7 repair. | OK presence; claim FAIL F7 |
-| Accessibility notes and image alt text | README 42–46, 118; PROJECT_PAGE 19–21, 63 | Present; factual curve descriptions and shipped UI require F6/F7 repair. | FAIL F6/F7 |
-| Repository link | README 134; PROJECT_PAGE 71 | https://github.com/sauravdasmg/Qollab present. Public accessibility was not asserted or checked here. | OK presence; public access manual |
-| Video | README 136; PROJECT_PAGE 72 | `[[VIDEO LINK]]` remains, expressly allowed by this task. | OK for this audit; human completion pending |
-| Top-level recorded cloud saved results | recorded_ionq.py, evidence_summary.json | Eight campaign raw receipts plus six archival receipts; each file below 2 MB. | OK storage; archival reproduction FAIL F8 |
-| Top-level local curves and metadata | nt_curves.py, recorded_local.py | Both numerical suites are present; only frozen has full receipt metadata. | FAIL F4 |
-| Build-window provenance | Parent provenance JSONL lines 86, 97, 125, 145, 189, 217, 235; reuse timestamps | Merge 01:00 UTC; imports 01:08; revised plan/manifest/evidence and T campaign all Oct 10. No reviewed event establishes a final G2/G3 PASS. | OK timing evidence; scientific gate FAIL F2 |
-
-The existing reviews are not final passes: G1_review.md begins `G1 REVIEW: HOLD`; G2_prep.md begins `MANIFESTS: BLOCKED`. The W deterministic uncertainty amendment and current manifest-loader checks address their respective technical concerns. They do not erase the continuing N gate failures or missing reuse explanation. Full independent new-seed simulation was intentionally not repeated under this task's quick-check restriction; this report independently verifies the saved fresh evidence and arithmetic, not a newly generated campaign.
+- W's baseline is the analytic ideal optimal one-way sequential reference. This is stated and scoped as "not all LOCC or separable measurements".
+- N's baseline is the attained product strategy under one fixed prize. This is stated as not globally optimal.
+- Both are evaluated on the same instances and the same noise scale grid. Cloud anchors use the same shot budget per arm.
+- There is no use of the exact answer inside a sampled estimate. The analytic W reference is declared as such.
+- The noise model is stated: a calibrated IonQ-like approximation (LOCAL MODEL), distinct from RECORDED simulator runs.
+- No W cloud 95% interval excludes zero, and the docs do not claim a statistically certified W advantage.
 
 ## STYLE (non-blocking)
 
-- Model-name suffixes and library-license identifiers are identifiers, not performance numbers. Their presence was checked separately from empirical claims.
-- The cloud sign/scope explanation is repeated in several sections; it can be shortened after the contradictions are fixed.
-- “The project plan does not list citable paper identifiers” is process commentary. A concise attribution to the known recipes would serve readers better once F5 is resolved; do not invent citations.
-- `[[VIDEO LINK]]`, actual public repository availability, platform theme selection, final publication, and logged-out/video acceptance remain the expressly excluded human steps. None alone caused this verdict.
+- S1: `results/frozen.json` and `results/fresh.json` still carry the raw label `"decision": "PASS_LOCAL_CONDITIONS"` next to `precision_target_met: false`. The shipped `nt_curves.py` and `recorded_local.py` carry the corrected label. Those two files are not shipped top-level, but a one-line README note would remove any ambiguity.
+- S2: The web UI still uses the legacy names "Two Whispers" and "Never Lose Twice" as card titles, buttons and aria-labels (web/index.html:37, 47, 61, 71, 107-108; tax_bridge.py:54, 62; main.js:365). The docs call the games W and N. Rename or add a line explaining the mapping.
+- S3: `tools/package_project.py` ships only .py, .json, LICENSE, requirements.txt and the web files, not PNGs or markdown. The PNG upload for PROJECT_PAGE images is a human step (PROJECT_PAGE:27). Make sure it happens, or the three images will not render.
+- S4: The console prints the 14 receipts without an ARCHIVAL / T-slot label, although README:90 says they are "separate". Also, fresh aria-1 N prints "precision target met=False" because its width is 0.300000000000000044, so the width is effectively exactly 0.30. README names only the frozen width miss, which is the substantive one.
+- S5: `reuse_sources.json` lists a destination `calibration_snapshot.json`, but the shipped file is `calibration_snapshot.py`.
+- S6: Hidden scratch directories in the project root (`.test-tmp-wp-nt-09`, `.verify-final-tmp`, `.wp-nt-01-pytest*`, `.pytest_cache`) are not shipped. Consider deleting them.
 
 ## Disposition
 
-FAIL pending resolution of F1–F9. The numerical evidence is internally reproducible; the primary scientific acceptance conditions and the submission's claim/reproduction/packaging descriptions are not all satisfied. No submission code or documentation was repaired by this reviewer.
+FAIL, on one fixable documentation item (R2-1). After the two-line edit, with F1-F9 otherwise resolved and tests, contract check and default run passing, this should be PASS. The N gate misses are disclosed as failed, with no number, seed or tolerance changed. The submission decision remains the human's.

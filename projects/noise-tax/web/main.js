@@ -362,7 +362,7 @@ async function loadGateCosts() {
 function announceCard() {
   const w = $(`badge-W`).textContent;
   const n = $(`badge-N`).textContent;
-  setStatus(`Noise scale ${state.noise.toFixed(2)}: Two Whispers ${w}, Never Lose Twice ${n}.`);
+  setStatus(`Noise scale ${state.noise.toFixed(2)}: Game W (double-trine) ${w}, Game N (hedging) ${n}.`);
 }
 
 async function runLiveDiff() {

@@ -34,7 +34,7 @@
     <section class="cards" aria-label="Two quantum advantage games">
       <article class="card" id="card-W" aria-labelledby="card-W-title">
         <header class="card-header">
-          <h2 id="card-W-title">Two Whispers <span class="subtitle">read both qubits together vs one at a time</span></h2>
+          <h2 id="card-W-title">Game W (double-trine) <span class="subtitle">read both qubits together vs one at a time</span></h2>
           <span class="badge tie" id="badge-W">LOADING</span>
         </header>
         <p class="advantage-line">
@@ -44,12 +44,12 @@
         <p class="comparator-line" id="live-W">LIVE run pending</p>
         <p class="comparator-line">analytic ideal one-way word error minus joint word error; default samples the joint arm only</p>
         <p class="crossover-line" id="xstar-W">crossover s*: not measured</p>
-        <div class="chart" id="chart-box-W" role="img" aria-label="Two Whispers: quantum advantage versus noise scale; values are in the table below"></div>
+        <div class="chart" id="chart-box-W" role="img" aria-label="Game W (double-trine): quantum advantage versus noise scale; values are in the table below"></div>
         <div class="legend" id="legend-W" aria-hidden="true"></div>
         <details class="data-table-details">
           <summary>Data table for this chart</summary>
           <table class="data-table" id="table-W">
-            <caption>Two Whispers: noise scale s, advantage, band, crossover, and source label.</caption>
+            <caption>Game W (double-trine): noise scale s, advantage, band, crossover, and source label.</caption>
             <thead><tr><th scope="col">s</th><th scope="col">advantage</th><th scope="col">band low</th><th scope="col">band high</th><th scope="col">crossing</th><th scope="col">source</th></tr></thead>
             <tbody></tbody>
           </table>
@@ -58,7 +58,7 @@
 
       <article class="card" id="card-N" aria-labelledby="card-N-title">
         <header class="card-header">
-          <h2 id="card-N-title">Never Lose Twice <span class="subtitle">published hedge vs attained product</span></h2>
+          <h2 id="card-N-title">Game N (hedging) <span class="subtitle">published hedge vs attained product</span></h2>
           <span class="badge tie" id="badge-N">LOADING</span>
         </header>
         <p class="advantage-line">
@@ -68,12 +68,12 @@
         <p class="comparator-line" id="live-N">LIVE run pending</p>
         <p class="comparator-line">product-strategy loss minus hedge loss (fixed prize 0.02)</p>
         <p class="crossover-line" id="xstar-N">crossover s*: not measured</p>
-        <div class="chart" id="chart-box-N" role="img" aria-label="Never Lose Twice: quantum advantage versus noise scale; values are in the table below"></div>
+        <div class="chart" id="chart-box-N" role="img" aria-label="Game N (hedging): quantum advantage versus noise scale; values are in the table below"></div>
         <div class="legend" id="legend-N" aria-hidden="true"></div>
         <details class="data-table-details">
           <summary>Data table for this chart</summary>
           <table class="data-table" id="table-N">
-            <caption>Never Lose Twice: noise scale s, advantage, band, crossover, and source label.</caption>
+            <caption>Game N (hedging): noise scale s, advantage, band, crossover, and source label.</caption>
             <thead><tr><th scope="col">s</th><th scope="col">advantage</th><th scope="col">band low</th><th scope="col">band high</th><th scope="col">crossing</th><th scope="col">source</th></tr></thead>
             <tbody></tbody>
           </table>
@@ -104,8 +104,8 @@
       <section class="sidebar-panel">
         <h3>Circuit as text</h3>
         <div class="game-switch" role="group" aria-label="Choose which game's circuit to display">
-          <button type="button" class="game-btn selected" id="gamebtn-W" aria-pressed="true">Two Whispers</button>
-          <button type="button" class="game-btn" id="gamebtn-N" aria-pressed="false">Never Lose Twice</button>
+          <button type="button" class="game-btn selected" id="gamebtn-W" aria-pressed="true">Game W (double-trine)</button>
+          <button type="button" class="game-btn" id="gamebtn-N" aria-pressed="false">Game N (hedging)</button>
         </div>
         <pre class="circuit-text" id="circuit-text" tabindex="0" aria-label="Selected game's circuit as text">Loading&hellip;</pre>
       </section>

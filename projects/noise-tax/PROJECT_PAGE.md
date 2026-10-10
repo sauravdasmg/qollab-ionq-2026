@@ -66,7 +66,7 @@ The six earlier receipts were produced on 2026-10-10 00:15-00:38 UTC by the reti
 | Never Lose Twice N: published hedge vs attained product | forte-1 | 1,000 | -0.0211 |
 | Never Lose Twice N: published hedge vs attained product | forte-enterprise-1 | 1,000 | -0.0377 |
 
-These six raw receipts are stored in top-level `recorded_ionq.py`, indexed in `evidence_summary.json`; the original exported consoles are retained in repository `results/exports/`. `frozen-anchors.png` shows these six archival observations beside local s=1 predictions, not T01-T08. The default display includes all 14 stored receipts, with the eight T-slot campaign receipts separate from this archive.
+These six raw receipts are stored in top-level `recorded_ionq.py` (`evidence_summary.json` indexes only T01-T08); the original exported consoles are retained in the repository under `projects/two-whispers/results/exports/` (W02-W04) and `projects/never-lose-twice/results/exports/` (N02-N04), the paths recorded in `recorded_ionq.SOURCE_FILES`. `frozen-anchors.png` shows these six archival observations beside local s=1 predictions, not T01-T08. The default display includes all 14 stored receipts, with the eight T-slot campaign receipts separate from this archive.
 
 Finite-shot estimates can cross a bound by sampling chance; interpret each estimate with its uncertainty interval. **LIVE** built-in results are the judge-facing run; **RECORDED** denotes the named Qollab IonQ simulator runs; **LOCAL MODEL** denotes the calibrated approximation.
 
