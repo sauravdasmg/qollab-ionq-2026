@@ -1,263 +1,177 @@
 VERDICT: FAIL
 
-# Final independent claim verification
+# Round-2 FINAL independent claim verification: Eyes-Free Entanglement
 
-Reviewed 2026-10-10 UTC, during the authorized build window. This reviewer authored none of the implementation or submission documentation. Only this report was edited. No full experiments, noise sweeps, new cloud jobs, or many-seed simulations were run. The current numerical totals and all six recorded cloud fits reproduce, but eight claim, integration, reproduction, or disclosure failures prevent PASS.
+Reviewed 2026-10-10 UTC. The reviewer wrote none of the code or docs. Only this file was edited. No full experiments, noise sweeps or cloud jobs were run. Python was `D:\Quantum Projects\Qollab\.venv\Scripts\python.exe`, with bytecode writing and the pytest cache disabled.
 
-## Scope and checks
+The numbers and the code now hold up. All round-1 code/evidence findings are resolved, and all six recorded cloud fits reproduce. Four documentation findings remain (N1-N4). Each is a text-only fix with no code change. They are claims that do not match the current published page, or labels and disclosures that are inaccurate. By the project's own rule these block PASS.
 
-Read README.md, PROJECT_PAGE.md, all nine top-level Python modules, HELPER_SPEC.md, LICENSE, requirements.txt, experiments/PLAN.md including both amendments, the experiment/decoder/summary/cloud-fit implementation, evidence_summary.json, recorded_ionq.py, the full frozen/fresh JSON evidence, saved development/G1 and cloud evidence, all ten Qollab HTML exports, and both earlier review reports. Read the supplied official rules including AMA, website rules, binding organizer answers, and the Eyes-Free entries in the global provenance log. Local results and earlier reviews are evidence to audit, not substituted for this review's checks.
+## 1. Commands run
 
-Commands were run from the submission directory. The environment's bare `python` is Python 3.14 without pytest. The requested checker worked under it; execution/tests used `../../.venv/Scripts/python.exe`, the repository's documented environment. Bytecode writing was disabled for execution checks; pytest's cache provider was disabled to avoid changing the existing cache.
+| Check | Result |
+|---|---|
+| `python -m pytest tests web -q` | 74 passed in 11.2 s |
+| `python ../../tools/check_submission.py .` | One blocker, "Verifier report says PASS", which is this report. All other blockers pass. Six MANUAL human-only items remain. 19 shipped files, all under 2 MB. |
+| `python ../../tools/qollab_local.py run . --backend ideal` | Succeeded. It printed 3 live series, then "Validated RECORDED packs: 9", then six RECORDED transcripts. There is no "missing recorded evidence" line. |
+| `main.recorded_estimates()` | 9 records, 0 errors, 6 informative fits. They equal `evidence_summary.json` cloud_fit to under 1e-9 on frequency and contrast. |
+| Independent refit | Integer shift/mask marginalization of `recorded_ionq.RECORDED`, then a plain unweighted least-squares fit. Every block has 1,000 shots. Results are in the table below and agree with the shipped binomial fits to within about 0.01. |
+| `experiments/run.py --help` and the guard code | `--output-dir` is accepted. A new directory passes the preflight (run.py:208-211). |
+| Shipped-set audit | The only file read is `wave.open(BytesIO)`. There are no other file reads, and the modules import only top-level modules. `uploads/eyes-free-web.zip` holds the same bytes as the project for every file except `evidence_summary.json` (see Section 5). |
 
-| Check | Observed result | Assessment |
-| --- | --- | --- |
-| `python ../../tools/build_window.py` | Build phase; deadline and feature freeze still ahead | OK |
-| `python ../../tools/check_submission.py .` | All automated blockers pass except the absent PASS verifier report; six manual items remain | OK for checker scope, excluding this report and human items as requested |
-| `../../.venv/Scripts/python.exe -m pytest tests -q -p no:cacheprovider` | **60 passed in 7.90 s** | OK; does not catch F1 or prove real browser downloads |
-| `../../.venv/Scripts/python.exe ../../tools/qollab_local.py run . --backend ideal` | Exit 0; main called; runtime contract verified; targeted repeat reports **0.79 s** inside the runner | Execution OK; functional failures F1/F2 appear in stdout |
-| Saved-evidence arithmetic | Recomputed all 792 local record success decisions from fit/decoder values; inspected every width/noise cell | OK |
-| Bounded local replay | One saved nominal-noise width-4 record per suite, refitted and decoded from its WAV bytes | Exact agreement with saved fit and decoder outputs |
-| Recorded cloud replay | Independently extracted each block with integer shifts/masks, computed even/odd counts, refitted all six series | Exact agreement with shipped cloud fit values |
-| Top-level-only runtime audit | Nine Python files use only top-level project modules and bundled libraries; no filesystem data reads; `wave.open` receives BytesIO | OK; no dependency on results/, review/, experiments/, or parent-directory data during main |
-| Shipped evidence availability | Top-level recorded_ionq.py contains all nine raw cloud records; evidence_summary.json contains local statistics and all six cloud fits including counts/intervals | Saved compact evidence is present; F1/F3/F6 remain |
+Independent refit versus shipped binomial fit (frequency; contrast):
 
-The checker reported 19 shipped files under its enumeration; direct immediate-file enumeration found 15 top-level files. Every actual top-level file is below 2 MB (largest: recorded_ionq.py, 217,922 bytes; evidence_summary.json, 190,833 bytes). The larger full local JSON files remain local under results/, which is appropriate for upload size but must be distinguished from the compact shipped summary.
+| Series | Independent LS refit | Shipped fit |
+|---|---|---|
+| frozen n1 | 0.990; 0.999 | 0.9922; 1.0000 |
+| frozen n2 | 2.000; 0.988 | 1.9986; 0.9890 |
+| frozen n4 | 3.998; 0.9506 | 3.9977; 0.9506 |
+| fresh n1 | 0.993; 0.990 | 0.9970; 0.9909 |
+| fresh n2 | 2.002; 0.980 | 1.9974; 0.9864 |
+| fresh n4 | 4.003; 0.955 | 4.0052; 0.9546 |
 
-The local runner's Matplotlib Agg warning is expected in headless emulation and is not a Qollab chart failure. The real built-in export contains plot output and three fitted series at 256 shots per phase. No logged-out/browser/assistive-technology acceptance was performed in this review.
+The human-accepted frozen n=4 values (3.9977, interval [3.975, 4.025]; contrast 0.9506, interval [0.8335, 1]) equal the shipped fit exactly.
 
-## Blocking failures: exact text, evidence, and required correction
+## 2. Round-1 findings: status
 
-### F1 — The documented recorded-data workflow rejects every bundled record
+| ID | Round-1 problem | Current evidence | Status |
+|---|---|---|---|
+| F1 | Parser rejected every bundled record | `main.recorded_estimates()` returns 9 records, 0 errors and both sweeps. `receipt.normalize_slot_record` exists (receipt.py:35). `tests/test_recorded_slots.py` parses the real `RECORDED`. The stale comment is replaced by recorded_ionq.py:1: "Nine original Qollab IonQ slot records. Preserve raw RECORD_JSON ...". | RESOLVED |
+| F2 | WAV download missing in the observed run | README:7 "WAV download requires `sendFile`; the observed Python fallback run did not receive it." README:14 "WAV export is conditional on `sendFile`." main.js:180 hides the button unless `sendFile` is a function. main.js:97-141 plays audio in the browser. Provenance line 282 (human, 2026-10-10): the page ran, audio played for all fringe types, and the chart drew. The claim is now limited to what works. | RESOLVED |
+| F3 | Cloud results labeled local-only | README:28 now reads "Evidence has two separate sources: RECORDED ... and LOCAL MODEL ...". evidence_summary.json `evidence_label` is "Mixed evidence: LOCAL MODEL suites and RECORDED Qollab IonQ simulator cloud fits". Its `scope` field separates the two. README:45 and PROJECT_PAGE:42 call it a "compact mixed evidence index". | RESOLVED |
+| F4 | "three circuits" | README:62 and PROJECT_PAGE:62 say "36 ... circuits ... three fitted width series (256 shots each; 9,216 circuit shots)". This matches eyes_core.py:47 and main.py:16. | RESOLVED |
+| F5 | Sound and chart did not carry full information | README:4 "Sound encodes the fitted fringe frequency as pitch and contrast as digital amplitude." README:125 "Playback encodes selected frequency and contrast, not uncertainty or fit status". Text and table carry the intervals. README:86 and PROJECT_PAGE:14 describe the three outputs as different channels. The code agrees: sonify uses only f and C, and main.js:129-131 does the same. The residual doc problem about the chart is N1. | RESOLVED, but see N1 |
+| F6 | No acquisition metadata in the summary | `provenance` has generated_utc, machine "Saurav", platform, Python 3.14.6, Qiskit 2.5.2 and NumPy 2.5.3. Each suite's provenance has software_versions (numpy 2.5.3, scipy 1.18.1, qiskit 2.5.2), simulator, noise_settings and settings. It also has `acquisition` with date_utc 2026-10-10 and a stated date_basis. The original host and Python version are honestly marked "not captured". Top-level config has shots_per_phase 1000 and noise_scales [0, 0.5, 0.75, 1, 1.5, 2], no longer null. | RESOLVED |
+| F7 | Shared-helper note unfinished | The note now names projects (README:113, PROJECT_PAGE:101, HELPER_SPEC:8, circuit_pack.py:3). The named projects are wrong; see N4. | PARTIAL (N4) |
+| F8 | Local reproduction commands blocked by the existing-evidence guard | README:73-75 and PROJECT_PAGE:69-71 now carry `--output-dir results/reproduce-*`. README:78 says to use a new directory per rerun and that `experiments/` and `review/manifests/` are repository files, not in the upload. | RESOLVED |
 
-README.md:66 says: **“Paste each console `RECORD_JSON` line into `recorded_ionq.py` as described in that file, preserving the original record.”** PROJECT_PAGE.md:63 gives the same paste workflow. README.md:39 and PROJECT_PAGE.md:41 identify that file as the original count records.
+## 3. Blocking findings (all text-only fixes)
 
-The actual slot producer, main.py:79–80, emits:
+### N1. Docs say the chart has no intervals, but the page chart now draws error bars and a fitted curve
 
-```python
-record = {"slot":slot,"suite":spec["suite"],"manifest_hash":spec["manifest_hash"],
-          "shots":shots,"effective_noise_model":effective,"counts":counts,"manifest":manifest}
-```
+This is stale text. The current page has pointwise error bars and a fitted curve.
 
-But receipt.py:18–19 requires:
+Docs text:
+- README.md:54: "The JS chart shows measured parity without fit intervals; `figures.py` supplies the Python fallback chart ... also without intervals".
+- README.md:94: "the parity chart omits fit intervals".
+- PROJECT_PAGE.md:14: "Its chart shows measured phase/parity without fit intervals."
+- PROJECT_PAGE.md:56: "The JS page and `figures.py` fallback chart show phase/parity without fit intervals".
+- PROJECT_PAGE.md:84: "the chart shows phase/parity without fit intervals".
 
-```python
-if record.get("schema") != SCHEMA or record.get("noise_model") != "aria-1":
-    raise ValueError("unknown schema or effective noise model")
-```
+The code:
+- web/main.js:84-91 draws a pointwise Wilson 95% interval bar for every phase point.
+- web/main.js:78-83 draws the fitted offset + cosine + sine curve.
+- web/main.js:97-99 gives the chart note: "Points show pointwise 95% Wilson intervals; purple curve is the fitted offset + cosine + sine model. Fit parameter intervals are in the results table."
+- web/index.html:14 adds a table with Phase, Parity, Shots and "95% parity interval" columns.
 
-Further validation requires label, UTC, qubits, phase frame, and counts/manifest digests that the slot producer does not emit. The raw objects at recorded_ionq.py:3–11 are the slot schema, not the older receipt schema. All nine match the original exports exactly after the existing source_file annotation; the problem is ingestion, not falsified counts.
+Required fix. In each of those five places, replace the "without fit intervals" wording with text like this: "For RECORDED and LIVE series the JS chart draws measured parity with pointwise 95% Wilson intervals and the fitted offset + cosine + sine curve, with a matching data table. LOCAL MODEL reference entries draw analytic points and curve with no sampling error bars. The fit-parameter intervals for frequency and contrast are shown in the results table, the text and Full fit details, not on the chart. The `figures.py` fallback chart shows no intervals."
 
-Direct `parse_records(RECORDED)` returns zero records and nine `unknown schema or effective noise model` errors. The default run prints:
+Also update the README:54 and PROJECT_PAGE:56 alt text so it does not imply the chart has no uncertainty display.
 
-```text
-line 2: unknown schema or effective noise model
-...
-line 10: unknown schema or effective noise model
-missing recorded Qollab IonQ evidence
-Validated recorded packs: 0; these are not independent cloud instances.
-Missing/duplicate recorded frozen sweep; no complete fit.
-Missing/duplicate recorded fresh sweep; no complete fit.
-```
+### N2. The page's "LOCAL MODEL" rows are an invented decay law, not the LOCAL MODEL evidence, and the docs do not say so
 
-Thus the shipped runtime never reaches either recorded sweep's fit. Exit 0 is insufficient to validate the documented replay. Align the producer, parser, and main assembly with the authentic slot schema, preserving raw counts and acquisition provenance. Add a regression that parses the actual bundled file and obtains the two complete sweeps. Merely renaming effective_noise_model will not fix the missing metadata/phase-frame fields. The existing tests validate the old phase_frame route and slot submission separately, without joining the slot output to the parser.
+web/eyes_bridge.py:16-27 builds the catalog with `contrast = exp(-0.025 * scale * n)` and `frequency = n` for noise scales 0, 0.5, 1 and 2. The page shows these rows with the source label "LOCAL MODEL", a "Noise scale" column, and zero-width intervals.
+
+The README uses "LOCAL MODEL" for the calibrated Aria-like simulation suites. Those suites give different values. The mean fitted contrast in `results/frozen-evidence.json`:
 
-### F2 — The demonstrated Qollab run has no audio download despite the headline instruction
+| Width | At 1x noise, saved suite | At 1x noise, catalog formula | At 2x noise, saved suite | At 2x noise, catalog formula |
+|---|---|---|---|---|
+| n=1 | 0.9995 | 0.9753 | 0.9991 | 0.9512 |
+| n=2 | 0.9858 | 0.9512 | 0.9709 | 0.9048 |
+| n=4 | 0.9591 | 0.9048 | 0.9174 | 0.8187 |
 
-README.md:7 says: **“then check the parity chart, text receipt, and WAV download.”** PROJECT_PAGE.md:11 says: **“then inspect the parity chart, text receipt, and WAV download.”** README.md:14 describes **“downloadable WAV audio.”**
+A reader who sees "LOCAL MODEL, noise scale 1, n=4, contrast 0.905" will reasonably take it to be the evidence in the README table, and it contradicts that evidence. The bridge status string says "analytic reference ...". README:125 and PROJECT_PAGE:111 say only that these entries are "illustrative references, not new acquisitions". Neither says what the numbers are.
 
-The actual built-in Qollab export `results/exports/saurav-eyes-free-entanglement-output-completed-2026-10-10T14-39-04.532Z.html`:1 contains the exact console message:
+Required fix. In README ("Publication and provenance" paragraph) and PROJECT_PAGE (same section), state: "The page's LOCAL MODEL catalog rows are a stylised analytic reference (frequency = n, contrast = exp(-0.025 x noise-scale x n), no sampling). They are not outputs of the calibrated noise simulation and do not match the saved 432/360-record suites (for example, the mean fitted contrast of the saved frozen suite at 1x noise and n=4 is 0.959, not 0.905)."
 
-```text
-Audio download unavailable: sendFile not injected; fallback needs operator verification.
-```
+The alternative fix is to rename the page's source label for those rows, for example "ANALYTIC REFERENCE". That means changing `source` in `fringe_catalog()` and the matching `"LOCAL MODEL"` string checks in web/main.js (lines 13, 97) and web/test_bridge.py. It needs a rebuild and a re-test, so the text fix is cheaper.
 
-The current default local run emits the same message. main.py:140 is `sender = globals().get("sendFile")`; lines 141–146 provide a download only if that function is callable, otherwise print the unavailable message. The shipped top-level set has no browser audio interface or alternative download implementation. The test injects a mock sender, so its success does not contradict the failed real Qollab export.
+### N3. The documented recorded-batch reproduction cannot be done on the published JS page, and the page's one IonQ action is undocumented
 
-The conditional caveats at README.md:62,92 and PROJECT_PAGE.md:61 are useful but do not establish the headline feature. `results/g1.json` and the shipped summary also retain `js_bridge_and_audio_fallback` false and overall FAIL. Implement and verify a working Qollab audio/download path, or clearly limit the submission's claims to the functioning features and disclose that the intended audio delivery remains unmet. A generic pending human acceptance item cannot turn an observed missing core feature into PASS.
+README.md:39 and PROJECT_PAGE.md:35 say: "select IonQ Aria 1, set Slot=E02 ... and Shots=1,000, then run". README.md:66 and PROJECT_PAGE.md:64 say to "use the fixed settings shown by the slot selector" and to paste each `RECORD_JSON` line into `recorded_ionq.py`.
 
-### F3 — Global provenance labels misclassify cloud results as local-only
+The published artifact is the flattened `--web` set. `tools/package_project.py:26` says "index.html + main.js at top level take precedence; main.py stays (bridges may import it)". The slot/shots/phase_frame parameters live only in `main.py:49`. The JS page never calls `main()`. Its only IonQ action is the button "Run one packed IonQ sample". That button calls `ionq_sample(backend, 128)` in web/eyes_bridge.py:66, which uses `pack(0.0)`, 128 shots, no slot, and returns a partial parity sample with no fit. The docs never mention this button.
 
-README.md:28 says: **“Every value below is **LOCAL MODEL** evidence from an exact small-state simulation with a calibrated Aria-like noise approximation. It is not Qollab execution or device data.”** Immediately below, lines 30–39 present the RECORDED cloud table. This is contradictory provenance, not a punctuation issue.
+The docs therefore tell a reader to do something the published page cannot do. This breaks the requirement that the docs state how to reproduce the recorded results.
 
-evidence_summary.json:2 says:
+Required fix. In README ("IonQ simulator slots" and the line-39 paragraph) and PROJECT_PAGE (lines 35 and 64), state:
+- Slot runs E01-E09 were made with the Python `main.py` project variant (upload `uploads/eyes-free.zip`, not the `--web` build). Use its parameters `slot=E02..E09` and `shots=1000`. That is what produced the `RECORD_JSON` lines.
+- The published JS page does not expose slots. It only replays the embedded recorded sweeps.
+- The page offers one optional button, "Run one packed IonQ sample". It submits one 21-qubit packed circuit at 128 shots, yields a partial parity value only, and does not reproduce any recorded slot.
 
-```json
-"evidence_label": "LOCAL MODEL (calibrated IonQ-like approximation, not device)"
-```
+### N4. Shared-helper note names projects whose code Eyes-Free does not share
 
-Its line 6385 says:
-
-```json
-"scope": "Saved local simulation evidence only; Qollab IonQ simulator records are in recorded_ionq.py."
-```
-
-Yet its `cloud_fit` section begins at line 3395 and line 3396 correctly labels cloud RECORD_JSON counts. README.md:45 and PROJECT_PAGE.md:5 likewise describe the entire file as a **“compact LOCAL MODEL summary”**, without acknowledging its recorded cloud section. Scope the local-only statements to the local suites and give the mixed evidence file an accurate overall description; retain the correct per-section labels.
-
-### F4 — The default circuit count is wrong
-
-README.md:62 states: **“The default run analyzes three small GHZ circuits”**.
-
-eyes_core.py:47 is:
-
-```python
-return [circuit(n, p + phase_frame) for n in WIDTHS for p in PHASES]
-```
-
-WIDTHS has 3 elements and PHASES has 12, so the default submits **36 circuits**, producing **three fitted series**, with 256 shots per circuit: 9,216 physical circuit shots in the local list job. main.py:15–17 also explicitly requires 36 count dictionaries. Correct “three ... circuits” to three width series / 36 circuits. This is a numeric execution-budget discrepancy.
-
-### F5 — Sound and chart do not carry the full information claimed
-
-PROJECT_PAGE.md:18 states: **“It makes the same fitted frequency, contrast, uncertainty, and fit status available visually, in structured text, and as a sound mapping.”** README.md:86 claims **“a measured fit and its uncertainty available in chart, semantic text, and sound”**. README.md:54 calls the outputs **“three equivalent presentations”**.
-
-sonify.py:13 reads only frequency and contrast, and line 21 emits:
-
-```python
-return 0.5*c*np.sin(2*np.pi*CARRIER*f*t)*envelope
-```
-
-There is no uncertainty or fit-status encoding in the waveform. main.py:136–139 selects informative fits and exports only `informative[0]`; it does not export one sound for each plotted width. figures.py:10–12 plots measured phase/parity with frequency, contrast, and flag in the legend, but no interval/error-bar display. The text transcript does retain the complete fit and its intervals. A two-number digital round trip does not validate equivalence of these channels.
-
-State precisely that optional sound encodes frequency and contrast of the selected informative series, while text carries the full uncertainty/provenance/diagnostics; specify the chart's actual information. Alternatively implement and validate the fuller representations. No additional quantum superiority or user benefit claim was found.
-
-### F6 — The shipped local evidence lacks required acquisition metadata
-
-The binding rule at `../../docs/hackathon-rules.md`:186–187 is: **“Local-simulation result files may ship as project files and be plotted during the run; label each with machine, simulator, Qiskit version, settings and date.”**
-
-README.md:45 and PROJECT_PAGE.md:5 identify **“`evidence_summary.json` ... [as] the compact LOCAL MODEL summary of the saved local results”**. The shipped summary has no machine, software-version, or result-acquisition-date metadata. This was checked recursively over its keys. Manifest hashes and numeric sampling seeds are not run dates or software versions. Its top-level config even has the exact entries `"shots_per_phase": null` (line 66), `"noise_scales": null` (line 68), and `"grid": null` (line 69), although the suite-specific configuration correctly retains shots=1000, six scales, phases, and fit settings.
-
-The local full evidence files contain Qiskit 2.5.2, NumPy 2.5.3, and SciPy 1.18.1, but the summary generator drops those versions. The full files are neither top-level nor below the upload limit. Add truthful machine, simulation implementation, exact software versions, settings, and acquisition date metadata to the shipped summary using the existing evidence/provenance. Do not substitute this review's date for the original run date. Repair the redundant null config keys or remove them with clear documentation.
-
-Cloud provenance is separately sufficient to establish the documented day/model/shots/slots from source filenames, model fields, counts, and export records. It must still be made consumable under F1.
-
-### F7 — The mandatory shared-helper disclosure is unfinished
-
-The binding rule at `../../docs/hackathon-rules.md`:184–185 requires the same helper note in each project stating **“what it does, when written, which projects use it”** and identifying project-specific work.
-
-README.md:113 states that the helper was **“written during the build window and shared with the related hackathon entries.”** PROJECT_PAGE.md:100 similarly says **“created during the window and shared with related entries.”** Neither names the actual consuming projects. The helper's own circuit_pack.py:1 contains only **“Phase-major disjoint-wire packs and little-endian marginalization.”** HELPER_SPEC.md:8–9 expressly says:
-
-```text
-Canonical shared participant/filename disclosure is pending orchestrator finalization; this file
-must not serve as a substitute for the identical final disclosure across entries.
-```
-
-Finalize an accurate identical helper note with the specific project names and creation timing. If the file is actually project-specific rather than reused, correct the reuse claim instead. The present audit does not invent cross-project reuse or independently certify other entries' notes. The broad AI/library/probe disclosures are present; this specific required shared-code note remains incomplete.
-
-### F8 — Documented local reproduction commands stop in the evidence-bearing checkout
-
-README.md:74–75 lists:
-
-```powershell
-python experiments/run.py --suite frozen --independent-manifest review/manifests/frozen.json
-python experiments/run.py --suite fresh --independent-manifest review/manifests/fresh.json
-```
-
-PROJECT_PAGE.md:69–70 lists the same commands; README.md:82 and PROJECT_PAGE.md:75 repeat the frozen command. experiments/run.py:208–209 deliberately protects existing evidence:
-
-```python
-if destination.exists() and not args.quick and not args.resume:
-    raise ValueError("full evidence already exists; preserve it before a separate orchestrator run")
-```
-
-Both documented configurations were checked only through this preflight, before any simulation. Both immediately raise that exact ValueError because the full saved files exist. Preserve the guard and document `--output-dir` pointing to a new directory for each rerun, plus the fact that experiments/ and review/manifests/ come from the repository rather than the top-level Qollab upload. Do not instruct users to overwrite or delete the authentic evidence. Recorded cloud slot settings themselves are correct; their replay problem is F1.
-
-## Claims table
-
-Repeated numerical claims are grouped with both source locations. “OK” on a number does not override a related presentation or runtime FAIL above.
-
-| Claim | Source | Reproduced value / evidence | OK/FAIL |
-| --- | --- | --- | --- |
-| Frozen audio fidelity 432/432 | README:5,49; PROJECT_PAGE:9,50; summary suites.frozen | 432 records; all 432 informative; all 432 independently recomputed decoder errors meet both limits | OK |
-| Fresh audio fidelity 360/360 | README:5,50; PROJECT_PAGE:9,51; summary suites.fresh | 360 records; all 360 informative; all 360 meet both limits | OK |
-| 24 frozen, 20 fresh seeded instances | README:49–50; PROJECT_PAGE:50–51 | 24 distinct frozen seeds and 20 distinct fresh seeds; disjoint; 18 records per seed | OK |
-| 432/432 and 360/360 identified frequencies | README:49–52; PROJECT_PAGE:50–53 | Recomputed nearest width, absolute error <=0.25, and interval containment within width +/-0.5; 432 and 360 pass | OK |
-| Audio tolerances 0.02 frequency, 0.01 contrast | README:52; PROJECT_PAGE:53; PLAN:17–18 | Frozen max errors 2.9028807801978473e-08 and 7.044340941675387e-07; fresh 2.945757504591029e-08 and 4.140304343813739e-07 | OK |
-| Identification tolerance 0.25 and half-unit interval criterion | README:52; PROJECT_PAGE:53; experiments/run.py:254–256 | Largest recipe-frequency error 0.02200198132318798 frozen, 0.02186073980319203 fresh; interval criteria also pass for every record | OK |
-| GHZ widths 1, 2, 4; width 1 reference | README:8,14,56; PROJECT_PAGE:13,26 | eyes_core.WIDTHS=(1,2,4); no frequency-only entanglement certification claim | OK |
-| Twelve phase points per series | README:22,32,56; PROJECT_PAGE:26,34 | Twelve sorted phases per width in each suite; frozen step pi/6, fresh shift pi/24 | OK |
-| Carrier 220 times fitted frequency | README:22; PROJECT_PAGE:26 | sonify.CARRIER=220; waveform formula matches; samples-only replay exactly matches saved decoder | OK |
-| Nine blocks, 21 qubits, three phase points, four batches | README:24; PROJECT_PAGE:28 | Three phases times widths (1+2+4)=21 wires; 9 blocks; four batches provide 12 phases. E01 is the documented smoke exception | OK |
-| One cloud circuit/job per run | README:24,66; PROJECT_PAGE:28,63 | One packed circuit at shared backend.run call, one result fetch/get_counts; no cloud loop | OK |
-| Default analyzes three circuits | README:62 | 36 actual circuits, three fitted series | FAIL F4 |
-| Default shots=256 | README:62; PROJECT_PAGE:61 | main signature; actual built-in export has 256 shots at each of 12 phases for each width | OK |
-| “about 1 s” default runtime | README:7,62; PROJECT_PAGE:11,61 | Current local runner reports 0.79 s; plausible local estimate, not an independently timed browser guarantee. No end-to-end browser timing is in the saved export | OK as approximate estimate only; identify timing environment on publication |
-| Acquisition 2026-10-10, aria-1, 1,000 shots/phase | README:8,32,56,66; PROJECT_PAGE:13,34,63 | E02–E09 source filenames are that UTC day; effective_noise_model aria-1; every packed count total is 1,000, so every marginal phase has 1,000 observations | OK |
-| Frozen E02–E05; fresh E06–E09 | README:32,36–39; PROJECT_PAGE:34,38–41 | Four unique slots per suite, frames and independent manifest hashes agree with cloud_slots.py and manifests | OK |
-| E01 smoke, 100 shots, excluded from fits | README:32,41; PROJECT_PAGE:34,43 | One 19-bit result 1010011000011110101 occurring 100 times; four expected asymmetric marginals; excluded from both fits | OK |
-| Frozen width 1: frequency 0.992; contrast 1.000 | README:36; PROJECT_PAGE:38 | 0.9922171041710965; 0.9999999899999998 | OK |
-| Frozen width 2: 1.999; 0.989 | README:36; PROJECT_PAGE:38 | 1.9985706741889826; 0.9889584761288279 | OK |
-| Frozen width 4: 3.998; 0.951 | README:36; PROJECT_PAGE:38 | 3.997744296141045; 0.9505559387221133 | OK |
-| Fresh width 1: 0.997; 0.991 | README:37; PROJECT_PAGE:39 | 0.9970041964892508; 0.9908850668475474 | OK |
-| Fresh width 2: 1.997; 0.986 | README:37; PROJECT_PAGE:39 | 1.9974143966450224; 0.9863568871107461 | OK |
-| Fresh width 4: 4.005; 0.955 | README:37; PROJECT_PAGE:39 | 4.0051720328305835; 0.954602163394363 | OK |
-| All six cloud fits near 1,2,4 | README:8,56; PROJECT_PAGE:13 | Six informative fits; all recipe frequencies within their intervals. Exact replay differences from summary: zero | OK |
-| RECORDED/LOCAL MODEL separation | README:28,45; PROJECT_PAGE:5; summary root labels | Correct table-level cloud labels but contradictory encompassing local-only labels | FAIL F3 |
-| Same full information in three equivalent presentations | README:54,86; PROJECT_PAGE:18 | Audio only encodes f/C, first informative series; chart does not display intervals | FAIL F5 |
-| Live Qollab WAV download | README:7,14; PROJECT_PAGE:11 | Saved actual Qollab export reports sendFile unavailable | FAIL F2 |
-| Recorded results paste/replay | README:39,66; PROJECT_PAGE:41,63 | Authentic saved objects present, but zero accepted by main's parser | FAIL F1 |
-| Reproduce local results using supplied commands | README:74–75,82; PROJECT_PAGE:69–70,75 | Both commands fail existing-evidence preflight | FAIL F8 |
-| Local evidence includes required provenance metadata | Shipped evidence_summary.json; organizer rule:186–187 | No acquisition date, machine, or software-version metadata | FAIL F6 |
-| No superseded cloud slot; corrected indexing disclosed | README:41; PROJECT_PAGE:43; WP-E-09 | Nine unique authentic slots, no duplicate replacements in exports; bit-slice repair is documented and independently verified | OK |
-| Equal-information baseline; no superiority/speedup/user-study claim | README:88–96; PROJECT_PAGE:83 | Same fit/counts, baseline and audio both 12,000 shots/series; zero resampling; comparator retains full information; no measured improvement over text asserted | OK subject to F5 |
-| Intervals descriptive, not guaranteed coverage | README:95; PROJECT_PAGE:83 | Frozen physical-frequency coverage 429/432; projection 431/432; contrast 432/432. Fresh all three 360/360. Boundary/mismatch misses retained | OK |
-| Prior sonification arXiv:2504.04624 and arXiv:2203.07879 | README:18; PROJECT_PAGE:22 | Both retrieved from arXiv and relevant to quantum sound/sonification; no unsearched uniqueness claim made | OK |
-| Qiskit 2.x and disclosed library licences | README:70,114; PROJECT_PAGE:100; requirements.txt | Environment Qiskit 2.5.2; NumPy/SciPy BSD family, Qiskit Apache-2.0, Matplotlib PSF-derived licence; shipped code has no Aer dependency | OK |
-| Shared helper disclosure complete | README:113; PROJECT_PAGE:100; HELPER_SPEC:8–9 | Purpose/window and Eyes-Free-specific work stated, but exact consuming projects/final common note absent | FAIL F7 |
-
-The two cited papers were checked directly: [arXiv:2504.04624, Notes on Quantum Soundscapes and Music](https://arxiv.org/abs/2504.04624) and [arXiv:2203.07879, Superconducting qubits as musical synthesizers for live performance](https://arxiv.org/abs/2203.07879). This confirms citation relevance, not an exhaustive novelty search.
-
-## Evidence, baseline, and protocol audit
-
-For each suite the complete Cartesian record coverage is present: 3 widths times 6 scales (0, 0.5, 0.75, 1, 1.5, 2) times 24 or 20 seeds. Every one of the 18 cells has its full denominator, all informative, all audio-success and identification decisions passing the declared thresholds. There are no dropped abstentions in these files. Cells are correlated within a seed; the docs correctly avoid calling them independent cloud trials. Seed-level audio/inference flags are 24/24 and 20/20. The gate is a digital information-preservation criterion, not a gain over the exact text baseline.
-
-The main fitter receives phases and counts only. Width enters later scoring, not fit_counts. Mathematical controls demonstrate GHZ parity cos(n*phase), product parity cos(phase)^n, and zero incoherent parity. The pure local noise code uses rz/sx/x/rxx compilation, noiseless rz, single-qubit depolarization 2*r1 and two-qubit depolarization 4*r2/3, with r1=0.0005, r2=0.009 and readout=0. These remain an approximation to IonQ noise, as documented; cloud agreement does not calibrate or uniquely identify the physical noise.
-
-The amended manifest contract is implemented and tested for both suites; file-byte hashes match cloud_slots.py and summary. Exact noisy probability vectors, KL-projection targets, residuals, and empirical coverage are present in the full evidence. The earlier manifest/truth/coverage defects in early_math.md have been repaired. Its warning that fresh seed values had already been sampled before that early review still limits any claim of outcome-unseen holdout status. Current README/page use “fresh” without asserting untouched/blind outcomes, so no additional failure is assigned.
-
-All six source hashes in evidence_summary.json match the current source bytes, including both manifests, full local files, g1.json and cloud_fit.json. Summary record counts and suite/seed statistics exactly match full evidence. For saved nominal-noise width-4 records with seeds 2026100500 and 20261011500, refitting counts gave zero difference in f/C; decoding existing WAVs gave zero difference from saved decoder outputs and their SHA-256 hashes matched. These are bounded replay checks, not fresh full-suite independent reproduction.
-
-Cloud marginalization was independently recomputed as `((int(bitstring, 2) >> offset) & ((1 << width) - 1)).bit_count() % 2`; this avoids relying on the repaired substring routine. For both suites the frequency intervals are [0.975,1.025], [1.975,2.025], and [3.975,4.025]. Contrast intervals are frozen [0.8912654901716573,1], [0.8743782571519161,1], [0.8335105972300244,1]; fresh [0.8416779541940168,1], [0.8775061858318477,1], [0.8465580785235766,1]. All agree with the shipped summary. The correct numerical analysis does not repair main's incompatible parser.
-
-There are no crossover, certification-count, quantum advantage, or hardware superiority claims to verify for this entry. Frequency alone is explicitly not an entanglement witness; contrast is explicitly not GHZ fidelity.
-
-## Submission requirements and provenance
-
-| Requirement | Evidence / limitation | Result |
-| --- | --- | --- |
-| MIT licence | LICENSE:1–21, copyright 2026 Saurav Das; README:120; PROJECT_PAGE:103 | Present |
-| Exact attribution | `This effort is supported by Qollab & IonQ.` in README:10,121 and PROJECT_PAGE:106 | Present |
-| AI, libraries, templates, prior work | README:109–115 and PROJECT_PAGE:96–100 name AgentMesh/OpenCode/OpenAI, reserve Claude, libraries, platform materials, and the pre-window probe with no code reuse asserted | Present at broad disclosure level; task-specific model attribution is not fully established by the available hook log |
-| In-window/shared helper reuse | Purpose and window disclosed; exact project list/final common note missing | FAIL F7 |
-| Theme | Quantum Unlocked in both docs | Present; platform tag remains human step |
-| Accessibility notes | Text path, labels, optional audio, keyboard/focus/captions, direct-acceptance caveat | Present; F2/F5 affect delivered claims; actual AT behavior untested |
-| Four judging criteria | Both docs explicitly cover novelty, technical execution, impact, documentation | Present |
-| Repo link | https://github.com/sauravdasmg/Qollab in both docs | Present; public/logged-out repository access is not asserted as tested |
-| Video | `[[VIDEO LINK]]` remains | Allowed human step in this work order |
-| Build window | Phase check and supplied receipt; project-specific provenance entries occur after kickoff | Consistent with in-window work; no contrary pre-window implementation event found |
-| Qollab default | Real built-in export and local ideal execution succeed | Execution present; parser/download behavior still fails |
-| Cloud confirmation | E01–E09 authentic saved Qollab simulator records and six correct replayed fits | Numerical confirmation present, not hardware evidence or a repaired live replay |
-| Logged-out acceptance/publication | No direct logged-out run established here | Human-only outstanding item |
-
-Relevant provenance log entries: line 73 admits Eyes-Free after another entry's technical-claim kill at 00:42:31 UTC; lines 80–88 record Eyes-Free implementation/testing in the open window; line 124 records the early HOLD at 03:30:59; lines 129–130 record repaired checks and frozen/fresh runs; lines 138–139 record slot/upload work; line 168 records E01–E09 completion at 14:47:25; line 176 records the repaired cloud analysis and correct rounded fits at 14:59:15. Hooks often identify agent as “main” and do not establish a complete per-task model ledger. They support timing, not a fabricated precise AI attribution. No global process/state/provenance file was modified because the work order authorizes only this report.
-
-## STYLE (non-blocking)
-
-- README:56 repeats “RECORDED (Qollab IonQ simulator)” and ends with a doubled period; line 96 has another doubled period.
-- README:66 and PROJECT_PAGE:63 refer to the cloud table “below” although it is above.
-- PROJECT_PAGE's consecutive Results/Cloud evidence headings and large leading Evidence files section could be clearer without changing any claim.
-- recorded_ionq.py:1 still says “No evidence is bundled.” despite nine embedded objects. Remove this stale comment when repairing F1; it is not evidence that the records are absent.
-- HELPER_SPEC.md contains older slot-interface details (including the historical E10 phase-frame description); distinguish historical implementation notes from the current slot ledger when finalizing it.
-- The summary retains historical G1 FAIL/independent-pass-false flags and raw evidence's cloud_confirmation=false. Do not silently relabel these as new passes. Explain their generation stage and add later independent status only after actual corrections/verification.
-- The approximate one-second runtime currently matches local emulation; state the measurement environment and avoid implying a measured end-to-end browser loading guarantee.
-
-## Snapshot and disposition
-
-| File | SHA-256 at review |
-| --- | --- |
-| README.md | d76f398df2efa8aed0e9b58d161bc847be4ea4aa0af1f95807c6d36bbd1b9847 |
-| PROJECT_PAGE.md | 220da874ee33992e1081cec361b81845b798e98d9af7df6d8d54a70fa6c0ebfd |
-| main.py | eb598669c181befc791426534d4062fcfd65b0527f37bf16c59dfd678a090eef |
-| recorded_ionq.py | 41acb96e9dbf4bee0997b91c82c39f2829f4eb90e9bfbed52cd723e4cf38de38 |
-| evidence_summary.json | e89f4d627562f33835f5436b30e11864837c241b5833bcb0b39cb3e180261cf0 |
-
-Required for a subsequent PASS: resolve F1–F8, rerun focused parser/download/contract checks and this claims audit against the final shipped files. Existing scientific counts do not need replacement merely to address these failures. Full independent experiments, browser acceptance, publication, and video were not performed or claimed by this quick verification.
+The note appears at README.md:113, PROJECT_PAGE.md:101, HELPER_SPEC.md:8 and circuit_pack.py:3. It says `circuit_pack.py` "is used by Entanglement Court, The Noise Tax and Eyes-Free."
+
+The checks:
+- Eyes-Free's `circuit_pack.py` is its own file. It imports `eyes_core`, and its API is `pack(phase_frame)`, `unpack` and `smoke_pack`.
+- It is not byte-identical to any other project's file. The md5 hashes differ across all five `projects/*/circuit_pack.py`.
+- The other files use `pack_circuits` / `unpack_counts`, and no other project imports Eyes-Free's file.
+- Entanglement Court's own note (README.md:121, HELPER_SPEC.md:11) says its helper is also used by "Two Whispers Make a Word and Never Lose Twice", not by Eyes-Free.
+- The Noise Tax note names the same three projects, but its file is also different.
+
+The hackathon rule at `docs/hackathon-rules.md:184-185` needs the note to say what the helper does, when it was written, and which projects use it. The current statement is inaccurate for this file, and the notes disagree across entries.
+
+Required fix. If code is not shared, replace the sentence with the truth: "`circuit_pack.py` is Eyes-Free's own helper, written in the build window. It packs phase-major circuits onto disjoint wires and marginalizes little-endian counts. It contains no code from other entries; sibling entries have separately written files of the same name." If it is a deliberately common helper, instead use one final identical wording across all entries, with the exact project list, and ship the same file.
+
+## 4. Claims table
+
+All README/PROJECT_PAGE numbers were traced to a shipped file or to `results/`.
+
+| Claim | Source | Reproduced value | Status |
+|---|---|---|---|
+| Frozen audio fidelity 432/432 | README:5,49; PAGE:5,51 | summary.suites.frozen.record_count 432. Seed-level flags 24/24. | OK |
+| Fresh audio fidelity 360/360 | README:5,50; PAGE:5,52 | record_count 360. Seed-level flags 20/20. | OK |
+| Frozen/fresh frequency identification 432/432 and 360/360 | README:49-50; PAGE:51-52 | Cell-level `identified` equals the denominator. | OK |
+| 24 and 20 seeded instances | README:49-50 | 24 and 20 seed lists in the summary. | OK |
+| Thresholds 0.02 (frequency), 0.01 (contrast), 0.25 | README:52 | Unchanged from the round-1 recomputation. Maximum observed errors are far below the limits. | OK |
+| Cloud table (frequency; contrast) | README:36-37; PAGE:32-33 | See the refit table in Section 1. All 12 values match to the printed digits. | OK |
+| Human-accepted n=4 frozen fit | provenance line 282 | 3.9977 [3.975, 4.025]; 0.9506 [0.8335, 1] equals the shipped fit. | OK |
+| Acquisition 2026-10-10, aria-1, 1,000 shots, slots E02-E09; E01 100-shot smoke, excluded | README:8,32; PAGE:28 | `recorded_ionq.py` has 9 objects. Slot, suite, shots and effective noise model all match. | OK |
+| Nine blocks, 21 qubits, 3 phases per batch, 4 batches | README:24; PAGE:24 | circuit_pack.pack and cloud_slots.build_slot match. | OK |
+| Default run is 36 circuits, 3 series, 256 shots, 9,216 circuit shots | README:62; PAGE:62 | eyes_core.py:47 and main.py:16. | OK |
+| About 1 s runtime | README:7,62 | Local emulation only. The docs say so. | OK |
+| Chart shows no intervals | README:54,94; PAGE:14,56,84 | The page draws pointwise Wilson 95% intervals and the fitted curve. | MISMATCH (N1) |
+| LOCAL MODEL catalog rows on the page | eyes_bridge.py:16-27; README:125 | They use an invented decay law and do not match the saved suites. | MISMATCH (N2) |
+| Recorded-batch reproduction by "Slot=E02, Shots=1000" | README:39,66; PAGE:35,64 | Not possible on the published JS page. | UNBACKED on the published artifact (N3) |
+| Helper "used by Entanglement Court, The Noise Tax and Eyes-Free" | README:113; PAGE:101 | The files are separate and not identical. | MISMATCH (N4) |
+| Sound encodes frequency and contrast only; text carries the intervals | README:4,125; PAGE:3,14,111 | sonify.py and main.js:129-131 agree. | OK |
+| WAV only where `sendFile` exists | README:7,14,125 | main.js:146,180 agree. | OK |
+| Audio for RECORDED/LIVE/LOCAL MODEL | PAGE:7; index.html | All fringe types play (main.js:117-141). Human acceptance confirms. | OK |
+| RECORDED, LIVE and LOCAL MODEL labeling in the result table | main.js:13; eyes_bridge.py | RECORDED comes from the embedded sweeps. LIVE comes from the injected ideal simulator. LOCAL MODEL labeling is questioned in N2. | OK except N2 |
+| Local reproduction commands | README:73-75; PAGE:68-71 | `--output-dir` is accepted and the guard is satisfied. | OK |
+| Prior sonification arXiv:2504.04624 and arXiv:2203.07879 | README:18; PAGE:18 | Retrieved and relevant in round 1. The docs make no uniqueness claim. | OK |
+| No speedup, superiority or learner-benefit claim | README:88-96; PAGE:82-84 | None is made. Frequency alone is explicitly not an entanglement witness. | OK |
+
+## 5. Baseline, evidence and shipped-set audit
+
+- **Baseline.** The text/table comparator carries the same fit, so no gain over text is claimed. Baseline and audio paths both use the same 12,000 shots per series (`baseline_shots` and `audio_shots` are both 12000, `resamples` 0). The fit sees only phases and counts, never the width. The saved-evidence gates remain historical G1 FAIL. They are disclosed at README:127.
+- **Noise model.** It is stated as local and approximate (r1 = 0.0005, r2 = 0.009, readout 0, basis rz/sx/x/rxx). Cloud agreement is not claimed to calibrate it.
+- **Shipped-set integrity.** `uploads/eyes-free-web.zip` (built 14:52) holds the same bytes as the project for every file except `evidence_summary.json`. That file was regenerated later, with the corrected labels and provenance. Rebuild the zip with `python tools/package_project.py eyes-free --web` from the repository root before upload, or it will ship the older summary. The rebuild changes only the data summary; the code files are already identical.
+- **Contract.** All BLOCKER checks pass except this report. The six MANUAL items are human-only (publish, logged-out run, video, public repo, theme tag, in-window attestation).
+
+## 6. Submission musts
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| MIT licence | LICENSE; README:120; PAGE:104 | Present |
+| Exact attribution line | README:10,121; PAGE:107 | Present |
+| AI, library and prior-work disclosure | README:109-115; PAGE:99-101 | Present (helper note is N4) |
+| Theme tag | "Quantum Unlocked" | Present |
+| Accessibility notes | README:105-107; PAGE:93-95 | Present |
+| Four judging-criteria summaries | README:98-103; PAGE:86-91 | Present |
+| Repo link | https://github.com/sauravdasmg/Qollab | Present (public access not tested) |
+| Video | `[[VIDEO LINK]]` remains | Allowed human step |
+
+## 7. STYLE (non-blocking)
+
+- README:92 still says the final page's browser acceptance is unestablished. It could now cite the human acceptance (provenance line 282, 2026-10-10: the page ran, audio played for all fringe types, the chart drew, and the n=4 values matched). It should still say screen-reader and keyboard behavior are untested.
+- README:54 and PAGE:56 alt text end with "... WAV". WAV is conditional, so say "optional WAV where `sendFile` exists".
+- README:56 duplicates the line-8 RECORDED sentence and ends with a doubled period.
+- README:66 and PAGE:64 say the fits are "below" or "above" inconsistently with the layout. PAGE:39-40 has stray blank lines.
+- The result-table column "Noise scale" shows "aria-1" for RECORDED rows and 0 for LIVE rows. A column title such as "Noise scale / model" would be clearer.
+- `evidence_summary.json` still carries the historical g1 gate with `overall: FAIL` and `js_bridge_and_audio_fallback: false`. This is explained by `historical_status_note` and README:127. Keep that note prominent.
+- The Python `main.py` fallback still prints the older "Audio download unavailable" message when `sendFile` is missing. This is fine, but it is not what the JS page shows.
+
+## 8. What is required for PASS
+
+Make the four documentation edits N1-N4 in README.md and PROJECT_PAGE.md. N4 also needs the HELPER_SPEC.md line and the circuit_pack.py docstring. Then rebuild the zip from the repository root. No code change is needed if N2 is fixed by text. Nothing in the numbers needs to change. Browser, logged-out and video steps remain human-only.

@@ -3,7 +3,7 @@
 Shared helpers live in their own files: circuit_pack.py and receipt.py implement
 circuit packing, count normalization, backend dispatch and evidence receipts.
 Written during Oct 9-11, 2026, with exact UTC provenance and source/license
-attribution; used by Entanglement Court, The Noise Tax and Eyes-Free. The Noise Tax
+attribution. Each entry ships its own version of this helper; the files differ. The Noise Tax
 imported the helper from the retired Two Whispers build-window entry.
 Project-specific physics, decoding, inference and presentation are described
 on each project page.

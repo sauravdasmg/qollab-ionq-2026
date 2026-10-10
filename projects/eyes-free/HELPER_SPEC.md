@@ -5,7 +5,7 @@ Owned outputs are the Python core, WAV fallback, bounded evidence CLI and focuse
 No interactive UI or science PASS is supplied. This effort is supported by Qollab & IonQ.
 
 Qiskit 2.x, NumPy, SciPy, Matplotlib and standard-library dependencies only.
-`circuit_pack.py` packs phase-major circuits into disjoint wires and marginalizes little-endian counts. It was written during the hackathon build window and is used by Entanglement Court, The Noise Tax and Eyes-Free.
+`circuit_pack.py` is a packing helper written during the hackathon build window (Oct 9-11, 2026). It packs several small circuits onto disjoint qubits of one circuit for Qollab's one-job-per-run IonQ interface and splits the measured counts back per block. Each of our entries (Entanglement Court, The Noise Tax, Eyes-Free) ships its own version of this helper with the same purpose; the files differ in detail. Eyes-Free's version is specific to its phase-major GHZ batches.
 GHZ phase recipes, frequency-blind fitting, browser audio/speech, receipts, UI, and evidence/decoder protocol are specific to Eyes-Free.
 The orchestration work order describes an earlier generic JS audio probe; none is copied here.
 

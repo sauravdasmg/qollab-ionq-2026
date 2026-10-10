@@ -1,6 +1,7 @@
 """Phase-major disjoint-wire packs and little-endian marginalization.
 
-circuit_pack.py packs phase-major circuits into disjoint wires and marginalizes little-endian counts. It was written during the hackathon build window and is used by Entanglement Court, The Noise Tax and Eyes-Free.
+circuit_pack.py: Eyes-Free's own phase-major packing helper, written during the build window
+(Oct 9-11, 2026). Each entry ships its own version of this helper; the files differ.
 """
 from qiskit import QuantumCircuit
 from eyes_core import WIDTHS, PHASES, circuit, normalized_counts

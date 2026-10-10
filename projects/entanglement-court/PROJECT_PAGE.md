@@ -107,7 +107,7 @@ The web interface is keyboard-operable and uses text and symbols alongside high-
 
 ## Disclosure and submission details
 
-AI tools: AgentMesh routing to OpenCode free models, OpenAI Codex models, and Claude Code. The shared `circuit_pack.py` and `receipt.py` helpers were written during Oct 9–11, 2026 and are also used by Two Whispers Make a Word and Never Lose Twice; the project-specific physics and presentation are distinct. Libraries: Qiskit 2.x (Apache-2.0), NumPy and SciPy (BSD-3-Clause), Matplotlib (PSF-based license). Qollab runtime documentation and hackathon rules informed the implementation; no Qollab starter template or outside project code is represented as original work.
+AI tools: AgentMesh routing to OpenCode free models, OpenAI Codex models, and Claude Code. Shared helper code in `circuit_pack.py` and `receipt.py` was written during Oct 9–11, 2026: it packs several small circuits onto disjoint qubits of one circuit for Qollab's one-job-per-run IonQ interface, splits the counts back per block and writes evidence receipts. Each of our entries (Entanglement Court, The Noise Tax, Eyes-Free) ships its own version of these helpers with the same purpose; the files differ in detail; the project-specific physics and presentation are distinct. Libraries: Qiskit 2.x (Apache-2.0), NumPy and SciPy (BSD-3-Clause), Matplotlib (PSF-based license). Qollab runtime documentation and hackathon rules informed the implementation; no Qollab starter template or outside project code is represented as original work.
 
 **Theme tag:** Quantum Unlocked  
 **License:** MIT ([LICENSE](LICENSE))

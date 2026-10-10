@@ -1,4 +1,4 @@
-"""Shared helpers live in their own files: circuit_pack.py and receipt.py implement circuit packing, count normalization, backend dispatch and evidence receipts. Written during Oct 9-11, 2026, with exact UTC provenance and source/license attribution; used by Two Whispers Make a Word, Never Lose Twice and Entanglement Court only where the shipped manifest lists the helper. Project-specific physics, decoding, inference and presentation are described on each project page.
+"""Shared helpers live in their own files: circuit_pack.py and receipt.py implement circuit packing, count normalization, backend dispatch and evidence receipts. Written during Oct 9-11, 2026, with exact UTC provenance and source/license attribution; each entry (Entanglement Court, The Noise Tax, Eyes-Free) ships its own version; the files differ. Project-specific physics, decoding, inference and presentation are described on each project page.
 
 Independent implementation from HELPER_SPEC.md; project MIT license applies.
 """
