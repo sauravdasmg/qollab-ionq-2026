@@ -91,7 +91,7 @@
     "numerical_conditions_met": true,
     "precision_target_met": false,
     "inference_adequate": true,
-    "decision": "PASS_LOCAL_CONDITIONS",
+    "decision": "LOCAL_CONDITIONS_ONLY; N precision and frozen/fresh agreement gates not met",
     "independent_reviewer": "pending",
     "cloud_crossover": "not measured",
     "admission_capacity_and_default_runtime": "orchestrator must audit"
@@ -2032,7 +2032,7 @@
     "numerical_conditions_met": true,
     "precision_target_met": false,
     "inference_adequate": true,
-    "decision": "PASS_LOCAL_CONDITIONS",
+    "decision": "LOCAL_CONDITIONS_ONLY; N precision and frozen/fresh agreement gates not met",
     "independent_reviewer": "pending",
     "cloud_crossover": "not measured",
     "admission_capacity_and_default_runtime": "orchestrator must audit"

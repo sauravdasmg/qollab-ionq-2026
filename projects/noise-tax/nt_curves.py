@@ -7,7 +7,7 @@ LABEL = "LOCAL MODEL (calibrated IonQ-like channel, frozen n=24, fresh n=24)"
 N_INSTANCES = {"frozen": 24, "fresh": 24}
 SOURCE_SHA256 = {'fresh.json': '69e4b59a078cdad693392c01fcd9da81af6399eb2710b52f916db54b4d0d551f',
  'frozen.json': 'd76cee76e4c2cc453fbcbff1c67010d2a6cd6d3e4e5d178501a2f51d1f0faa8f',
- 'summary.json': 'afa2c1b47b17aa56806bca01126a0212f94d1c45b6e3d8536e891874bef96a58'}
+ 'summary.json': '678faad920aef96032a1effbd480bd709bac1db7f1329862da3931b20bd14682'}
 CURVES = {'note': 'Compact summary of results/frozen.json and results/fresh.json (full files kept locally; too large '
          'for GitHub/Qollab). LOCAL MODEL: calibrated IonQ-like channel, not device.',
  'suites': {'fresh': {'analysis': {'N': {'aria-1': {'ci_width': 0.30000000000000004,
@@ -1696,7 +1696,8 @@ CURVES = {'note': 'Compact summary of results/frozen.json and results/fresh.json
                                                                 'reporting': 'DETERMINISTIC'}}},
                       'gate': {'admission_capacity_and_default_runtime': 'orchestrator must audit',
                                'cloud_crossover': 'not measured',
-                               'decision': 'PASS_LOCAL_CONDITIONS',
+                               'decision': 'LOCAL_CONDITIONS_ONLY; N precision and frozen/fresh agreement '
+                                           'gates not met',
                                'independent_reviewer': 'pending',
                                'inference_adequate': True,
                                'numerical_conditions_met': True,
@@ -3474,7 +3475,8 @@ CURVES = {'note': 'Compact summary of results/frozen.json and results/fresh.json
                                                                  'reporting': 'DETERMINISTIC'}}},
                        'gate': {'admission_capacity_and_default_runtime': 'orchestrator must audit',
                                 'cloud_crossover': 'not measured',
-                                'decision': 'PASS_LOCAL_CONDITIONS',
+                                'decision': 'LOCAL_CONDITIONS_ONLY; N precision and frozen/fresh agreement '
+                                            'gates not met',
                                 'independent_reviewer': 'pending',
                                 'inference_adequate': True,
                                 'numerical_conditions_met': True,

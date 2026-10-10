@@ -60,7 +60,7 @@ GAMES = {
     },
     'N': {
         'title': 'Never Lose Twice',
-        'subtitle': 'quantum hedge vs normal play',
+        'subtitle': 'published hedge vs attained product',
         'positive': 'quantum hedge wins',
         'negative': 'product strategy wins (also a quantum strategy)',
         'metric': 'fixed-prize loss, prize 0.02',

@@ -10,6 +10,9 @@ ROOT = Path(__file__).resolve().parents[1]
 def render(source):
     raw = source.read_bytes()
     data = json.loads(raw)
+    for content in data['suites'].values():
+        if content.get('gate', {}).get('decision') == 'PASS_LOCAL_CONDITIONS':
+            content['gate']['decision'] = 'LOCAL_CONDITIONS_ONLY; N precision and frozen/fresh agreement gates not met'
     hashes = {'summary.json': hashlib.sha256(raw).hexdigest()}
     for suite, content in data['suites'].items():
         hashes[suite + '.json'] = content['source_sha256']

@@ -12,6 +12,23 @@ import hedging_core as n
 from qiskit.providers.basic_provider import BasicSimulator
 
 
+_QUICK_DIR = None
+
+
+def _quick_output():
+    """Run experiments/run.py --quick once into a temporary folder and reuse it."""
+    global _QUICK_DIR
+    if _QUICK_DIR is None:
+        import tempfile
+        repo_root = Path(__file__).resolve().parents[1]
+        _QUICK_DIR = Path(tempfile.mkdtemp()) / 'quick'
+        result = subprocess.run([sys.executable, str(repo_root / 'experiments' / 'run.py'), '--quick',
+                                 '--output-dir', str(_QUICK_DIR)], capture_output=True, text=True,
+                                timeout=60, cwd=str(repo_root))
+        assert result.returncode == 0, result.stderr
+    return _QUICK_DIR
+
+
 def test_main_runs_on_ideal_simulator_under_40s():
     """main() runs through qollab_local.py on ideal backend in < 40s and prints LIVE/RECORDED."""
     import main
@@ -111,8 +128,7 @@ def test_experiments_run_quick_works():
 
 def test_experiments_run_quick_manifest_has_correct_structure():
     """Quick manifest has expected structure with 2 instances and 2 scale points."""
-    repo_root = Path(__file__).resolve().parents[1]
-    output_dir = repo_root / 'test_quick_results'
+    output_dir = _quick_output()
     
     with open(output_dir / 'quick-manifest.json', 'r') as f:
         manifest = json.load(f)
@@ -130,8 +146,7 @@ def test_experiments_run_quick_manifest_has_correct_structure():
 
 def test_experiments_run_quick_gate_decision_is_smoke_only():
     """Quick run gate decision should be SMOKE_ONLY."""
-    repo_root = Path(__file__).resolve().parents[1]
-    output_dir = repo_root / 'test_quick_results'
+    output_dir = _quick_output()
     
     with open(output_dir / 'quick.json', 'r') as f:
         data = json.load(f)

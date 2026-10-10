@@ -37,37 +37,37 @@
   {
     "source": "D:\\Quantum Projects\\Qollab\\projects\\two-whispers\\synthesis.py",
     "source_sha256": "39939b815823f0823702fbc2297cee3e5d5b8fc52b4e2c66d21674041fe9ed7f",
-    "destination": "adapted algorithm/reference; see REUSE_MANIFEST.md",
+    "destination": "whispers_core.py: double-trine measurement synthesis algorithm/reference adapted from retired Two Whispers.",
     "utc": "2026-10-10T01:08:30.098605+00:00"
   },
   {
     "source": "D:\\Quantum Projects\\Qollab\\projects\\two-whispers\\experiments\\noise.py",
     "source_sha256": "8b9de9364470bc4e73ef0721784fcd637d9e95689f0161652473870ae7d41875",
-    "destination": "adapted algorithm/reference; see REUSE_MANIFEST.md",
+    "destination": "noise_channel.py and experiments/run.py: W noise-analysis methodology/reference from retired Two Whispers.",
     "utc": "2026-10-10T01:08:30.098662+00:00"
   },
   {
     "source": "D:\\Quantum Projects\\Qollab\\projects\\never-lose-twice\\experiments\\noise.py",
     "source_sha256": "021565307e7186f06510d13bd751c48b5272196d3e56cc40fd8adc6f1f34cb21",
-    "destination": "adapted algorithm/reference; see REUSE_MANIFEST.md",
+    "destination": "noise_channel.py and experiments/run.py: N noise-analysis methodology/reference from retired Never Lose Twice; merged channel semantics are shared.",
     "utc": "2026-10-10T01:08:30.098710+00:00"
   },
   {
     "source": "D:\\Quantum Projects\\Qollab\\projects\\two-whispers\\receipt.py",
     "source_sha256": "0af406a359775825c411462df631e9b2949ce6e055ba9f93180fa48022bf1ad6",
-    "destination": "adapted algorithm/reference; see REUSE_MANIFEST.md",
+    "destination": "receipt.py: packed-count receipt validation and normalization reference from retired Two Whispers.",
     "utc": "2026-10-10T01:08:30.098757+00:00"
   },
   {
     "source": "D:\\Quantum Projects\\Qollab\\tools\\ionq_noise_params.json",
     "source_sha256": "b1b9bbdadb59a971905cc9da1a4cf5135093d9ae2b5fb527bbaba719cd15a5a8",
-    "destination": "adapted algorithm/reference; see REUSE_MANIFEST.md",
+    "destination": "calibration_snapshot.json and noise_channel.py: calibration parameters copied as the shared approximate IonQ-like channel reference.",
     "utc": "2026-10-10T01:08:30.098800+00:00"
   },
   {
     "source": "D:\\Quantum Projects\\Qollab\\tools\\qollab_local.py",
     "source_sha256": "a95871410bf7bec69ece3084ed76e3d24abe73cfc5ac0999142a8b644a14ddf9",
-    "destination": "adapted algorithm/reference; see REUSE_MANIFEST.md",
+    "destination": "Local verification uses the repository tools/qollab_local.py emulator; this is tooling/reference, not a shipped provider.",
     "utc": "2026-10-10T01:08:30.098845+00:00"
   }
 ]
