@@ -17,6 +17,12 @@ def analyze(counts, phase_frame=0.0):
     return [fit_counts(PHASES+phase_frame, counts[j*12:(j+1)*12]) for j in range(3)]
 
 
+def _submit_job(circuit_or_list, shots):
+    """Single shared submission point for all paths."""
+    job = backend.run(circuit_or_list, shots=shots)
+    return job.result().get_counts()
+
+
 def main(shots: int=256, phase_frame: float=0.0, slot: str = ""):
     if slot:
         if slot not in SLOTS: raise ValueError("unknown cloud slot")
@@ -28,22 +34,13 @@ def main(shots: int=256, phase_frame: float=0.0, slot: str = ""):
             backend.set_options(noise_model="aria-1")
             effective = getattr(backend.options, "noise_model", None)
             if effective != "aria-1": raise ValueError("effective aria-1 option not confirmed")
-        job = backend.run(q, shots=shots)
-        result = job.result()
-        counts = result.get_counts()
-        record = {"slot":slot,"suite":spec["suite"],"manifest_hash":spec["manifest_hash"],
-                  "shots":shots,"effective_noise_model":effective,"counts":counts,"manifest":manifest}
-        if slot != "E01":
-            record["fits"] = {str(n): {"frequency":None,"frequency_ci":None,"contrast":None,
-                "contrast_ci":None,"phase_points_received":3,"status":"awaiting complete twelve-phase suite"} for n in WIDTHS}
-            print("Slot frequency and contrast fits require combining all four preregistered batches.", flush=True)
-        print("RECORD_JSON " + json.dumps(record, sort_keys=True), flush=True)
-        return record
-    if not 1 <= shots <= 1000 or not np.isfinite(phase_frame):
-        raise ValueError("shots must be 1..1000 and phase_frame finite")
-    print("Eyes-Free: starting one counts job", flush=True)
-    if backend.name == "ionq_simulator":
-        # Science runs are one phase-major triple; four explicit runs cover a sweep.
+        circuit_or_list = q
+        path_type = "slot"
+        path_params = {"slot": slot, "spec": spec, "manifest": manifest, "effective": effective}
+    elif backend.name == "ionq_simulator":
+        if not 1 <= shots <= 1000 or not np.isfinite(phase_frame):
+            raise ValueError("shots must be 1..1000 and phase_frame finite")
+        print("Eyes-Free: starting one counts job", flush=True)
         smoke = phase_frame == -1.0
         export = abs(phase_frame-2*np.pi) < 1e-9
         base = phase_frame if not export else 0.0
@@ -61,18 +58,49 @@ def main(shots: int=256, phase_frame: float=0.0, slot: str = ""):
         if effective != "aria-1":
             raise ValueError("effective aria-1 option not confirmed")
         q, manifest = smoke_pack() if smoke else pack(base)
-        job = backend.run(q, shots=shots)
-        result = job.result()
-        counts = result.get_counts()
+        circuit_or_list = q
+        path_type = "ionq_default"
+        path_params = {"smoke": smoke, "export": export, "base": base, "fresh": fresh, "frozen": frozen,
+                       "manifest": manifest, "effective": effective}
+    else:
+        if not 1 <= shots <= 1000 or not np.isfinite(phase_frame):
+            raise ValueError("shots must be 1..1000 and phase_frame finite")
+        circuit_or_list = circuits(phase_frame)
+        path_type = "builtin"
+        path_params = {"phase_frame": phase_frame}
+
+    counts = _submit_job(circuit_or_list, shots)
+
+    if path_type == "slot":
+        slot = path_params["slot"]
+        spec = path_params["spec"]
+        manifest = path_params["manifest"]
+        effective = path_params["effective"]
+        record = {"slot":slot,"suite":spec["suite"],"manifest_hash":spec["manifest_hash"],
+                  "shots":shots,"effective_noise_model":effective,"counts":counts,"manifest":manifest}
+        if slot != "E01":
+            record["fits"] = {str(n): {"frequency":None,"frequency_ci":None,"contrast":None,
+                "contrast_ci":None,"phase_points_received":3,"status":"awaiting complete twelve-phase suite"} for n in WIDTHS}
+            print("Slot frequency and contrast fits require combining all four preregistered batches.", flush=True)
+        print("RECORD_JSON " + json.dumps(record, sort_keys=True), flush=True)
+        return record
+
+    if path_type == "ionq_default":
+        smoke = path_params["smoke"]
+        export = path_params["export"]
+        base = path_params["base"]
+        fresh = path_params["fresh"]
+        frozen = path_params["frozen"]
+        manifest = path_params["manifest"]
+        effective = path_params["effective"]
         record = make_record(counts, manifest, shots, base, effective,
                              "smoke" if smoke else "export" if export else "fresh" if fresh else "frozen",
-                             qubits=q.num_qubits)
+                             qubits=21 if not smoke else 19)
         print("RECORD_JSON " + json.dumps(record, sort_keys=True), flush=True)
         print("Partial three-phase pack only; no frequency estimate. Preserve original console export.", flush=True)
         return record
-    job = backend.run(circuits(phase_frame), shots=shots)
-    result = job.result()
-    counts = result.get_counts()
+
+    phase_frame = path_params["phase_frame"]
     estimates = analyze(counts, phase_frame)
     for n,e in zip(WIDTHS,estimates):
         print("Measured series width %d; estimate remains frequency-blind." % n,flush=True)

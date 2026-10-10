@@ -7,7 +7,7 @@ import sonify
 import receipt
 import recorded_ionq
 import circuit_pack
-import figures
+import main
 
 
 def fringe_catalog():
@@ -23,8 +23,7 @@ def fringe_catalog():
 def live_fringe(backend, shots=256):
     """Run the small ideal reference circuits using the injected backend."""
     circuits = eyes_core.circuits()
-    job = backend.run(circuits, shots=shots)
-    counts = job.result().get_counts()
+    counts = main._submit_job(circuits, shots)
     output = []
     phases = list(eyes_core.PHASES)
     for index, n in enumerate(eyes_core.WIDTHS):
@@ -57,8 +56,7 @@ def recorded_fringe():
 def ionq_sample(backend, shots=128):
     """Submit exactly one packed circuit, then return labeled fringe records."""
     packed = circuit_pack.pack_circuits([eyes_core.circuit(1, 0.0)])
-    job = backend.run(packed, shots=shots)
-    counts = job.result().get_counts()
+    counts = main._submit_job(packed, shots)
     if isinstance(counts, list):
         counts = counts[0]
     total = sum(counts.values())
