@@ -32,7 +32,7 @@ sx/x depolarization lambda=2*r1, rxx lambda=4*r2/3, rz noiseless. Matches channe
 structure of local tooling but remains explicitly a local approximation, never cloud evidence.
 
 Full orchestrator commands:
-`python experiments/run.py --suite frozen`
+`python experiments/run.py --suite frozen --independent-manifest review/manifests/frozen.json`
 `python experiments/run.py --suite fresh --independent-manifest PATH`
 These save counts, truth, configs, fit CIs/residuals, PCM, text, decoded estimates,
 errors, abstentions, timings and seed summaries. Existing full JSON is never overwritten.
@@ -42,3 +42,32 @@ KILL/HOLD: failure of any per-cell criterion is reported as threshold failure, n
 by dropping records. Independent verifier and full Qollab IonQ confirmation are required
 before science PASS. Scheduling, spare capacity, attempt ledger and provenance belong to
 orchestrator; this package does not authorize cloud runs or submission.
+
+## WP-E-04 truth/coverage amendment ? 2026-10-10T03:31:54.141546+00:00
+
+Written before new evaluation output. Frozen and fresh both require an independent
+manifest; its exact file bytes are SHA-256 hashed and its validated settings consumed.
+Each record saves the complete exact channel bit-string probability vectors in
+little-endian integer index order, the phase grid, even probabilities and parity.
+For scale zero the population frequency/contrast targets are analytically n and 1.
+For nonzero scales a single sinusoid can be misspecified. Its contrast target is
+hypot(bc,bs) of the constrained binomial KL projection of the exact even probabilities
+onto b0+bc*cos(f*x)+bs*sin(f*x), with the frozen SPEC grid, refinement, tie rule
+and physical numerical guard. Compute this deterministic projection using fractional
+expected counts (1000*p_even, 1000*(1-p_even)), without sampling or rounding.
+Its frequency is the pseudo-true fitted frequency; recipe frequency n remains the
+physical target. Save projection coefficients, frequency, convergence and parity
+residuals so model mismatch is visible. Projection intervals/flags are not evidence.
+
+Report signed and absolute contrast error against this target, physical frequency
+error against n, and frequency error against the projection. Save sampled-fit
+residuals and exact-channel-versus-fitted parity residuals (vectors, RMSE, maximum).
+Empirical coverage is inclusive interval containment of physical frequency n,
+projection frequency and population contrast. Denominators include every record,
+including abstentions. Per width/scale cells report successes, trials, fractions
+and binomial CIs; overall fractions pool correlated records and have no binomial CI.
+No coverage threshold was specified previously; report observed coverage at nominal
+1-alpha (alpha=.05/6), including boundary/misspecification failures, without claiming
+calibrated intervals. Full science PASS still requires independent verification,
+full suites and Qollab confirmation. Quick truncations are partial evidence only.
+Local ideal samples are labelled local ideal simulation, not live Qollab execution.

@@ -111,6 +111,14 @@ def run_demo(backend, case=0, shots=200, challenge="sealed", assume_trusted_meas
         'manifest': manifest,
         'layout': layout,
         'marginals': marginals,
+        # Explicit rows preserve leading-zero outcomes across Python/JS bridges.
+        # Missing Z blocks in audited16 are unavailable, never fabricated zeros.
+        'distributions': {
+            name: [{'outcome': format(i, '04b'),
+                    'probability': hist.get(format(i, '04b'), 0) / sum(hist.values())}
+                   for i in range(16)]
+            for name, hist in marginals.items() if name.endswith('_Z')
+        },
         'analysis': analysis,
         'record': record if ionq else None,
         'source': source,
@@ -151,14 +159,27 @@ def get_case_metadata(case=0):
 
 def get_circuit_text(case=0, challenge="sealed", block_name=None):
     """Get circuit as text for a specific block or all blocks."""
-    from qiskit import QuantumCircuit
     circuits, manifest = make_demo(case, recipe={'audited16': challenge == 'audited16'})
     blocks = demo_blocks(circuits, manifest)
     if block_name:
-        for b in blocks:
-            if b.name == block_name:
-                return str(b)
-        raise ValueError(f'block {block_name} not found')
+        aliases = {'sealed': ('target_Z', 'impostor_Z'),
+                   'Z': ('target_Z', 'impostor_Z'),
+                   'A': ('target_A', 'impostor_A'),
+                   'B': ('target_B', 'impostor_B'),
+                   'stamp': ('target_A', 'target_B'),
+                   'receipt': ('target_A', 'target_B')}
+        names = aliases.get(block_name, (block_name,))
+        available = {b.name: b for b in blocks}
+        reference = ''
+        if any(name.endswith('_Z') and name not in available for name in names):
+            # audited16 omits Z measurements; show the actual reference circuit
+            # with an explicit disclosure rather than an unrelated A/B circuit.
+            z_circuits, z_manifest = make_demo(case)
+            available.update({b.name: b for b in demo_blocks(z_circuits, z_manifest)})
+            reference = 'Z reference circuits only; not measured in the audited16 run.\n\n'
+        if any(name not in available for name in names):
+            return 'Circuit unavailable for this view. Choose Exhibit Z, A, B or the receipt.'
+        return reference + '\n\n'.join(name + '\n' + str(available[name]) for name in names)
     return '\n\n'.join(str(b) for b in blocks)
 
 

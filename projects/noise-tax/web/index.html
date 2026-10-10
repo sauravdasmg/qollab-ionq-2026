@@ -9,7 +9,7 @@
       <div class="slider-block">
         <h2 id="slider-heading">Noise scale <span class="slider-today">s = 0 noiseless &middot; s = 1 today's IonQ noise &middot; s = 2 twice today's noise</span></h2>
         <div class="slider-row">
-          <input type="range" id="noise-slider" min="0" max="2" step="0.05" value="0"
+          <input type="range" id="noise-slider" min="0" max="2" step="0.025" value="0"
                  aria-labelledby="slider-heading" aria-valuetext="noise scale 0.00">
           <output class="slider-value" for="noise-slider" id="slider-value">0.00</output>
           <span class="value-label">LOCAL MODEL</span>
@@ -117,6 +117,7 @@
       <section class="sidebar-panel">
         <h3>LIVE vs RECORDED vs LOCAL MODEL</h3>
         <p class="secondary">Every number on this page carries one of these labels.</p>
+        <p class="secondary">W crossings are DETERMINISTIC for the specified depolarizing model and frame family. Their grid brackets are numerical resolution. Calibration sensitivity varies two-qubit infidelity by +/-0.001 with fitted one-qubit infidelity unchanged; it is a scenario range. N uses a paired-instance bootstrap interval and a width target of 0.30. Recorded IonQ points show CLOUD SAMPLING binomial bounds. These sources do not quantify remote pulse-model mismatch.</p>
         <dl class="label-list" id="label-legend"></dl>
       </section>
 

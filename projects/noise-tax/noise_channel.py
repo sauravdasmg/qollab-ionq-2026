@@ -29,7 +29,7 @@ MODELS = tuple(MODEL_KEYS)
 COMPILER_SEED = 1234
 SEMANTICS = 'joint depolarization after sx/x and declared entangler; rz noiseless; full source; stage barriers'
 
-def configuration(model='aria-1', scale=1., source_noise=True):
+def configuration(model='aria-1', scale=1., source_noise=True, calibration_shift=None):
     if model not in MODEL_KEYS or not math.isfinite(scale) or not 0 <= scale <= 2:
         raise ValueError('unknown model or scale outside [0,2]')
     p = CALIBRATION[MODEL_KEYS[model]]
@@ -38,7 +38,13 @@ def configuration(model='aria-1', scale=1., source_noise=True):
            'compiler_seed': COMPILER_SEED, 'optimization_level': 1,
            'source_noise': bool(source_noise), 'calibration_sha256': CALIBRATION_SHA256,
            'semantics': SEMANTICS, 'label': 'LOCAL MODEL: calibrated IonQ-like approximation'}
-    for width, rate in ((1, p['r_1q']), (2, p['r_2q'])):
+    if calibration_shift is not None:
+        if calibration_shift not in (-.001, .001):
+            raise ValueError('calibration sensitivity uses only +/-0.001 edges')
+        cfg['r_2q'] = p['r_2q'] + calibration_shift
+        cfg['calibration_shift'] = calibration_shift
+        cfg['uncertainty_source'] = 'CALIBRATION SENSITIVITY; scenario, not confidence interval'
+    for width, rate in ((1, cfg['r_1q']), (2, cfg['r_2q'])):
         if not 0 <= rate*scale/(1-1/2**width) <= 1:
             raise ValueError('joint depolarizing lambda outside [0,1]')
     if not 0 <= cfg['readout'] <= .5:
@@ -120,7 +126,8 @@ def prepare_steps(compiled):
 def probabilities(compiled, cfg=None, prepared=None):
     cfg = configuration() if cfg is None else cfg
     # Validate even externally provided configurations, never silently clip.
-    checked = configuration(cfg['model'], cfg['scale'], cfg.get('source_noise', True))
+    checked = configuration(cfg['model'], cfg['scale'], cfg.get('source_noise', True),
+                            cfg.get('calibration_shift'))
     if cfg != checked:
         raise ValueError('configuration does not match frozen calibrated channel')
     block = prepare_steps(compiled) if prepared is None else prepared

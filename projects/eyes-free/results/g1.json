@@ -1,0 +1,63 @@
+{
+  "gate": "g1",
+  "criteria": [
+    {
+      "name": "exact_fringe_control_and_parity_sign",
+      "threshold": "max absolute error <= 1e-10",
+      "value": 1.3322676295501878e-15,
+      "pass": true
+    },
+    {
+      "name": "equal_budget_accessible_baseline",
+      "threshold": "equal shots and zero resampling",
+      "value": true,
+      "pass": true
+    },
+    {
+      "name": "quick_decoder_precision",
+      "threshold": "|frequency error| <= 0.02 and |contrast error| <= 0.01 for every informative record",
+      "value": {
+        "passed": 72,
+        "total": 72
+      },
+      "pass": true
+    },
+    {
+      "name": "frozen_metrics_and_declared_budget",
+      "threshold": "full frozen evidence at 24 seeds x 6 scales x 3 widths, preliminary targets met",
+      "value": {
+        "evidence_exists": true,
+        "development_records": 72
+      },
+      "pass": true
+    },
+    {
+      "name": "js_bridge_and_audio_fallback",
+      "threshold": "main.js and index.html implement bridge plus playback/download fallback",
+      "value": {
+        "ui_files_present": false
+      },
+      "pass": false
+    },
+    {
+      "name": "calibrated_local_channel",
+      "threshold": "ARIA rates match ../../tools/ionq_noise_params.json; local approximation only",
+      "value": {
+        "r_1q": 0.0005,
+        "r_2q": 0.009,
+        "readout": 0.0,
+        "basis": [
+          "rz",
+          "sx",
+          "x",
+          "rxx"
+        ],
+        "noise_model": "aria-1"
+      },
+      "pass": true
+    }
+  ],
+  "overall": "FAIL",
+  "independent_pass": false,
+  "cloud_confirmed": false
+}

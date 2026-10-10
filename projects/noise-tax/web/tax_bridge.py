@@ -40,7 +40,7 @@ MODELS = ('aria-1', 'forte-1', 'forte-enterprise-1')
 DEFAULT_SHOTS = 512
 MAX_SHOTS = 4000
 GRID_MAX = 2.0
-SLIDER_STEP = 0.05
+SLIDER_STEP = 0.025
 PRIZE = 0.02
 MEANING = ('Noise charges a tax on every quantum advantage; '
            'here is where the bill exceeds the gain.')
@@ -133,6 +133,7 @@ def get_recorded():
                     'case_id': anchor.get('case_id'),
                     'source_file': anchor.get('source_file'),
                     'receipt_schema': record.get('schema_version')}
+            item['cloud_sampling'] = anchor['cloud_sampling']
             if anchor['game'] == 'W':
                 item['detail'] = 'joint word error %.5f' % anchor['word_error']
             else:
@@ -152,7 +153,10 @@ def get_recorded():
 
 
 def _development_path():
-    for candidate in (Path('results') / 'development.json',
+    for candidate in (Path('results') / 'frozen.json',
+                      _PARENT / 'results' / 'frozen.json',
+                      Path(__file__).resolve().parent / 'frozen.json',
+                      Path('results') / 'development.json',
                       _PARENT / 'results' / 'development.json',
                       Path(__file__).resolve().parent / 'development.json'):
         try:
@@ -211,6 +215,8 @@ def _local_curve(game, model, step=SLIDER_STEP):
              'grid_resolution': float(step),
              'curve_source': 'computed live by tax_bridge on the five small demo blocks',
              'confidence': None, 'n_instances': None, 'label': 'LOCAL MODEL'}
+    entry['uncertainty_source'] = ('DETERMINISTIC; numerical grid resolution; calibration sensitivity pending'
+                                   if game == 'W' else 'demo curve only; instance bootstrap not evaluated')
     _CURVE_CACHE[key] = entry
     return dict(entry)
 
@@ -261,6 +267,18 @@ def get_evidence():
                 })
             else:
                 entry.update(_local_curve(game, model))
+            if game == 'W':
+                # Old pilot W bootstrap intervals were degenerate. Never display
+                # their CI label; retain only the conditional numerical root.
+                entry.update({'lower': None, 'upper': None, 'ci': None, 'confidence': None,
+                              'uncertainty_source': 'DETERMINISTIC; numerical grid resolution'})
+                if analysis:
+                    entry['numerical_grid_bracket'] = (analysis.get('inversion') or {}).get('numerical_grid_bracket')
+                    entry['calibration_sensitivity'] = analysis.get('calibration_sensitivity')
+            else:
+                entry['uncertainty_source'] = ('N INSTANCE BOOTSTRAP; 97.5% simultaneous band'
+                                               if analysis else 'demo only; bootstrap pending')
+                entry['precision_target_met'] = analysis.get('precision_target_met') if analysis else None
             per_model[model] = entry
         games[game] = per_model
     product_ff = (1 - math.cos(math.pi/8)**2)**2

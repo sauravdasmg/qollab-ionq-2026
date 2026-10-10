@@ -92,3 +92,49 @@ Progress includes ETA; atomic checkpoint per instance/model plus per-scale
 progress enables interrupted runs to resume. Optional sensitivities are deferred
 and must never replace the primary. UI, publication/video, and science gates
 remain orchestrator-owned.
+
+
+## G1 HOLD amendment ? 2026-10-10T03:28:40.222617+00:00
+
+Prospective amendment recorded before any revised evaluation output. The coarse
+development results remain pilot artifacts. BOTH games now use s_k=k/40,
+k=0..80 (0.025), including G1. Endpoints-only --quick remains a mechanics test.
+Advantage definitions, construction/sampling seeds, fixed prize and thresholds
+are unchanged. Full development/frozen/fresh runs remain orchestrator-owned.
+
+W diagnosis: the 24 common-Haar-frame curves coincide to floating-point
+precision. Rotating both product signals and their square-root receiver leaves
+the ideal game unchanged. Depolarization obeys D(U rho U?)=U D(rho) U?;
+the chosen compiled stage/gate pattern has the same effective contraction
+for this frame family. This explains the observed invariance for this specified
+model; it is not a theorem about arbitrary compiled circuits or remote pulse
+noise. Verify equality of evaluated curves with absolute tolerance 1e-12.
+W crossing is DETERMINISTIC conditional on the specified channel/frame family.
+Its outward numerical grid bracket is not a sampling confidence interval.
+No W bootstrap band, confidence level or sampling CI is reported.
+
+W calibration sensitivity: hold fitted r_1q, readout, basis and compilation
+unchanged; recompute the representative seeded curve and s* at fitted
+r_2q minus/plus 0.001, separately for every model. This follows the grid
+resolution in ../../research/logs/noise_calibration.md and
+../../tools/calibrate_noise.py. Report both edge rates/curves/roots and their
+s* range; unresolved edges remain explicit. The range is a calibration
+sensitivity scenario, not a statistical calibration confidence interval,
+and excludes pulse-model mismatch. Fresh-suite sensitivity uses its own seed.
+
+N retains the preregistered paired whole-curve bootstrap, 4000 draws, analysis
+seed 2026104402 and 97.5% simultaneous band. Invert as before; width target
+<=0.30 remains explicit and a failure stays a failure. W precision uses the
+numerical grid bracket width under the same <=0.30 threshold. Small-draw
+runs remain SMOKE_ONLY. G1 HOLD requires independent reproduction; code
+changes and a five-draw smoke do not resolve that review decision themselves.
+
+Recorded IonQ uncertainty is CLOUD SAMPLING: two-sided Clopper-Pearson
+binomial intervals for decoded W successes per label and all N joint outcome
+indicators per arm. For each plotted advantage point, use Bonferroni-adjusted
+95% component intervals and propagate their bounds (equal label averaging
+for W; fixed-prize loss difference for N). This conservatively covers packed
+arm dependence and is not a binomial model of the nonbinary N loss itself.
+No cloud noise-scale crossing is fitted. Distinguish grid resolution, N instance
+bootstrap uncertainty, W calibration sensitivity and cloud shot sampling in
+JSON, figures and main output.

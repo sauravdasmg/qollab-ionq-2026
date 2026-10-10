@@ -82,7 +82,7 @@ def parse_records(text):
             statuses.append({'line': number, 'ok': False, 'error': str(exc)})
     return records, statuses
 
-def summarize_record(r):
+def _summarize_record(r):
     marginals = record_marginals(r)
     manifest = r['manifest']
     common = {'model': r['noise_model'], 'shots': r['shots'],
@@ -113,3 +113,59 @@ def summarize_record(r):
     na = n.analyze_probabilities([marginals[j] for j in indices], selected)
     return [dict(common, game='N', advantage=na['advantage'], metrics=na,
                  reference='attained product recipe, fixed prize 0.02')]
+
+def binomial_interval(successes, shots, confidence=.95):
+    """Two-sided exact Clopper-Pearson interval for one Bernoulli indicator."""
+    from scipy.stats import beta
+    if not 0 <= successes <= shots or shots <= 0 or not 0 < confidence < 1:
+        raise ValueError('valid binomial counts and confidence required')
+    tail = (1-confidence)/2
+    return [float(beta.ppf(tail, successes, shots-successes+1)) if successes else 0.,
+            float(beta.ppf(1-tail, successes+1, shots-successes)) if successes < shots else 1.]
+
+def summarize_record(r):
+    """Attach shot uncertainty to each cloud point; never estimate a cloud s*."""
+    summaries = _summarize_record(r)
+    marginals = record_marginals(r)
+    merged = r.get('project') == 'The Noise Tax' or r.get('schema_version') == 'noise-tax-1'
+    for summary in summaries:
+        rows = []
+        if summary['game'] == 'W':
+            blocks = r['manifest']['W']['ordered_blocks'] if merged else r['manifest']['ordered_blocks']
+            indices = list(range(3)) if merged else [i for i, b in enumerate(blocks) if b['family'] == 'textbook']
+            bounds = []
+            for i in indices:
+                b = blocks[i]; dist = marginals[i]; total = sum(dist.values())
+                count = sum(v for bits, v in dist.items()
+                            if b['decoder'][int(bits.replace(' ', ''), 2)] == b['label'])
+                ci = binomial_interval(count, total, 1-.05/len(indices))
+                bounds.append(ci)
+                rows.append({'label': b['label'], 'event': 'decoded success', 'count': count,
+                             'shots': total, 'binomial_interval': binomial_interval(count, total),
+                             'simultaneous_interval': ci})
+            interval = [sum(b[j] for b in bounds)/len(bounds)-w.P_SEQ for j in (0, 1)]
+        else:
+            # Each joint outcome is a Bernoulli indicator, although loss is not.
+            blocks = list(n.BLOCKS)
+            arm_bounds = {}
+            for arm in blocks:
+                probs = summary['metrics'][arm]['joint_probabilities']
+                # Validated marginals have exactly r['shots'] observations per arm.
+                bounds = {}
+                for event, prob in probs.items():
+                    count = int(round(prob*r['shots']))
+                    ci = binomial_interval(count, r['shots'], 1-.05/8)
+                    bounds[event] = ci
+                    rows.append({'arm': arm, 'event': event, 'count': count, 'shots': r['shots'],
+                                 'binomial_interval': binomial_interval(count, r['shots']),
+                                 'simultaneous_interval': ci})
+                weights = {'FF': 1.04, 'FP': .02, 'PF': .02, 'PP': 0.}
+                arm_bounds[arm] = [sum(weights[e]*bounds[e][j] for e in weights) for j in (0, 1)]
+            product, hedge = arm_bounds['attained_product'], arm_bounds['published_hedge']
+            interval = [product[0]-hedge[1], product[1]-hedge[0]]
+        summary['cloud_sampling'] = {
+            'uncertainty_source': 'CLOUD SAMPLING', 'confidence': .95, 'components': rows,
+            'advantage_interval': interval,
+            'method': 'Clopper-Pearson binomial components; Bonferroni 95% propagated advantage bounds',
+            'limitations': 'pointwise shot sampling only; no cloud s* or model uncertainty'}
+    return summaries

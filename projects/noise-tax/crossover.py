@@ -133,11 +133,38 @@ def analyze(grid, instance_curves, draws=4000, seed=2026104401, confidence=.975)
             'limitations': ['paired whole-curve nonparametric bootstrap approximation',
                            'small-n uncertainty', 'excludes calibration/model uncertainty',
                            'disjoint root sets retained; no monotonicity imposed',
-                           'mean curve uses exact probabilities, not synthetic shots']}
+            'mean curve uses exact probabilities, not synthetic shots'],
+            'uncertainty_source': 'N INSTANCE BOOTSTRAP; excludes calibration/model uncertainty'}
+
+def deterministic(grid, instance_curves):
+    """Conditional W root and numerical bracket, without a sampling CI."""
+    x, curves = _inputs(grid, instance_curves)
+    if curves.ndim != 2 or not len(curves):
+        raise ValueError('whole W curves required')
+    spread = float(np.max(np.abs(curves-curves[0])))
+    if spread > 1e-12:
+        raise ValueError('W frame invariance failed; revise deterministic estimand')
+    mean = curves.mean(axis=0)
+    point = crossing(x, mean)
+    inverted = invert_band(x, mean, mean)
+    bracket = inverted.pop('confidence_interval')
+    inverted['numerical_grid_bracket'] = bracket
+    inverted['method'] = 'deterministic piecewise-linear root; outward numerical grid bracket'
+    valid = point['status'] == 'resolved' and bracket is not None
+    width = float(bracket[1]-bracket[0]) if bracket else None
+    return {'reporting': 'DETERMINISTIC', 'uncertainty_source': 'NUMERICAL GRID RESOLUTION',
+            'mean_advantage': mean.tolist(), 'point': point, 'inversion': inverted,
+            'n_instances': len(curves), 'max_frame_curve_difference': spread,
+            'valid_interior_crossing': bool(valid), 'grid_bracket_width': width,
+            'precision_target_met': bool(valid and width <= .30),
+            'limitations': ['conditional on specified depolarizing model and frame family',
+                            'grid bracket is not a sampling confidence interval',
+                            'model mismatch is not quantified']}
 
 def compare_fresh(frozen, fresh, tolerance=.10):
     a, b = frozen['point']['estimate'], fresh['point']['estimate']
-    ca, cb = frozen['inversion']['confidence_interval'], fresh['inversion']['confidence_interval']
+    key = 'numerical_grid_bracket' if frozen.get('reporting') == 'DETERMINISTIC' else 'confidence_interval'
+    ca, cb = frozen['inversion'][key], fresh['inversion'][key]
     valid = frozen['valid_interior_crossing'] and fresh['valid_interior_crossing']
     delta = abs(a-b) if a is not None and b is not None else None
     # Combined interval bounds for the difference, and absolute tolerance.

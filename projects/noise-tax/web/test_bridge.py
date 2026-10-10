@@ -81,6 +81,9 @@ def test_recorded_anchors():
         assert anchor['date'] is not None and '2026-10-' in anchor['date']
         assert anchor['shots'] in (1000, 4000)
         assert math.isfinite(anchor['advantage'])
+        assert anchor['cloud_sampling']['uncertainty_source'] == 'CLOUD SAMPLING'
+        ci = anchor['cloud_sampling']['advantage_interval']
+        assert ci[0] <= anchor['advantage'] <= ci[1]
     assert len(by_game['W']) == 3 and len(by_game['N']) == 3
     for model in MODELS:
         wmodel = [a for a in by_game['W'] if a['model'] == model]
@@ -90,6 +93,31 @@ def test_recorded_anchors():
         assert 'hedge FF' in nmodel[0]['detail']
     evidence_anchors = tax_bridge.get_evidence()['anchors']
     assert len(evidence_anchors) == 6
+
+
+def test_w_web_does_not_present_sampling_ci():
+    evidence = tax_bridge.get_evidence()
+    for entry in evidence['games']['W'].values():
+        assert entry['ci'] is None and entry['confidence'] is None
+        assert entry['lower'] is None and entry['upper'] is None
+        assert 'DETERMINISTIC' in entry['uncertainty_source']
+
+
+def test_web_preserves_revised_uncertainty_fields():
+    from unittest.mock import patch
+    from crossover import deterministic, analyze
+    grid = [0., 1., 2.]
+    curves = [[1., 0., -1.], [1., 0., -1.]]
+    wa = deterministic(grid, curves)
+    wa['calibration_sensitivity'] = {'s_star_range': [.9, 1.1]}
+    na = analyze(grid, curves, draws=5)
+    data = {'grid': grid, 'analysis': {
+        'W': {m: wa for m in MODELS}, 'N': {m: na for m in MODELS}}}
+    with patch.object(tax_bridge, '_development', return_value=(data, 'test.json')):
+        evidence = tax_bridge.get_evidence()
+    assert evidence['games']['W']['aria-1']['calibration_sensitivity']['s_star_range'] == [.9, 1.1]
+    assert evidence['games']['W']['aria-1']['numerical_grid_bracket'] == wa['inversion']['numerical_grid_bracket']
+    assert evidence['games']['N']['aria-1']['ci'] == na['inversion']['confidence_interval']
 
 
 def test_fallback_w_curve_ideal_evenly_spaced():

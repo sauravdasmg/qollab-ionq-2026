@@ -9,6 +9,22 @@ let currentShots = 200;
 let currentResults = null;
 let currentVerdict = null;
 let recordedData = null;
+let runGeneration = 0;
+let circuitGeneration = 0;
+let stagedElements = null;
+let announceTimer = null;
+let lastSuccessfulParams = null;
+let automaticRuns = true;
+
+function plainData(value) {
+  if (value && typeof value.toJs === "function") value = value.toJs({ dict_converter: Object.fromEntries });
+  if (value instanceof Map) return Object.fromEntries([...value].map(([k, v]) => [k, plainData(v)]));
+  if (Array.isArray(value)) return value.map(plainData);
+  if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, plainData(v)]));
+  return value;
+}
+function renderElement(id) { return stagedElements?.get(id) || document.getElementById(id); }
+
 
 // DOM references
 const docket = document.getElementById("docket");
@@ -37,7 +53,8 @@ function announce(message, type = "polite") {
   statusRegion.textContent = message;
   statusRegion.className = "status-region visible";
   statusRegion.setAttribute("aria-live", type);
-  setTimeout(() => {
+  clearTimeout(announceTimer);
+  announceTimer = setTimeout(() => {
     statusRegion.classList.remove("visible");
   }, 5000);
 }
@@ -47,8 +64,7 @@ function showLoading(text = "Convening the court…") {
   loading.setAttribute("aria-busy", "true");
   loading.hidden = false;
   errorDisplay.hidden = true;
-  docket.hidden = true;
-  evidenceDocket.hidden = true;
+  // Keep the previous docket visible during loading and failed runs.
 }
 
 function hideLoading() {
@@ -56,9 +72,10 @@ function hideLoading() {
   loading.hidden = true;
 }
 
-function showError(message, error = null) {
+function showError(message) {
   hideLoading();
-  errorText.textContent = error ? `${message}\n\n${error}` : message;
+  errorText.textContent = `${message}. Please retry; previous evidence is retained.`;
+  if (docket.hidden && evidenceDocket.hidden) showDocket();
   errorDisplay.hidden = false;
   announce(message, "assertive");
 }
@@ -77,55 +94,103 @@ function setVerdictNote(text) {
   verdictNoteText.textContent = text;
 }
 
-// Histogram rendering
-function renderHistogram(containerId, tableId, marginals, blockName, colorClass) {
-  const container = document.getElementById(containerId);
-  const tableBody = document.getElementById(tableId).querySelector("tbody");
-  const hist = marginals[blockName] || {};
-  const total = Object.values(hist).reduce((a, b) => a + b, 0) || 1;
-
-  // Clear
-  container.innerHTML = "";
-  tableBody.innerHTML = "";
-
-  // Create bars
-  const barContainer = document.createElement("div");
-  barContainer.className = "histogram-bar";
-
-  for (let i = 0; i < 16; i++) {
-    const key = i.toString(2).padStart(4, "0");
-    const count = hist[key] || 0;
-    const prob = count / total;
-    const height = Math.max(2, prob * 180); // min 2px for visibility
-
-    const bar = document.createElement("div");
-    bar.className = `bar ${colorClass}`;
-    bar.style.height = `${height}px`;
-    bar.setAttribute("data-outcome", key);
-    bar.setAttribute("title", `${key}: ${(prob * 100).toFixed(2)}%`);
-    barContainer.appendChild(bar);
-
-    // Table row
-    const row = document.createElement("tr");
-    row.className = `${colorClass}-row`;
-    row.innerHTML = `<td><code>${key}</code></td><td>${prob.toFixed(6)}</td>`;
-    tableBody.appendChild(row);
+// Explicit bridge rows avoid coercion of leading-zero dictionary keys.
+function distributionRows(results, blockName) {
+  const explicit = results.distributions?.[blockName];
+  if (explicit) {
+    const rows = explicit.map(row => ({ outcome: String(row.outcome), probability: Number(row.probability) }));
+    const total = rows.reduce((sum, row) => sum + row.probability, 0);
+    if (rows.length !== 16 || new Set(rows.map(row => row.outcome)).size !== 16 ||
+        rows.some(row => !/^[01]{4}$/.test(row.outcome) || !Number.isFinite(row.probability) || row.probability < 0) ||
+        Math.abs(total - 1) > 1e-8) throw new Error("Invalid measured distribution");
+    return rows.sort((a, b) => a.outcome.localeCompare(b.outcome));
   }
+  const hist = results.marginals?.[blockName];
+  if (!hist) {
+    if (results.manifest?.recipe_identity?.audited16) return null;
+    throw new Error("Missing measured distribution");
+  }
+  const counts = {};
+  for (const [rawKey, rawCount] of Object.entries(hist)) {
+    const key = String(rawKey).replace(/\s/g, "").padStart(4, "0");
+    const count = Number(rawCount);
+    if (!/^[01]{4}$/.test(key) || !Number.isFinite(count) || count < 0) throw new Error("Invalid counts");
+    counts[key] = (counts[key] || 0) + count;
+  }
+  const total = Object.values(counts).reduce((a, b) => a + b, 0);
+  if (!(total > 0)) throw new Error("No measured samples");
+  return Array.from({ length: 16 }, (_, i) => {
+    const outcome = i.toString(2).padStart(4, "0");
+    return { outcome, probability: (counts[outcome] || 0) / total };
+  });
+}
 
-  container.appendChild(barContainer);
+// Fixed SVG coordinates work even before a hidden parent is laid out.
+function renderHistogram(containerId, tableId, results, blockName, colorClass) {
+  const container = renderElement(containerId);
+  const tableBody = renderElement(tableId).querySelector("tbody");
+  const rows = distributionRows(results, blockName);
+  const fragment = document.createDocumentFragment();
+  if (!rows) {
+    const note = document.createElement("p");
+    note.textContent = "Z outcomes were not measured in audited16. Select sealed or anchor for measured Z distributions.";
+    container.replaceChildren(note);
+    tableBody.replaceChildren();
+    return;
+  }
+  const ns = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("viewBox", "0 0 720 310");
+  svg.setAttribute("width", "720");
+  svg.setAttribute("height", "310");
+  svg.setAttribute("class", "histogram-svg");
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", `${blockName}: measured Z probabilities. Full values in the table below.`);
+  function shape(tag, attrs, text) {
+    const node = document.createElementNS(ns, tag);
+    Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, String(value)));
+    if (text !== undefined) node.textContent = text;
+    svg.appendChild(node);
+    return node;
+  }
+  shape("rect", { x: 0, y: 0, width: 720, height: 310, fill: "#FFFFFF" });
+  const maximum = Math.max(0.1, ...rows.map(row => row.probability));
+  const upper = Math.min(1, Math.ceil(maximum * 20) / 20);
+  for (let tick = 0; tick <= 4; tick++) {
+    const y = 230 - tick * 50;
+    shape("line", { x1: 60, x2: 708, y1: y, y2: y, stroke: "#D8CBB0" });
+    shape("text", { x: 53, y: y + 5, "text-anchor": "end", fill: "#1F1A14", "font-size": 15 }, `${(upper * tick * 25).toFixed(1)}%`);
+  }
+  shape("text", { x: 60, y: 20, fill: "#1F1A14", "font-size": 16 }, "Probability");
+  rows.forEach((row, i) => {
+    const x = 65 + i * 40;
+    const height = row.probability / upper * 200;
+    const rect = shape("rect", { x, y: 230 - height, width: 30, height, fill: "#2B3A8C" });
+    const title = document.createElementNS(ns, "title");
+    title.textContent = `${row.outcome}: ${(row.probability * 100).toFixed(2)}%`;
+    rect.appendChild(title);
+    shape("text", { transform: `translate(${x + 15},244) rotate(50)`, fill: "#1F1A14", "font-size": 15 }, row.outcome);
+    const tr = document.createElement("tr");
+    tr.className = `${colorClass}-row`;
+    tr.innerHTML = `<td><code>${row.outcome}</code></td><td>${row.probability.toFixed(6)}</td>`;
+    fragment.appendChild(tr);
+  });
+  shape("text", { x: 385, y: 305, "text-anchor": "middle", fill: "#1F1A14", "font-size": 16 }, "Outcome (bit string)");
+  container.replaceChildren(svg);
+  tableBody.replaceChildren(fragment);
 }
 
 // Parity chart rendering
 function renderParityChart(containerId, tableId, intervals, blockPrefix) {
-  const container = document.getElementById(containerId);
-  const tableBody = document.getElementById(tableId).querySelector("tbody");
+  const container = renderElement(containerId);
+  const tableBody = renderElement(tableId).querySelector("tbody");
 
   container.innerHTML = "";
   tableBody.innerHTML = "";
 
   // Filter intervals for this block prefix
   const relevant = Object.entries(intervals).flatMap(([block, rows]) =>
-    block.startsWith(blockPrefix) ? rows.map(r => ({ ...r, block })) : []
+    block.endsWith(`_${blockPrefix}`) ? rows.map(r => ({ ...r, block })) : []
   );
 
   relevant.forEach(item => {
@@ -161,8 +226,8 @@ function renderParityChart(containerId, tableId, intervals, blockPrefix) {
 
 // Evidence stamp rendering
 function renderEvidenceStamp(witness) {
-  const stampContent = document.getElementById("stamp-content");
-  const stampTableBody = document.getElementById("table-stamp").querySelector("tbody");
+  const stampContent = renderElement("stamp-content");
+  const stampTableBody = renderElement("table-stamp").querySelector("tbody");
 
   stampContent.innerHTML = "";
   stampTableBody.innerHTML = "";
@@ -228,12 +293,16 @@ function renderEvidenceStamp(witness) {
 }
 
 // Circuit text rendering
-async function renderCircuitText(caseNum, challenge, blockName) {
+const CIRCUIT_VIEWS = { sealed: "sealed", Z: "Z", A: "A", B: "B", stamp: "stamp" };
+async function renderCircuitText(caseNum, challenge, view) {
+  const generation = ++circuitGeneration;
   try {
-    const text = await court.get_circuit_text.callPromising(caseNum, challenge, blockName);
-    circuitText.textContent = text;
+    const text = await court.get_circuit_text.callPromising(caseNum, challenge, CIRCUIT_VIEWS[view] || view);
+    if (generation === circuitGeneration) circuitText.textContent = String(text);
   } catch (e) {
-    circuitText.textContent = `Error loading circuit: ${e.message}`;
+    if (generation !== circuitGeneration) return;
+    if (!circuitText.textContent.trim()) circuitText.textContent = "Circuit preview is temporarily unavailable. Please retry.";
+    announce("Circuit preview could not be updated. Please retry.", "assertive");
   }
 }
 
@@ -249,7 +318,7 @@ function renderComparison(results, recorded) {
     <div>α per generator: ${witness.per_generator_alpha?.toFixed(5) ?? "N/A"}</div>
     <div>Shots/block: ${results.shots}</div>
   `;
-  liveValues.innerHTML = liveHtml;
+  renderElement("live-values").innerHTML = liveHtml;
 
   // Recorded values
   if (recorded && recorded.records.length > 0) {
@@ -265,14 +334,14 @@ function renderComparison(results, recorded) {
       <div>Noise Model: ${rec.noise_model ?? "N/A"}</div>
       <div>UTC: ${rec.utc_end ?? "N/A"}</div>
     `;
-    recordedValues.innerHTML = recHtml;
-    comparisonMeta.innerHTML = `
+    renderElement("recorded-values").innerHTML = recHtml;
+    renderElement("comparison-meta").innerHTML = `
       <span>Live: ${results.source}</span>
       <span>Recorded: ${rec.backend} | ${rec.noise_model} | ${rec.shots} shots</span>
     `;
   } else {
-    recordedValues.innerHTML = "<div>No recorded IonQ data available.</div>";
-    comparisonMeta.innerHTML = `<span>Live: ${results.source}</span><span>Recorded: No cloud evidence staged</span>`;
+    renderElement("recorded-values").innerHTML = "<div>No recorded IonQ data available.</div>";
+    renderElement("comparison-meta").innerHTML = `<span>Live: ${results.source}</span><span>Recorded: No cloud evidence staged</span>`;
   }
 }
 
@@ -311,75 +380,89 @@ function switchTab(tabName) {
     panel.setAttribute("aria-hidden", !selected);
     panel.hidden = !selected;
   });
+  void renderCircuitText(currentCase, currentChallenge, tabName);
   announce(`Viewing ${tabName === "stamp" ? "Evidence Stamp" : `Exhibit ${tabName}`}`);
 }
 
-// Main run function
-async function runDemo() {
-  showLoading("Measuring sealed preparations on built-in simulator…");
-
+// Stage every update off-screen and commit only after every renderer succeeds.
+function renderResults(results, recorded) {
+  const ids = ["bars-target", "table-target", "bars-impostor", "table-impostor",
+    "parity-Z", "table-parity-Z", "parity-A", "table-parity-A", "parity-B", "table-parity-B",
+    "stamp-content", "table-stamp", "live-values", "recorded-values", "comparison-meta"];
+  const targets = ids.map(id => document.getElementById(id));
+  if (targets.some(node => !node)) throw new Error("Evidence panel unavailable");
+  const clones = targets.map(node => node.cloneNode(true));
+  stagedElements = new Map(ids.map((id, i) => [id, clones[i]]));
   try {
-    // Get backend (built-in simulator) - global injected by Qollab
-    const results = await court.run_demo.callPromising(
-      backend,
-      currentCase,
-      currentShots,
-      currentChallenge,
-      currentTrust
-    );
-
-    currentResults = results;
-
-    // Load recorded data
-    recordedData = await court.load_recorded.callPromising();
-
-    // Update case IDs
-    caseIdEl.textContent = `Case ${currentCase}`;
-    evidenceCaseIdEl.textContent = `Case ${currentCase}`;
-
-    // Render Z histograms (target_Z and impostor_Z)
-    renderHistogram("bars-target", "table-target", results.marginals, "target_Z", "target");
-    renderHistogram("bars-impostor", "table-impostor", results.marginals, "impostor_Z", "impostor");
-
-    // Render parity charts for all tabs
+    renderHistogram("bars-target", "table-target", results, "target_Z", "target");
+    renderHistogram("bars-impostor", "table-impostor", results, "impostor_Z", "impostor");
     const intervals = results.analysis.parity_intervals_95 || {};
-    renderParityChart("parity-Z", "table-parity-Z", intervals, "target_Z");
-    renderParityChart("parity-Z", "table-parity-Z", intervals, "impostor_Z");
-    renderParityChart("parity-A", "table-parity-A", intervals, "target_A");
-    renderParityChart("parity-A", "table-parity-A", intervals, "impostor_A");
-    renderParityChart("parity-B", "table-parity-B", intervals, "target_B");
-    renderParityChart("parity-B", "table-parity-B", intervals, "impostor_B");
-
-    // Render evidence stamp
+    for (const view of ["Z", "A", "B"]) renderParityChart(`parity-${view}`, `table-parity-${view}`, intervals, view);
     renderEvidenceStamp(results.analysis.simultaneous_witness);
-
-    // Render sidebar
-    meaningText.textContent = await court.get_measurement_meaning.callPromising();
-    await renderCircuitText(currentCase, currentChallenge, "target_Z");
-
-    // Render comparison
-    renderComparison(results, recordedData);
-
-    // Reset verdict
-    currentVerdict = null;
-    document.querySelectorAll(".verdict-btn").forEach(btn => {
-      btn.classList.remove("selected");
-      btn.setAttribute("aria-checked", "false");
-    });
-    setVerdictNote("Select a verdict above to proceed.");
-
-    // Enable controls
-    verdictOptions.querySelectorAll(".verdict-btn").forEach(btn => btn.disabled = false);
-    evidenceTabs.querySelectorAll(".evidence-tab").forEach(tab => tab.disabled = true);
-    remeasureBtn.disabled = currentChallenge !== "sealed" || !results.source.includes("built-in");
-
-    hideLoading();
-    showDocket();
-    announce("Measurement complete. Court convened. Two sealed preparations presented. Examine the Z histograms and render a tentative verdict.");
-  } catch (e) {
-    showError("Failed to convene court", e.message);
-    console.error(e);
+    renderComparison(results, recorded);
+  } finally { stagedElements = null; }
+  const previous = targets.map(node => [...node.childNodes]);
+  try { targets.forEach((node, i) => node.replaceChildren(...clones[i].childNodes)); }
+  catch (e) {
+    targets.forEach((node, i) => node.replaceChildren(...previous[i]));
+    throw e;
   }
+}
+
+async function runDemo(preserveVerdict = false) {
+  const generation = ++runGeneration;
+  ++circuitGeneration;
+  const params = { caseNum: currentCase, challenge: currentChallenge, trust: currentTrust, shots: currentShots };
+  showLoading("Measuring preparations on the selected simulator?");
+  try {
+    const results = plainData(await court.run_demo.callPromising(
+      backend, params.caseNum, params.shots, params.challenge, params.trust));
+    if (generation !== runGeneration) return;
+    let recorded = recordedData || { records: [], statuses: [] };
+    try { recorded = plainData(await court.load_recorded.callPromising()); }
+    catch (e) { /* Optional recorded evidence must not discard a live result. */ }
+    if (generation !== runGeneration) return;
+    renderResults(results, recorded);
+    currentResults = results;
+    lastSuccessfulParams = params;
+    recordedData = recorded;
+    caseIdEl.textContent = `Case ${params.caseNum}`;
+    evidenceCaseIdEl.textContent = `Case ${params.caseNum}`;
+    if (!preserveVerdict) {
+      currentVerdict = null;
+      document.querySelectorAll(".verdict-btn").forEach(btn => {
+        btn.classList.remove("selected");
+        btn.setAttribute("aria-checked", "false");
+      });
+      setVerdictNote("Select a verdict above to proceed.");
+    }
+    verdictOptions.querySelectorAll(".verdict-btn").forEach(btn => btn.disabled = false);
+    evidenceTabs.querySelectorAll(".evidence-tab").forEach(tab => tab.disabled = !currentVerdict);
+    remeasureBtn.disabled = params.challenge !== "sealed" || !String(results.source).includes("built-in");
+    hideLoading();
+    if (currentVerdict) showEvidenceDocket(); else showDocket();
+    const activeTab = evidenceTabs.querySelector('[aria-selected="true"]')?.dataset.tab || "Z";
+    void renderCircuitText(params.caseNum, params.challenge, currentVerdict ? activeTab : "sealed");
+    announce("Measurement complete. Examine the measured evidence and render a tentative verdict.");
+  } catch (e) {
+    if (generation !== runGeneration) return;
+    if (lastSuccessfulParams) {
+      currentCase = lastSuccessfulParams.caseNum;
+      currentChallenge = lastSuccessfulParams.challenge;
+      currentTrust = lastSuccessfulParams.trust;
+      caseSelect.value = String(currentCase);
+      challengeSelect.value = currentChallenge;
+      trustToggle.checked = currentTrust;
+    }
+    showError("Court evidence could not be updated");
+    console.error(e);
+  } finally { if (generation === runGeneration) hideLoading(); }
+}
+
+function redrawHistograms() {
+  if (!currentResults) return;
+  try { renderResults(currentResults, recordedData); }
+  catch (e) { announce("Chart could not be redrawn. Previous evidence retained.", "assertive"); }
 }
 
 // Event handlers
@@ -424,181 +507,61 @@ function setupEventListeners() {
   // Case selector
   caseSelect.addEventListener("change", async () => {
     currentCase = parseInt(caseSelect.value, 10);
-    await runDemo();
+    if (automaticRuns) await runDemo();
   });
 
   // Challenge selector
   challengeSelect.addEventListener("change", async () => {
     currentChallenge = challengeSelect.value;
-    await runDemo();
+    if (automaticRuns) await runDemo();
   });
 
   // Trust toggle
   trustToggle.addEventListener("change", async () => {
     currentTrust = trustToggle.checked;
-    await runDemo();
+    if (automaticRuns) await runDemo();
   });
 
-  // Remeasure button
   remeasureBtn.addEventListener("click", async () => {
-    if (currentChallenge !== "sealed") return;
-    showLoading("Remeasuring on built-in simulator…");
-    try {
-      const results = await court.run_demo.callPromising(
-        backend,
-        currentCase,
-        currentShots,
-        currentChallenge,
-        currentTrust
-      );
-      currentResults = results;
-
-      // Re-render everything
-      renderHistogram("bars-target", "table-target", results.marginals, "target_Z", "target");
-      renderHistogram("bars-impostor", "table-impostor", results.marginals, "impostor_Z", "impostor");
-      const intervals = results.analysis.parity_intervals_95 || {};
-      renderParityChart("parity-Z", "table-parity-Z", intervals, "target_Z");
-      renderParityChart("parity-Z", "table-parity-Z", intervals, "impostor_Z");
-      renderParityChart("parity-A", "table-parity-A", intervals, "target_A");
-      renderParityChart("parity-A", "table-parity-A", intervals, "impostor_A");
-      renderParityChart("parity-B", "table-parity-B", intervals, "target_B");
-      renderParityChart("parity-B", "table-parity-B", intervals, "impostor_B");
-      renderEvidenceStamp(results.analysis.simultaneous_witness);
-      renderComparison(results, recordedData);
-      announce("Measurement complete. Remeasure complete. New ideal samples drawn.");
-    } catch (e) {
-      showError("Remeasure failed", e.message);
-    } finally {
-      hideLoading();
-      if (currentVerdict) {
-        showEvidenceDocket();
-      } else {
-        showDocket();
-      }
-    }
+    if (currentChallenge === "sealed") await runDemo(true);
   });
-
-  // Evidence panel circuit text updates
-  evidenceTabs.addEventListener("click", async (e) => {
-    const tab = e.target.closest(".evidence-tab");
-    if (!tab) return;
-    const tabName = tab.dataset.tab;
-    let blockName = "target_Z";
-    if (tabName === "A") blockName = "target_A";
-    else if (tabName === "B") blockName = "target_B";
-    else if (tabName === "stamp") blockName = "target_Z"; // default
-    await renderCircuitText(currentCase, currentChallenge, blockName);
+  let resizeFrame = null;
+  window.addEventListener("resize", () => {
+    if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(() => { resizeFrame = null; redrawHistograms(); });
   });
 }
 
-// Initialize
+// Initialize; failures never remove the page shell or previous evidence.
 async function init() {
-  // Load recorded data first
-  try {
-    recordedData = await court.load_recorded.callPromising();
-  } catch (e) {
-    console.warn("Could not load recorded data:", e);
-    recordedData = { records: [], statuses: [] };
-  }
-
-  // Set initial meaning
-  try {
-    meaningText.textContent = await court.get_measurement_meaning.callPromising();
-  } catch (e) {
-    meaningText.textContent = "Matching Z statistics can hide different correlations in other bases.";
-  }
-
-  // Set initial circuit text
-  await renderCircuitText(currentCase, currentChallenge, "target_Z");
-
-  // Run initial demo based on backend type
-  if (backend.name === "ionq_simulator") {
-    // Show button for one IonQ job, don't run on load
+  const backendName = typeof backend.name === "function" ? backend.name() : backend.name;
+  automaticRuns = backendName !== "ionq_simulator";
+  setupEventListeners();
+  try { recordedData = plainData(await court.load_recorded.callPromising()); }
+  catch (e) { recordedData = { records: [], statuses: [] }; }
+  try { meaningText.textContent = await court.get_measurement_meaning.callPromising(); }
+  catch (e) { meaningText.textContent = "Matching Z statistics can hide different correlations in other bases."; }
+  void renderCircuitText(currentCase, currentChallenge, "sealed");
+  if (backendName === "ionq_simulator") {
+    hideLoading();
     const button = document.createElement("button");
     button.textContent = "Run one IonQ job";
     button.className = "verdict-btn";
-    button.setAttribute("aria-label", "Run one IonQ job");
-    const loading = document.getElementById("loading");
     document.querySelector(".courtroom").insertBefore(button, loading);
-
-    await new Promise((resolve) => {
+    await new Promise(resolve => {
       button.addEventListener("click", async () => {
         button.disabled = true;
-        try {
-          announce("Running IonQ job…");
-          const results = await court.run_demo.callPromising(
-            backend,
-            currentCase,
-            currentShots,
-            currentChallenge,
-            currentTrust
-          );
-          currentResults = results;
-
-          // Load recorded data
-          recordedData = await court.load_recorded.callPromising();
-
-          // Update case IDs
-          caseIdEl.textContent = `Case ${currentCase}`;
-          evidenceCaseIdEl.textContent = `Case ${currentCase}`;
-
-          // Render Z histograms
-          renderHistogram("bars-target", "table-target", results.marginals, "target_Z", "target");
-          renderHistogram("bars-impostor", "table-impostor", results.marginals, "impostor_Z", "impostor");
-
-          // Render parity charts for all tabs
-          const intervals = results.analysis.parity_intervals_95 || {};
-          renderParityChart("parity-Z", "table-parity-Z", intervals, "target_Z");
-          renderParityChart("parity-Z", "table-parity-Z", intervals, "impostor_Z");
-          renderParityChart("parity-A", "table-parity-A", intervals, "target_A");
-          renderParityChart("parity-A", "table-parity-A", intervals, "impostor_A");
-          renderParityChart("parity-B", "table-parity-B", intervals, "target_B");
-          renderParityChart("parity-B", "table-parity-B", intervals, "impostor_B");
-
-          // Render evidence stamp
-          renderEvidenceStamp(results.analysis.simultaneous_witness);
-
-          // Render sidebar meaning and circuit
-          meaningText.textContent = await court.get_measurement_meaning.callPromising();
-          await renderCircuitText(currentCase, currentChallenge, "target_Z");
-
-          // Render comparison
-          renderComparison(results, recordedData);
-
-          // Reset verdict
-          currentVerdict = null;
-          document.querySelectorAll(".verdict-btn").forEach(btn => {
-            btn.classList.remove("selected");
-            btn.setAttribute("aria-checked", "false");
-          });
-          setVerdictNote("Select a verdict above to proceed.");
-
-          // Enable controls
-          verdictOptions.querySelectorAll(".verdict-btn").forEach(btn => btn.disabled = false);
-          evidenceTabs.querySelectorAll(".evidence-tab").forEach(tab => tab.disabled = true);
-          remeasureBtn.disabled = currentChallenge !== "sealed" || !results.source.includes("built-in");
-
-          hideLoading();
-          showDocket();
-          announce("Measurement complete. IonQ job complete. Court convened with IonQ results.");
-        } catch (e) {
-          showError("IonQ job failed", e.message);
-          announce("IonQ job error", "assertive");
-        } finally {
-          resolve();
-        }
+        caseSelect.disabled = true;
+        challengeSelect.disabled = true;
+        trustToggle.disabled = true;
+        try { await runDemo(); } finally { resolve(); }
       }, { once: true });
     });
-  } else {
-    await runDemo();
-  }
-
-  setupEventListeners();
+  } else { await runDemo(); }
 }
 
-// Start when DOM is ready
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", init);
-} else {
-  init();
-}
+window.addEventListener("error", () => showError("The page could not complete that action"));
+window.addEventListener("unhandledrejection", () => showError("The page could not complete that action"));
+function start() { void init().catch(() => showError("Court could not be initialized")); }
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+else start();

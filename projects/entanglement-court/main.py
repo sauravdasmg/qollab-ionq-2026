@@ -6,6 +6,7 @@ from cases import make_demo, analyze_counts
 from circuit_pack import demo_blocks, pack_circuits, unpack_counts, normalize_counts, digest, circuit_hash, circuit_description
 from receipt import load_records, utc_now, emit_record, MODELS
 from figures import present, parity_interval, ASSUMPTIONS
+from campaign import build_slot
 
 
 def _effective_model(active):
@@ -18,7 +19,9 @@ def _effective_model(active):
     return model
 
 
-def main(case: int=0, shots: int=200, challenge: str="sealed", assume_trusted_measurements: bool=False):
+def main(case: int=0, shots: int=200, challenge: str="sealed", assume_trusted_measurements: bool=False, slot: str=""):
+    if type(slot) is not str: raise ValueError("slot must be a string")
+    campaign_row = None
     if type(case) is not int or case not in range(4):
         raise ValueError('case must be a frozen ID 0..3')
     if type(shots) is not int or not 1 <= shots <= 10000:
@@ -31,9 +34,14 @@ def main(case: int=0, shots: int=200, challenge: str="sealed", assume_trusted_me
     records, statuses = load_records()
     for status in statuses:
         print(status, flush=True)
-    circuits, manifest = make_demo(case, recipe={'audited16': challenge == 'audited16'})
+    if slot:
+        circuits, manifest, campaign_row = build_slot(slot)
+        case = manifest['case_id']
+        challenge = 'campaign'
+    else:
+        circuits, manifest = make_demo(case, recipe={'audited16': challenge == 'audited16'})
     manifest['shared_helpers'] = ['circuit_pack.py', 'receipt.py']
-    blocks = demo_blocks(circuits, manifest)
+    blocks = circuits if campaign_row else demo_blocks(circuits, manifest)
     packed, layout = pack_circuits(blocks)
     active = globals().get('backend')
     if active is None:
@@ -45,13 +53,20 @@ def main(case: int=0, shots: int=200, challenge: str="sealed", assume_trusted_me
     ionq = isinstance(name, str) and name.startswith('ionq')
     if ionq and name != 'ionq_simulator':
         raise ValueError('only the injected IonQ simulator is supported')
+    if campaign_row and ionq:
+        setter = getattr(active, 'set_options', None)
+        if callable(setter): setter(noise_model='aria-1')
     effective = _effective_model(active) if ionq else None
+    if campaign_row and shots != 200:
+        raise ValueError('preregistered campaign slots require exactly 200 shots')
+    if campaign_row and ionq and effective != 'aria-1':
+        raise ValueError('campaign slots require the injected aria-1 noise model')
     if ionq and challenge == 'audited16':
         raise ValueError('Readiness gap: 16-wire cloud fallback requires saved Z references and the C27 smoke audit; neither is staged. Use the 24-wire anchor.')
     started = utc_now()
     assumptions = list(manifest['source_assumptions']) + [ASSUMPTIONS,
         'Packed blocks share one execution, not independent generated instances.',
-        'Anchor demonstration is not the prescribed campaign; cloud budget/controls pending.']
+        ('Preregistered campaign slot ' + slot if campaign_row else 'Anchor demonstration is not the prescribed campaign; cloud budget/controls pending.')]
     record = dict(schema_version='1.0.0', source='Qollab IonQ simulator run', operator_environment=platform.platform(),
                   backend=name, noise_model=effective, shots=shots, settings={'manifest': manifest, 'challenge': challenge,
                   'packed_circuit': circuit_description(packed),
@@ -105,9 +120,13 @@ def main(case: int=0, shots: int=200, challenge: str="sealed", assume_trusted_me
         raise
     if ionq:
         emit_record(record)
+    if campaign_row:
+        campaign_record = {'slot':slot, 'suite':campaign_row['suite'], 'case_id':campaign_row['case_id'], 'stratum':campaign_row['stratum'], 'manifest_hash':campaign_row['manifest_hash'], 'shots':shots, 'noise_model':effective or 'ideal'}
+        print('Campaign verdict: ' + str(analysis.get('simultaneous_witness',{}).get('receipt','inconclusive')) + ' (conditional on trusted ideal rotations/readout).', flush=True)
+        print('RECORD_JSON ' + json.dumps(campaign_record, sort_keys=True), flush=True)
     source = ('Live Qollab IonQ simulator | ' + effective + ' | UTC ' + record['utc_end']) if ionq else 'Live built-in ideal'
     present(marginals, analysis, source, shots, assume_trusted_measurements)
-    for saved in records:
+    for saved in ([] if campaign_row else records):
         if saved['error']:
             continue
         saved_manifest = saved['settings'].get('manifest')

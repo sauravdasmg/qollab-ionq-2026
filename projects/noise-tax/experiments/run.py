@@ -41,7 +41,7 @@ def atomic_json(path, value):
 def build_manifest(suite, quick=False, gate=None):
     ws, ns, sampling = SUITES[suite]
     count = 2 if quick else 24
-    grid = [0., 2.] if quick else ([k/4 for k in range(9)] if gate == 'g1' else [k/40 for k in range(81)])
+    grid = [0., 2.] if quick else [k/40 for k in range(81)]
     hashes = {p: hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in IMPLEMENTATION_FILES}
     configuration = {'suite': suite, 'quick': quick, 'gate': gate, 'grid': grid,
         'models': list(channel.MODELS), 'primary_model': 'aria-1', 'n_instances': count,
@@ -51,6 +51,9 @@ def build_manifest(suite, quick=False, gate=None):
         'sampling_base': sampling, 'sampling_rng': 'SeedSequence [base,game,seed,model,scale,arm] / PCG64',
         'shots': {'W_per_label_per_arm': 1000, 'N_per_arm': 4000},
         'fixed_prize': .02, 'channel': {m: channel.configuration(m) for m in channel.MODELS},
+        'uncertainty_design': {'W': 'DETERMINISTIC; numerical grid bracket plus calibration sensitivity',
+                               'N': 'paired-instance bootstrap', 'cloud': 'binomial shot sampling',
+                               'calibration_r_2q_shifts': [-.001, .001]},
         'calibration_sha256': channel.CALIBRATION_SHA256, 'implementation_sha256': hashes,
         'versions': {'qiskit': qiskit.__version__, 'numpy': np.__version__, 'python': platform.python_version()},
         'recipe': {'W': 'fixed textbook square-root, decoder [0,1,2,0], one-way ideal-source reference',
@@ -175,6 +178,30 @@ def diagnostic_controls():
                                            'counted_in_primary': False}
     return controls
 
+def calibration_sensitivity(spec, grid, model):
+    """Recompute W at the calibration-grid edges, keeping fitted 1q unchanged."""
+    circuits, manifest = w.make_demo(spec)
+    compiled = [channel.compile_circuit(c, model) for c in circuits]
+    prepared = [channel.prepare_steps(c) for c in compiled]
+    edges = []
+    for shift in (-.001, .001):
+        curve = []
+        for scale in grid:
+            cfg = channel.configuration(model, scale, calibration_shift=shift)
+            probs = [channel.probabilities(c, cfg, p) for c, p in zip(compiled, prepared)]
+            curve.append(w.analyze_probabilities(probs, manifest)['advantage'])
+        root = crossover.crossing(grid, curve)
+        edges.append({'r_2q': cfg['r_2q'], 'shift': shift, 'r_1q': cfg['r_1q'],
+                      'mean_advantage': curve, 'point': root})
+    resolved = all(e['point']['status'] == 'resolved' for e in edges)
+    roots = [e['point']['estimate'] for e in edges]
+    return {'uncertainty_source': 'CALIBRATION SENSITIVITY',
+            'method': 'fitted r_2q +/-0.001; fitted r_1q unchanged; not a confidence interval',
+            'representative_seed': spec['seed'], 'edges': edges,
+            's_star_range': [min(roots), max(roots)] if resolved else None,
+            'status': 'resolved' if resolved else 'unresolved',
+            'excludes': 'remote pulse-model mismatch and statistical calibration coverage'}
+
 def run(args):
     if args.independent_manifest and args.suite != 'fresh':
         raise ValueError('--independent-manifest is for the fresh suite only')
@@ -216,8 +243,14 @@ def run(args):
                 print(f'LOCAL MODEL {suite_name} {game}/{model} {done}/{total}; elapsed={elapsed:.1f}s ETA={eta:.1f}s', flush=True)
             results['cases'][game][model] = cases
             curves = [[p['exact_advantage'] for p in case['points']] for case in cases]
-            results['analysis'].setdefault(game, {})[model] = crossover.analyze(
-                cfg['grid'], curves, draws=args.draws, seed=analysis_config['seeds'][game])
+            if game == 'W':
+                analysis = crossover.deterministic(cfg['grid'], curves)
+                analysis['calibration_sensitivity'] = calibration_sensitivity(
+                    cfg['instances'][game][0], cfg['grid'], model)
+            else:
+                analysis = crossover.analyze(cfg['grid'], curves, draws=args.draws,
+                                             seed=analysis_config['seeds'][game])
+            results['analysis'].setdefault(game, {})[model] = analysis
     results['diagnostic_controls'] = diagnostic_controls()
     records, statuses = recorded_ionq.parse_records()
     anchors = [a for r in records for a in summarize_record(r)]

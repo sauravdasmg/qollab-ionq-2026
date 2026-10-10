@@ -1098,3 +1098,22 @@ select {
     break-inside: avoid;
   }
 }
+
+/* A single stable chart, with readable labels even in narrow Qollab panels. */
+.histogram { min-width: 0; }
+.histogram > .histogram-bar {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 310px;
+  overflow-x: auto;
+  background: #FFFFFF;
+}
+.histogram-svg {
+  display: block;
+  width: 100%;
+  min-width: 720px;
+  height: auto;
+  background: #FFFFFF;
+  color: #1F1A14;
+}

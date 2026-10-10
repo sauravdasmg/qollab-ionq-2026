@@ -89,8 +89,8 @@ def main(shots: int=256, phase_frame: float=0.0):
         text = transcript(informative[0], "live built-in ideal")
         sender = globals().get("sendFile")
         if callable(sender):
-            sender(audio, "eyes-free.wav")
-            sender(text.encode("utf-8"), "eyes-free-receipt.txt")
+            sender("eyes-free.wav", "audio/wav", audio)
+            sender("eyes-free-receipt.txt", "text/plain", text.encode("utf-8"))
             print("Audio download requested. Start at low volume; use player Stop. Verify download works.", flush=True)
         else:
             print("Audio download unavailable: sendFile not injected; fallback needs operator verification.", flush=True)

@@ -29,3 +29,8 @@ Kill or pause the claim for local easy certification below 60%, a product-contro
 ## Resource ledger and saved evidence
 
 Quick mode is development-only: exactly two paired development inputs, at most 10 draws each, ideal and nominal aria only, separate `quick-*` output, no suite, sweep, fresh evaluation, or full-evidence overwrite. Full local campaign is owned by the orchestrator. Save configs, software versions, machine and UTC, generation/sample seeds, full parameters, recipe/search cost, raw counts/probabilities, hashes, per-instance paired outcomes, uncertainty, shot/qubit/gate accounting, failures and negative decisions. Resume only from deterministic validated checkpoints. Cloud console exports stay in `results/exports/`; receipts must not be synthesized by this harness.
+
+
+## 2026-10-10T03:31:16Z amendment ? executable cloud subset
+
+The human-operated campaign slots are C02?C13 from the frozen manifest cases 2026100200?2026100205 and 2026100212?2026100217 (six easy followed by six near-threshold), then C14?C25 from fresh cases 20261011000?20261011005 and 20261011010?20261011015 (same stratum order). This is the predeclared seed subset in the primary plan, not a new selection. `campaign.py` embeds each complete manifest and its SHA-256; it verifies each embedded manifest against `review/manifests/frozen.json` or `fresh.json` before building. Each slot is one six-block, 24-qubit packed circuit on IonQ aria-1 at 200 shots; built-in checking executes the six component circuits as one list.

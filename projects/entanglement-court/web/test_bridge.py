@@ -98,3 +98,46 @@ def test_run_demo_invalid_trust_flag():
     backend = BasicSimulator()
     with pytest.raises(ValueError):
         court_bridge.run_demo(backend, case=0, shots=100, challenge="sealed", assume_trusted_measurements="true")
+
+@pytest.mark.parametrize("case", range(4))
+@pytest.mark.parametrize("challenge", ["sealed", "anchor"])
+def test_measured_distributions_all_cases(case, challenge):
+    result = court_bridge.run_demo(BasicSimulator(seed_simulator=712), case=case,
+                                   shots=64, challenge=challenge)
+    for name in ("target_Z", "impostor_Z"):
+        rows = result["distributions"][name]
+        assert len(rows) == 16
+        assert [r["outcome"] for r in rows] == [format(i, "04b") for i in range(16)]
+        assert sum(r["probability"] for r in rows) == pytest.approx(1)
+        assert any(r["probability"] > 0 for r in rows)
+        hist = result["marginals"][name]
+        assert sum(hist.values()) == 64
+        assert all(r["probability"] == hist.get(r["outcome"], 0) / 64 for r in rows)
+
+
+def page_circuit_requests():
+    import re
+    from pathlib import Path
+    js = Path(__file__).with_name("main.js").read_text(encoding="utf-8")
+    mapping = re.search(r"const CIRCUIT_VIEWS = \{([^}]+)\}", js).group(1)
+    views = re.findall(r':\s*"([^"]+)"', mapping)
+    blocks = re.findall(r'"((?:target|impostor)_[ZAB])"', js)
+    return sorted(set(views + blocks + ["receipt"]))
+
+
+@pytest.mark.parametrize("case", range(4))
+@pytest.mark.parametrize("challenge", ["sealed", "anchor", "audited16"])
+@pytest.mark.parametrize("view", page_circuit_requests())
+def test_all_page_circuit_requests(case, challenge, view):
+    text = court_bridge.get_circuit_text(case, challenge, view)
+    assert text
+    assert "unavailable" not in text.lower()
+    assert "Traceback" not in text
+    if challenge == "audited16" and view in ("sealed", "Z", "target_Z", "impostor_Z"):
+        assert "not measured" in text
+    if view in ("stamp", "receipt"):
+        assert "target_A" in text and "target_B" in text
+
+
+def test_unknown_circuit_view_is_friendly():
+    assert "Circuit unavailable" in court_bridge.get_circuit_text(0, "sealed", "unknown")

@@ -15,7 +15,12 @@ def plot_results(result, output_dir='figures'):
                 continue
             x = result['grid']; y = summary['mean_advantage']
             ax.plot(x, y, style, color=colors[model], label=model)
-            if model == 'aria-1':
+            if game == 'W':
+                sensitivity = summary['calibration_sensitivity']['s_star_range']
+                if sensitivity:
+                    ax.axvspan(*sensitivity, color=colors[model], alpha=.12,
+                               label=model+' calibration sensitivity')
+            elif model == 'aria-1':
                 ax.fill_between(x, summary['lower_band'], summary['upper_band'],
                                 color=colors[model], alpha=.18, label='97.5% simultaneous band')
                 ci = summary['inversion']['confidence_interval']
@@ -32,7 +37,8 @@ def plot_results(result, output_dir='figures'):
     (folder / (result['suite'] + '-alt.txt')).write_text(
         'Two panels show signed exact-instance mean advantage versus local modeled noise scale. '
         'Above zero favors the joint/hedge recipe. Below zero favors the ideal one-way reference/'
-        'attained product. Shading marks bootstrap bands, hatched intervals crossover sets. '
+        'attained product. W crossings are deterministic; W shading is calibration sensitivity, '
+        'not sampling confidence. N shading marks bootstrap bands, hatched intervals crossover sets. '
         'See JSON analysis for values, unresolved/censored statuses and negative results.', encoding='utf-8')
     return str(path)
 
@@ -49,8 +55,11 @@ def plot_cloud_comparison(result, anchors, output_dir='figures'):
                 ax.scatter(j-.1, curves['mean_advantage'][result['grid'].index(1.)],
                            marker='s', color='#007f86', label='LOCAL MODEL s=1' if j == 0 else None)
             for k, anchor in enumerate(a for a in anchors if a['game'] == game and a['model'] == model):
-                ax.scatter(j+.1, anchor['advantage'], marker='o', color='#d14c36',
-                           label='RECORDED IonQ simulator' if j == 0 and k == 0 else None)
+                ci = anchor['cloud_sampling']['advantage_interval']
+                ax.errorbar(j+.1, anchor['advantage'],
+                            yerr=[[anchor['advantage']-ci[0]], [ci[1]-anchor['advantage']]],
+                            fmt='o', color='#d14c36',
+                            label='RECORDED cloud sampling 95% bounds' if j == 0 and k == 0 else None)
         ax.axhline(0, color='black', linewidth=.8)
         ax.set_xticks(range(3), models, rotation=15)
         ax.set_ylabel('Signed advantage'); ax.set_title(game+' discrete anchors; no cloud scale sweep')

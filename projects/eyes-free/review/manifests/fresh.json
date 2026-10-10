@@ -2,14 +2,14 @@
   "schema": "eyes-free-independent-manifest-v1",
   "suite": "fresh",
   "owner": "independent_verifier",
-  "generated_utc": "2026-10-10T01:11:58.759826Z",
+  "generated_utc": "2026-10-10T03:26:50.069488Z",
   "generator_notes": [
-    "Independently assembled by WP-E-03 from the preregistered plan, before this reviewer sampled held-out counts. Seed ranges are prescribed, not randomly selected or outcome-tuned.",
-    "Each instance is one independently seeded suite over all widths/phases/scales; repeated settings do not increase independent instance count.",
-    "Development seeds 2026100400..2026100403 excluded. Frozen and fresh IDs and sampling seeds are disjoint.",
-    "Actual harness restarts NumPy default_rng(seed) at each noise scale and consumes multinomial draws in width-major then phase-major order; settings within a seed are correlated.",
-    "Five nonzero local noise scales plus ideal scale zero. phase_frame is added to all twelve evenly spaced phases; qubit/classical layout follows current harness without further random variation.",
-    "Current loader reads only fresh seeds and phase_frame, hashes the full fresh JSON, and ignores the frozen file entirely. Owner and instance IDs are reviewer metadata, not currently enforced."
+    "WP-E-03 independent verifier regenerated these manifests directly from the prescribed plan; seed ranges are fixed, not selected using outcomes. Earlier files at the same requested paths existed and are superseded by this generation.",
+    "One instance is one sampling seed spanning widths 1,2,4, twelve phases, and six noise settings including ideal. These settings are correlated within each instance and are not additional independent instances.",
+    "NumPy default_rng(seed) is restarted at each scale by the current harness; multinomial draws are consumed in width-major, phase-major order. No development seeds or cross-suite sampling seeds overlap.",
+    "Frozen phase frame is zero; fresh is pi/24. Layout is the current little-endian identity layout, with no additional randomized layout changes supported by this harness.",
+    "The current configuration loader ignores the frozen manifest. For fresh it requires only seeds and phase_frame; it does not enforce owner, instance IDs, instance_count, widths, scales, or shots. This is an early HOLD finding, not an assertion of enforced manifest validation.",
+    "Full experiments remain orchestrator-only. This review uses a maximum of five saved records per suite for smoke verification."
   ],
   "instance_count": 20,
   "seeds": [
@@ -142,12 +142,12 @@
     4
   ],
   "noise_scales": [
-    0.0,
+    0,
     0.5,
     0.75,
-    1.0,
+    1,
     1.5,
-    2.0
+    2
   ],
   "phase_frame": 0.1308996938995747,
   "phases_rad": [

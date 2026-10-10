@@ -88,10 +88,12 @@ def test_builtin_list_and_download(monkeypatch):
     b=Ideal()
     downloads=[]
     monkeypatch.setattr(app,"backend",b,raising=False)
-    monkeypatch.setattr(app,"sendFile",lambda data,name:downloads.append((name,data)),raising=False)
+    monkeypatch.setattr(app,"sendFile",lambda name,content_type,data:downloads.append((name,content_type,data)),raising=False)
     monkeypatch.setattr("matplotlib.pyplot.show",lambda:None)
     estimates=app.main()
     assert b.job.fetches==b.job.value.fetches==1
     assert len(estimates)==3
-    assert {n for n,d in downloads}=={"eyes-free.wav","eyes-free-receipt.txt"}
-    assert dict(downloads)["eyes-free.wav"].startswith(b"RIFF")
+    assert {n for n,t,d in downloads}=={"eyes-free.wav","eyes-free-receipt.txt"}
+    assert {n:t for n,t,d in downloads} == {"eyes-free.wav":"audio/wav", "eyes-free-receipt.txt":"text/plain"}
+    assert {n:d for n,t,d in downloads}["eyes-free.wav"].startswith(b"RIFF")
+    assert isinstance({n:d for n,t,d in downloads}["eyes-free-receipt.txt"], bytes)

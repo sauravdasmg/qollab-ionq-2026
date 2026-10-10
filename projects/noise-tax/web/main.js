@@ -77,17 +77,26 @@ function renderCardValues() {
     const lo = entry.lower ? interp(entry.grid, entry.lower, state.noise) : null;
     const hi = entry.upper ? interp(entry.grid, entry.upper, state.noise) : null;
     if (lo !== null) {
-      $(`adv-${game}`).title = `CI [${fmt(lo)}, ${fmt(hi)}] at s=${fmt(state.noise)}`;
+      $(`adv-${game}`).title = `N INSTANCE BOOTSTRAP band [${fmt(lo)}, ${fmt(hi)}] at s=${fmt(state.noise)}`;
     }
     const xstar = entry.crossing;
     const cs = entry.ci;
     if (xstar === null) {
       $(`xstar-${game}`).textContent = "crossover s*: not measured within s = 0…2";
+    } else if (game === "W") {
+      const range = entry.calibration_sensitivity?.s_star_range;
+      const bracket = entry.numerical_grid_bracket;
+      $(`xstar-${game}`).textContent = `DETERMINISTIC s* = ${xstar.toFixed(3)}` +
+        (bracket ? `; numerical grid bracket [${bracket.map(x => x.toFixed(3)).join(", ")}]` : "") +
+        (range ? `; CALIBRATION SENSITIVITY [${range.map(x => x.toFixed(3)).join(", ")}]` : "; calibration sensitivity pending");
     } else if (cs && Array.isArray(cs)) {
       $(`xstar-${game}`).textContent =
         `crossover s* = ${xstar.toFixed(3)}  ·  CI [${cs[0].toFixed(3)}, ${cs[1].toFixed(3)}]`;
     } else {
       $(`xstar-${game}`).textContent = `crossover s* = ${xstar.toFixed(3)}`;
+    }
+    if (game === "N" && entry.ci) {
+      $(`xstar-${game}`).textContent += `; width <=0.30 target ${entry.precision_target_met ? "met" : "UNMET"}`;
     }
     drawChart(game);
     rebuildTable(game);
@@ -188,6 +197,10 @@ function drawChart(game) {
   for (const anchor of state.evidence.anchors) {
     if (anchor.game !== game) continue;
     const ay = yScale(anchor.advantage, yMax, yMin);
+    const shotCI = anchor.cloud_sampling?.advantage_interval;
+    if (shotCI) helper("line", {x1: String(xScale(1)), x2: String(xScale(1)),
+      y1: String(yScale(shotCI[0], yMax, yMin)), y2: String(yScale(shotCI[1], yMax, yMin)),
+      stroke: "#C2410C", "stroke-width": "2"});
     const sign = anchor.advantage > 1e-9 ? "quantum" : anchor.advantage < -1e-9 ? "classical" : "quantum";
     helper("circle", { cx: String(xScale(1)), cy: String(ay), r: "5", class: `anchor anchor-${sign}` });
     const when = anchor.date ? String(anchor.date).slice(0, 10) : "";
@@ -239,7 +252,7 @@ function renderLegend(game) {
     { shape: "●", style: "color:#1F6B3A;", label: "recorded IonQ advantage (>0)" },
     { shape: "●", style: "color:#9B1C1C;", label: "recorded IonQ advantage (<0)" },
     { shape: "▲", style: "color:#0B5CAD;", label: "live run" },
-    { shape: "◆", style: "color:#C2410C;", label: "crossover s* (CI band)" },
+    { shape: "◆", style: "color:#C2410C;", label: game === "W" ? "deterministic crossover s*" : "crossover s* (N bootstrap CI)" },
     { shape: "- -", style: "color:#CBD5E1;", label: "advantage = 0" },
   ];
   for (const item of items) {
@@ -274,6 +287,7 @@ function rebuildTable(game) {
     if (anchor.game !== game) continue;
     const tr = document.createElement("tr");
     const sign = anchor.advantage > 1e-9 ? "quantum" : anchor.advantage < -1e-9 ? "classical" : "tie";
+    const shotBounds = anchor.cloud_sampling?.advantage_interval;
     tr.innerHTML = `<td>1.00</td><td>${fmt(anchor.advantage)}</td><td>—</td><td>—</td>` +
       `<td>—</td><td>${MODEL_LABELS[anchor.model]} · RECORDED· ${sign}</td>`;
     body.appendChild(tr);
@@ -310,7 +324,7 @@ function renderAnchors() {
   for (const anchor of state.evidence.anchors) {
     const li = document.createElement("li");
     li.innerHTML = `<strong>${MODEL_LABELS[anchor.model] || anchor.model}</strong> (${anchor.game}) — ` +
-      `advantage ${fmt(anchor.advantage)}, ${anchor.shots} shots, ${anchor.date}<span class="secondary"> — ${anchor.detail}</span>`;
+      `advantage ${fmt(anchor.advantage)}, ${anchor.shots} shots, ${anchor.date}<span class="secondary"> — ${anchor.detail}; CLOUD SAMPLING 95% binomial propagated advantage bounds [${anchor.cloud_sampling.advantage_interval.map(x => fmt(x)).join(", ")}]</span>`;
     ul.appendChild(li);
   }
 }

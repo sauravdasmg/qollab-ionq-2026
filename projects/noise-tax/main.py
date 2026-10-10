@@ -73,6 +73,7 @@ def main(shots: int = 512, noise_model: str = 'aria-1'):
     print(f'RECORDED progress 3/3: {len(records)} validated historical receipts; {sum(not s["ok"] for s in statuses)} receipt issues')
     for record in records:
         for anchor in summarize_record(record):
+            print(f"RECORDED CLOUD SAMPLING {anchor['game']} {anchor['model']}: 95% binomial component bounds, propagated advantage interval={anchor['cloud_sampling']['advantage_interval']}")
             if anchor['game'] == 'W':
                 print(f"RECORDED IonQ simulator W {anchor['model']}: shots={anchor['shots']}/label, textbook joint error={anchor['word_error']:.5f}, advantage={anchor['advantage']:+.5f}")
             else:
@@ -89,7 +90,12 @@ def main(shots: int = 512, noise_model: str = 'aria-1'):
     else:
         for game, models in frozen['analysis'].items():
             for model, analysis in models.items():
-                print(f"LOCAL MODEL {game} {model}: crossing={analysis['point']['estimate']}, status={analysis['point']['status']}, CI={analysis['inversion']['confidence_interval']}, grid step=0.025")
+                if game == 'W' and analysis.get('reporting') == 'DETERMINISTIC':
+                    print(f"LOCAL MODEL W {model}: DETERMINISTIC crossing={analysis['point']['estimate']}, status={analysis['point']['status']}, numerical grid bracket={analysis['inversion']['numerical_grid_bracket']}; CALIBRATION SENSITIVITY s* range={analysis['calibration_sensitivity']['s_star_range']} (r_2q +/-0.001, fitted 1q unchanged; not a sampling CI)")
+                elif game == 'N':
+                    print(f"LOCAL MODEL N {model}: crossing={analysis['point']['estimate']}, status={analysis['point']['status']}, N INSTANCE BOOTSTRAP 97.5% simultaneous-band CI={analysis['inversion']['confidence_interval']}, width target <=0.30 met={analysis['precision_target_met']}")
+                else:
+                    print(f'LOCAL MODEL W {model}: legacy pilot uncertainty superseded; revised deterministic evaluation pending')
     if cloud:
         job_id = job.job_id() if callable(getattr(job, 'job_id', None)) else getattr(job, 'job_id', None)
         record = make_record(packed, layout, raw, manifests, int(shots), noise_model, started, ended, job_id)
