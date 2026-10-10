@@ -1,5 +1,9 @@
 # Eyes-Free Entanglement
 
+## Evidence files in this project
+
+`evidence_summary.json` is the compact LOCAL MODEL summary of the saved local results; `recorded_ionq.py` contains the recorded Qollab IonQ simulator runs. Regenerate the summary from the full files in `results/` with `python experiments/make_summary.py`.
+
 Explore a measured GHZ parity fringe as a chart, a screen-reader-ready receipt, and optional sound. Pitch encodes fitted frequency; digital amplitude encodes contrast.
 
 **Key local result:** in the LOCAL MODEL frozen suite, audio preserved the fitted frequency and contrast within the stated tolerances for 432/432 records; in the fresh suite, 360/360. These are calibrated IonQ-like simulations, not cloud or device results.

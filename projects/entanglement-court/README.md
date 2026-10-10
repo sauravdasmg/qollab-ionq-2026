@@ -32,6 +32,8 @@ The simultaneous bound allocates error probability across generator parities and
 
 The local noise model approximates IonQ-like errors and is not a device result. The cloud subset is pending; no cloud outcome is claimed here.
 
+**Evidence files in this project:** `evidence_summary.json` contains compact LOCAL MODEL statistics and source hashes; `recorded_ionq.py` holds the Qollab IonQ runs. Regenerate the summary with `python experiments/make_summary.py`.
+
 ![Frozen-case local campaign chart.](figures/frozen.png)
 
 *Alt text: Frozen-case campaign figure; graph-state certification is higher for easy cases than near-threshold cases, where inconclusive outcomes are expected.*

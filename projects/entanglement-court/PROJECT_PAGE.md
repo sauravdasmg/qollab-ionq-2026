@@ -52,6 +52,8 @@ Every successful receipt states its assumptions. Cloud inference is conditional 
 
 The local IonQ-like noise model is an approximation and is not hardware or Qollab cloud evidence.
 
+**Evidence files in this project:** `evidence_summary.json` contains compact LOCAL MODEL statistics and source hashes; `recorded_ionq.py` holds the Qollab IonQ runs. Regenerate the summary with `python experiments/make_summary.py`.
+
 ### Replicate and extend
 
 To replicate the local evidence, run `python experiments/run.py --suite frozen --independent-manifest review/manifests/frozen.json` (and `--suite fresh` with `fresh.json`) from the repository. To extend it, add new graph/product preparations in `cases.py` or new witness terms in `witness.py`, then add matching independent manifests.

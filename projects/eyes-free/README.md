@@ -27,6 +27,10 @@ For an IonQ simulator run, nine small circuits are packed into disjoint blocks o
 
 Evidence files: `results/frozen-evidence.json` and `results/fresh-evidence.json`. Every value below is **LOCAL MODEL** evidence from an exact small-state simulation with a calibrated Aria-like noise approximation. It is not Qollab execution or device data.
 
+### Evidence files in this project
+
+`evidence_summary.json` is the compact LOCAL MODEL summary of the saved local results; `recorded_ionq.py` contains the recorded Qollab IonQ simulator runs. Regenerate the summary from the full files in `results/` with `python experiments/make_summary.py`.
+
 | Suite | Seeded instances | Informative records | Audio agrees with fitted frequency and contrast | Frequency identified | Evidence label |
 | --- | ---: | ---: | ---: | ---: | --- |
 | Frozen | 24 | 432 | 432/432 | 432/432 | LOCAL MODEL |

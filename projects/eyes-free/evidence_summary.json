@@ -1,0 +1,3396 @@
+{
+  "evidence_label": "LOCAL MODEL (calibrated IonQ-like approximation, not device)",
+  "source_files_sha256": {
+    "results/frozen-evidence.json": "cb5f98230ac64a7758154b2f78a8d620bc8c138956cba6a07902cc1dcc077e7b",
+    "results/fresh-evidence.json": "870cd38189b5dd035305470987afd409323d8248788d1e73bdcf7793e96774b8",
+    "review/manifests/frozen.json": "53438b090a1cba3ee6a442a6d4a84c8510c2512170c0096f0e299a46a4159d56",
+    "review/manifests/fresh.json": "91482c10b3664cac2d7b5916489d0307a588b432ce55236190addc0472000269",
+    "results/g1.json": "670ef9a4c6149167c73845946c0def3997613d886b20a39708aa98d4623bedbd"
+  },
+  "manifests_sha256": {
+    "frozen": "53438b090a1cba3ee6a442a6d4a84c8510c2512170c0096f0e299a46a4159d56",
+    "fresh": "91482c10b3664cac2d7b5916489d0307a588b432ce55236190addc0472000269"
+  },
+  "config": {
+    "seeds_by_suite": {
+      "frozen": [
+        2026100500,
+        2026100501,
+        2026100502,
+        2026100503,
+        2026100504,
+        2026100505,
+        2026100506,
+        2026100507,
+        2026100508,
+        2026100509,
+        2026100510,
+        2026100511,
+        2026100512,
+        2026100513,
+        2026100514,
+        2026100515,
+        2026100516,
+        2026100517,
+        2026100518,
+        2026100519,
+        2026100520,
+        2026100521,
+        2026100522,
+        2026100523
+      ],
+      "fresh": [
+        20261011500,
+        20261011501,
+        20261011502,
+        20261011503,
+        20261011504,
+        20261011505,
+        20261011506,
+        20261011507,
+        20261011508,
+        20261011509,
+        20261011510,
+        20261011511,
+        20261011512,
+        20261011513,
+        20261011514,
+        20261011515,
+        20261011516,
+        20261011517,
+        20261011518,
+        20261011519
+      ]
+    },
+    "shots_per_phase": null,
+    "noise_models": "see per-record source evidence",
+    "noise_scales": null,
+    "grid": null,
+    "gate": {
+      "gate": "g1",
+      "criteria": [
+        {
+          "name": "exact_fringe_control_and_parity_sign",
+          "threshold": "max absolute error <= 1e-10",
+          "value": 1.3322676295501878e-15,
+          "pass": true
+        },
+        {
+          "name": "equal_budget_accessible_baseline",
+          "threshold": "equal shots and zero resampling",
+          "value": true,
+          "pass": true
+        },
+        {
+          "name": "quick_decoder_precision",
+          "threshold": "|frequency error| <= 0.02 and |contrast error| <= 0.01 for every informative record",
+          "value": {
+            "passed": 72,
+            "total": 72
+          },
+          "pass": true
+        },
+        {
+          "name": "frozen_metrics_and_declared_budget",
+          "threshold": "full frozen evidence at 24 seeds x 6 scales x 3 widths, preliminary targets met",
+          "value": {
+            "evidence_exists": true,
+            "development_records": 72
+          },
+          "pass": true
+        },
+        {
+          "name": "js_bridge_and_audio_fallback",
+          "threshold": "main.js and index.html implement bridge plus playback/download fallback",
+          "value": {
+            "ui_files_present": false
+          },
+          "pass": false
+        },
+        {
+          "name": "calibrated_local_channel",
+          "threshold": "ARIA rates match ../../tools/ionq_noise_params.json; local approximation only",
+          "value": {
+            "r_1q": 0.0005,
+            "r_2q": 0.009,
+            "readout": 0.0,
+            "basis": [
+              "rz",
+              "sx",
+              "x",
+              "rxx"
+            ],
+            "noise_model": "aria-1"
+          },
+          "pass": true
+        }
+      ],
+      "overall": "FAIL",
+      "independent_pass": false,
+      "cloud_confirmed": false
+    }
+  },
+  "suites": {
+    "frozen": {
+      "label": "LOCAL MODEL (calibrated IonQ-like approximation, not device)",
+      "suite_label": "local noise approximation; not cloud evidence",
+      "seeds": [
+        2026100500,
+        2026100501,
+        2026100502,
+        2026100503,
+        2026100504,
+        2026100505,
+        2026100506,
+        2026100507,
+        2026100508,
+        2026100509,
+        2026100510,
+        2026100511,
+        2026100512,
+        2026100513,
+        2026100514,
+        2026100515,
+        2026100516,
+        2026100517,
+        2026100518,
+        2026100519,
+        2026100520,
+        2026100521,
+        2026100522,
+        2026100523
+      ],
+      "configuration": {
+        "fit": {
+          "grid_step": 0.025,
+          "range": [
+            0.5,
+            4.5
+          ],
+          "alpha": 0.008333333333333333,
+          "ties": "lowest frequency; separated profile components are inconclusive",
+          "interval": "profile LR chi-square(1); grid envelope plus one-step conservative padding",
+          "contrast": "profile-component union of joint Wald radii; grid-Bonferroni LR null required",
+          "offset": "abs(offset)+hypot(cos,sin)<=1-1e-8 (numerical guard)",
+          "reselection": "entire grid profiled every fit"
+        },
+        "seeds": [
+          2026100500,
+          2026100501,
+          2026100502,
+          2026100503,
+          2026100504,
+          2026100505,
+          2026100506,
+          2026100507,
+          2026100508,
+          2026100509,
+          2026100510,
+          2026100511,
+          2026100512,
+          2026100513,
+          2026100514,
+          2026100515,
+          2026100516,
+          2026100517,
+          2026100518,
+          2026100519,
+          2026100520,
+          2026100521,
+          2026100522,
+          2026100523
+        ],
+        "scales": [
+          0,
+          0.5,
+          0.75,
+          1,
+          1.5,
+          2
+        ],
+        "shift": 0.0,
+        "shots": 1000,
+        "widths": [
+          1,
+          2,
+          4
+        ],
+        "phases_rad": [
+          0.0,
+          0.5235987755982988,
+          1.0471975511965976,
+          1.5707963267948966,
+          2.0943951023931953,
+          2.6179938779914944,
+          3.141592653589793,
+          3.665191429188092,
+          4.1887902047863905,
+          4.71238898038469,
+          5.235987755982989,
+          5.759586531581287
+        ],
+        "manifest_sha256": "53438b090a1cba3ee6a442a6d4a84c8510c2512170c0096f0e299a46a4159d56",
+        "truth_protocol": "WP-E-04-KL-projection-v1"
+      },
+      "fit_spec": {
+        "grid_step": 0.025,
+        "range": [
+          0.5,
+          4.5
+        ],
+        "alpha": 0.008333333333333333,
+        "ties": "lowest frequency; separated profile components are inconclusive",
+        "interval": "profile LR chi-square(1); grid envelope plus one-step conservative padding",
+        "contrast": "profile-component union of joint Wald radii; grid-Bonferroni LR null required",
+        "offset": "abs(offset)+hypot(cos,sin)<=1-1e-8 (numerical guard)",
+        "reselection": "entire grid profiled every fit"
+      },
+      "independent_manifest_sha256": "53438b090a1cba3ee6a442a6d4a84c8510c2512170c0096f0e299a46a4159d56",
+      "summary": {
+        "n1/scale0": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.0007628481586510102,
+              "mae": 0.0037112307199492303
+            },
+            "projection_frequency": {
+              "bias": 0.0007628481586510102,
+              "mae": 0.0037112307199492303
+            },
+            "contrast": {
+              "bias": -1.000000006412538e-08,
+              "mae": 1.000000006412538e-08
+            }
+          },
+          "reference_fit_mean_rmse": 0.007883970527780051
+        },
+        "n2/scale0": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": -0.00011829856528996115,
+              "mae": 0.0035893103049862893
+            },
+            "projection_frequency": {
+              "bias": -0.00011829856528996115,
+              "mae": 0.0035893103049862893
+            },
+            "contrast": {
+              "bias": -1.0000000091880956e-08,
+              "mae": 1.0000000091880956e-08
+            }
+          },
+          "reference_fit_mean_rmse": 0.008537773819780247
+        },
+        "n4/scale0": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.00028659896678586333,
+              "mae": 0.004200127436879197
+            },
+            "projection_frequency": {
+              "bias": 0.00028659896678586333,
+              "mae": 0.004200127436879197
+            },
+            "contrast": {
+              "bias": -0.001562489730439473,
+              "mae": 0.001562489730439473
+            }
+          },
+          "reference_fit_mean_rmse": 0.008921845506258819
+        },
+        "n1/scale0.5": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 5.29031542318333e-06,
+              "mae": 0.0038531111517945923
+            },
+            "projection_frequency": {
+              "bias": 0.00035290813346400735,
+              "mae": 0.003911047454801396
+            },
+            "contrast": {
+              "bias": 6.521486138394428e-05,
+              "mae": 0.00033410559045382593
+            }
+          },
+          "reference_fit_mean_rmse": 0.008472297268140375
+        },
+        "n2/scale0.5": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 23,
+              "total": 24,
+              "fraction": 0.9583333333333334,
+              "ci": [
+                0.7887983165430269,
+                0.9989456475545303
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": -0.0002478924922513966,
+              "mae": 0.0050134674306394995
+            },
+            "projection_frequency": {
+              "bias": -0.00025807808982121944,
+              "mae": 0.005014316230436984
+            },
+            "contrast": {
+              "bias": 0.00034370748117109234,
+              "mae": 0.0014616752640599824
+            }
+          },
+          "reference_fit_mean_rmse": 0.008943667881259448
+        },
+        "n4/scale0.5": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.0018571292317535737,
+              "mae": 0.004816123298713115
+            },
+            "projection_frequency": {
+              "bias": 0.0018570956247856985,
+              "mae": 0.004816123298713115
+            },
+            "contrast": {
+              "bias": 0.00024174534387760385,
+              "mae": 0.004517169866884131
+            }
+          },
+          "reference_fit_mean_rmse": 0.011770896272592085
+        },
+        "n1/scale0.75": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.0004029054156302475,
+              "mae": 0.0037499034887757735
+            },
+            "projection_frequency": {
+              "bias": 0.000924769965455971,
+              "mae": 0.003847016866263648
+            },
+            "contrast": {
+              "bias": 3.759205792926157e-05,
+              "mae": 0.00046918553199276164
+            }
+          },
+          "reference_fit_mean_rmse": 0.008213868347129083
+        },
+        "n2/scale0.75": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 23,
+              "total": 24,
+              "fraction": 0.9583333333333334,
+              "ci": [
+                0.7887983165430269,
+                0.9989456475545303
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.0012778678040427278,
+              "mae": 0.005231056691230159
+            },
+            "projection_frequency": {
+              "bias": 0.0012639439622569488,
+              "mae": 0.005228736050932529
+            },
+            "contrast": {
+              "bias": -2.1874740341344217e-05,
+              "mae": 0.0019446654917721397
+            }
+          },
+          "reference_fit_mean_rmse": 0.010682159606109716
+        },
+        "n4/scale0.75": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 23,
+              "total": 24,
+              "fraction": 0.9583333333333334,
+              "ci": [
+                0.7887983165430269,
+                0.9989456475545303
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.002833893167342912,
+              "mae": 0.006505369564103007
+            },
+            "projection_frequency": {
+              "bias": 0.0028338578830669667,
+              "mae": 0.006505354862321362
+            },
+            "contrast": {
+              "bias": 0.0016031825081579503,
+              "mae": 0.007261001872121152
+            }
+          },
+          "reference_fit_mean_rmse": 0.01471488371642253
+        },
+        "n1/scale1": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.00014311426107387984,
+              "mae": 0.004024884442589828
+            },
+            "projection_frequency": {
+              "bias": 0.0008397345029553203,
+              "mae": 0.004140987816236734
+            },
+            "contrast": {
+              "bias": 2.8714146553740494e-05,
+              "mae": 0.0005228182809862286
+            }
+          },
+          "reference_fit_mean_rmse": 0.008970100051359687
+        },
+        "n2/scale1": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 23,
+              "total": 24,
+              "fraction": 0.9583333333333334,
+              "ci": [
+                0.7887983165430269,
+                0.9989456475545303
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": -0.00022916272572186722,
+              "mae": 0.005400333879345733
+            },
+            "projection_frequency": {
+              "bias": -0.0002460983070400787,
+              "mae": 0.005400333879345733
+            },
+            "contrast": {
+              "bias": 0.0002774756376505659,
+              "mae": 0.0021870342772728896
+            }
+          },
+          "reference_fit_mean_rmse": 0.00995882114086682
+        },
+        "n4/scale1": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.0008006507922690235,
+              "mae": 0.004991897908859825
+            },
+            "projection_frequency": {
+              "bias": 0.0008006145393741152,
+              "mae": 0.004991888845636098
+            },
+            "contrast": {
+              "bias": 0.0020405855412164394,
+              "mae": 0.006311896479225573
+            }
+          },
+          "reference_fit_mean_rmse": 0.012647451570993895
+        },
+        "n1/scale1.5": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": -0.00043687057453350536,
+              "mae": 0.003713595660676375
+            },
+            "projection_frequency": {
+              "bias": 0.0006103712309860112,
+              "mae": 0.003727098090270687
+            },
+            "contrast": {
+              "bias": 0.0001764484757123911,
+              "mae": 0.0006583111562907159
+            }
+          },
+          "reference_fit_mean_rmse": 0.008606617759484722
+        },
+        "n2/scale1.5": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.0016736136419373826,
+              "mae": 0.005462991652106906
+            },
+            "projection_frequency": {
+              "bias": 0.0016528022310147994,
+              "mae": 0.005459523083619809
+            },
+            "contrast": {
+              "bias": 9.963391479655044e-05,
+              "mae": 0.0024045200017741852
+            }
+          },
+          "reference_fit_mean_rmse": 0.010953025042101874
+        },
+        "n4/scale1.5": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.0009917064328919072,
+              "mae": 0.006533335021841742
+            },
+            "projection_frequency": {
+              "bias": 0.000991669436199975,
+              "mae": 0.006533328855726421
+            },
+            "contrast": {
+              "bias": 0.000761365858810171,
+              "mae": 0.005494206284294483
+            }
+          },
+          "reference_fit_mean_rmse": 0.012849327212129192
+        },
+        "n1/scale2": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": -0.0008186972673094687,
+              "mae": 0.003916122506423499
+            },
+            "projection_frequency": {
+              "bias": 0.0005806705565976807,
+              "mae": 0.004031906280531202
+            },
+            "contrast": {
+              "bias": 0.0001242040118798332,
+              "mae": 0.0006852617290560072
+            }
+          },
+          "reference_fit_mean_rmse": 0.008983920427995984
+        },
+        "n2/scale2": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.000670672257524448,
+              "mae": 0.0051929757444597975
+            },
+            "projection_frequency": {
+              "bias": 0.0006485729432028261,
+              "mae": 0.005189292525406193
+            },
+            "contrast": {
+              "bias": -7.434221067986284e-05,
+              "mae": 0.0025968147644619918
+            }
+          },
+          "reference_fit_mean_rmse": 0.010700398573791832
+        },
+        "n4/scale2": {
+          "seed_records": 24,
+          "informative": 24,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_successes": 24,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "identified": 24,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8575264022774743,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 24,
+              "total": 24,
+              "fraction": 1.0,
+              "ci": [
+                0.8575264022774743,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.00217749689940816,
+              "mae": 0.006212266748698643
+            },
+            "projection_frequency": {
+              "bias": 0.0021774595540591246,
+              "mae": 0.006212257412361384
+            },
+            "contrast": {
+              "bias": 0.0018570992115843205,
+              "mae": 0.007887860310885097
+            }
+          },
+          "reference_fit_mean_rmse": 0.012970080439003842
+        },
+        "overall": {
+          "informative": 432,
+          "abstentions": 0,
+          "availability": 1.0,
+          "audio_successes": 432,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "identified": 432,
+          "inference_fraction": 1.0,
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 429,
+              "total": 432,
+              "fraction": 0.9930555555555556
+            },
+            "projection_frequency": {
+              "successes": 431,
+              "total": 432,
+              "fraction": 0.9976851851851852
+            },
+            "contrast": {
+              "successes": 432,
+              "total": 432,
+              "fraction": 1.0
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.00066849253997934,
+              "mae": 0.0047843390917818454
+            },
+            "projection_frequency": {
+              "bias": 0.000886746818150281,
+              "mae": 0.004806104445245446
+            },
+            "contrast": {
+              "bias": 0.00033323568718127936,
+              "mae": 0.0025721687017761547
+            }
+          },
+          "reference_fit_mean_rmse": 0.010265616953511124,
+          "ci_basis": "see seed_summary: one threshold indicator per independent seed",
+          "record_count": 432
+        }
+      },
+      "seed_summary": {
+        "audio_pass": {
+          "successes": 24,
+          "total": 24,
+          "ci": [
+            0.8575264022774743,
+            1.0
+          ]
+        },
+        "inference_pass": {
+          "successes": 24,
+          "total": 24,
+          "ci": [
+            0.8575264022774743,
+            1.0
+          ]
+        }
+      },
+      "seed_results": [
+        {
+          "seed": 2026100500,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100501,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100502,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100503,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100504,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100505,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100506,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100507,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100508,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100509,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100510,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100511,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100512,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100513,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100514,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100515,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100516,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100517,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100518,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100519,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100520,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100521,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100522,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 2026100523,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        }
+      ],
+      "record_count": 432,
+      "gate": {
+        "independent_science_pass": false,
+        "cloud_confirmation": false,
+        "implementation_handoff_only": false
+      }
+    },
+    "fresh": {
+      "label": "LOCAL MODEL (calibrated IonQ-like approximation, not device)",
+      "suite_label": "local noise approximation; not cloud evidence",
+      "seeds": [
+        20261011500,
+        20261011501,
+        20261011502,
+        20261011503,
+        20261011504,
+        20261011505,
+        20261011506,
+        20261011507,
+        20261011508,
+        20261011509,
+        20261011510,
+        20261011511,
+        20261011512,
+        20261011513,
+        20261011514,
+        20261011515,
+        20261011516,
+        20261011517,
+        20261011518,
+        20261011519
+      ],
+      "configuration": {
+        "fit": {
+          "grid_step": 0.025,
+          "range": [
+            0.5,
+            4.5
+          ],
+          "alpha": 0.008333333333333333,
+          "ties": "lowest frequency; separated profile components are inconclusive",
+          "interval": "profile LR chi-square(1); grid envelope plus one-step conservative padding",
+          "contrast": "profile-component union of joint Wald radii; grid-Bonferroni LR null required",
+          "offset": "abs(offset)+hypot(cos,sin)<=1-1e-8 (numerical guard)",
+          "reselection": "entire grid profiled every fit"
+        },
+        "seeds": [
+          20261011500,
+          20261011501,
+          20261011502,
+          20261011503,
+          20261011504,
+          20261011505,
+          20261011506,
+          20261011507,
+          20261011508,
+          20261011509,
+          20261011510,
+          20261011511,
+          20261011512,
+          20261011513,
+          20261011514,
+          20261011515,
+          20261011516,
+          20261011517,
+          20261011518,
+          20261011519
+        ],
+        "scales": [
+          0,
+          0.5,
+          0.75,
+          1,
+          1.5,
+          2
+        ],
+        "shift": 0.1308996938995747,
+        "shots": 1000,
+        "widths": [
+          1,
+          2,
+          4
+        ],
+        "phases_rad": [
+          0.1308996938995747,
+          0.6544984694978735,
+          1.1780972450961724,
+          1.7016960206944713,
+          2.22529479629277,
+          2.748893571891069,
+          3.2724923474893677,
+          3.7960911230876664,
+          4.319689898685965,
+          4.843288674284264,
+          5.366887449882563,
+          5.890486225480862
+        ],
+        "manifest_sha256": "91482c10b3664cac2d7b5916489d0307a588b432ce55236190addc0472000269",
+        "truth_protocol": "WP-E-04-KL-projection-v1"
+      },
+      "fit_spec": {
+        "grid_step": 0.025,
+        "range": [
+          0.5,
+          4.5
+        ],
+        "alpha": 0.008333333333333333,
+        "ties": "lowest frequency; separated profile components are inconclusive",
+        "interval": "profile LR chi-square(1); grid envelope plus one-step conservative padding",
+        "contrast": "profile-component union of joint Wald radii; grid-Bonferroni LR null required",
+        "offset": "abs(offset)+hypot(cos,sin)<=1-1e-8 (numerical guard)",
+        "reselection": "entire grid profiled every fit"
+      },
+      "independent_manifest_sha256": "91482c10b3664cac2d7b5916489d0307a588b432ce55236190addc0472000269",
+      "summary": {
+        "n1/scale0": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.004160894350511368,
+              "mae": 0.006460914146970675
+            },
+            "projection_frequency": {
+              "bias": 0.004160894350511368,
+              "mae": 0.006460914146970675
+            },
+            "contrast": {
+              "bias": -0.0028064247382596887,
+              "mae": 0.0028064247382596887
+            }
+          },
+          "reference_fit_mean_rmse": 0.009191686530982842
+        },
+        "n2/scale0": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.0015513771051477443,
+              "mae": 0.0030631756332913486
+            },
+            "projection_frequency": {
+              "bias": 0.0015513771051477443,
+              "mae": 0.0030631756332913486
+            },
+            "contrast": {
+              "bias": -0.0028719240659142277,
+              "mae": 0.0028719240659142277
+            }
+          },
+          "reference_fit_mean_rmse": 0.007635503812837348
+        },
+        "n4/scale0": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.000989493392988039,
+              "mae": 0.004314318755998215
+            },
+            "projection_frequency": {
+              "bias": 0.000989493392988039,
+              "mae": 0.004314318755998215
+            },
+            "contrast": {
+              "bias": -0.004596432010371254,
+              "mae": 0.004596432010371254
+            }
+          },
+          "reference_fit_mean_rmse": 0.010757125675080501
+        },
+        "n1/scale0.5": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.005012559298811514,
+              "mae": 0.00678999632317766
+            },
+            "projection_frequency": {
+              "bias": 0.005012732773037054,
+              "mae": 0.006790100407712984
+            },
+            "contrast": {
+              "bias": -0.002154714628523685,
+              "mae": 0.0028482295801007416
+            }
+          },
+          "reference_fit_mean_rmse": 0.009309532931261615
+        },
+        "n2/scale0.5": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.001568817868286898,
+              "mae": 0.003838645982738853
+            },
+            "projection_frequency": {
+              "bias": 0.0015688184079343359,
+              "mae": 0.0038386461446330844
+            },
+            "contrast": {
+              "bias": -0.001126780298662322,
+              "mae": 0.004571669845950565
+            }
+          },
+          "reference_fit_mean_rmse": 0.008841418486272247
+        },
+        "n4/scale0.5": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.000983806899211359,
+              "mae": 0.0030810359618466342
+            },
+            "projection_frequency": {
+              "bias": 0.0009838954611953276,
+              "mae": 0.003081053674243428
+            },
+            "contrast": {
+              "bias": -0.0014930106760927542,
+              "mae": 0.006837169336106852
+            }
+          },
+          "reference_fit_mean_rmse": 0.011587622375863044
+        },
+        "n1/scale0.75": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.005050194153551057,
+              "mae": 0.007578606739687554
+            },
+            "projection_frequency": {
+              "bias": 0.0050502563960721945,
+              "mae": 0.007578637860948123
+            },
+            "contrast": {
+              "bias": -0.0020947597768068205,
+              "mae": 0.003035830150170704
+            }
+          },
+          "reference_fit_mean_rmse": 0.009409708906817632
+        },
+        "n2/scale0.75": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.001645001190831752,
+              "mae": 0.004766508714113526
+            },
+            "projection_frequency": {
+              "bias": 0.0016450016730344742,
+              "mae": 0.004766508858774343
+            },
+            "contrast": {
+              "bias": -0.001093861722522399,
+              "mae": 0.004423616708101735
+            }
+          },
+          "reference_fit_mean_rmse": 0.009506523522960915
+        },
+        "n4/scale0.75": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.00022486738275320217,
+              "mae": 0.004385090070588604
+            },
+            "projection_frequency": {
+              "bias": 0.00022495271743518951,
+              "mae": 0.004385098604056803
+            },
+            "contrast": {
+              "bias": -0.0001437768971980724,
+              "mae": 0.006990037709559355
+            }
+          },
+          "reference_fit_mean_rmse": 0.01289659376342473
+        },
+        "n1/scale1": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.005208927627733134,
+              "mae": 0.008090157518591096
+            },
+            "projection_frequency": {
+              "bias": 0.005208800829012056,
+              "mae": 0.008090094119230557
+            },
+            "contrast": {
+              "bias": -0.0019928936308413804,
+              "mae": 0.0028965100487805483
+            }
+          },
+          "reference_fit_mean_rmse": 0.009989012283651283
+        },
+        "n2/scale1": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.00031189076513787883,
+              "mae": 0.0034221403710519628
+            },
+            "projection_frequency": {
+              "bias": 0.0003118811590344106,
+              "mae": 0.003422139410441616
+            },
+            "contrast": {
+              "bias": -0.000539832927685352,
+              "mae": 0.004386150775701686
+            }
+          },
+          "reference_fit_mean_rmse": 0.009738562105542074
+        },
+        "n4/scale1": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": -0.0009529942481544485,
+              "mae": 0.004438912701141673
+            },
+            "projection_frequency": {
+              "bias": -0.0009529118997796626,
+              "mae": 0.004438896231466716
+            },
+            "contrast": {
+              "bias": 0.00010635150582078424,
+              "mae": 0.0054088921979575984
+            }
+          },
+          "reference_fit_mean_rmse": 0.011613896596569074
+        },
+        "n1/scale1.5": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.004516955036920784,
+              "mae": 0.007110905001290474
+            },
+            "projection_frequency": {
+              "bias": 0.004516929833570488,
+              "mae": 0.007110894919950356
+            },
+            "contrast": {
+              "bias": -0.0017064304241856177,
+              "mae": 0.0029961246923792483
+            }
+          },
+          "reference_fit_mean_rmse": 0.009224704473771548
+        },
+        "n2/scale1.5": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.0014748662245347654,
+              "mae": 0.004502363780674812
+            },
+            "projection_frequency": {
+              "bias": 0.0014748033827416628,
+              "mae": 0.004502344928136881
+            },
+            "contrast": {
+              "bias": -0.0009778991514161005,
+              "mae": 0.005799727602430166
+            }
+          },
+          "reference_fit_mean_rmse": 0.010659607008250074
+        },
+        "n4/scale1.5": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.0013632882988060314,
+              "mae": 0.004778323664170215
+            },
+            "projection_frequency": {
+              "bias": 0.0013633656782515492,
+              "mae": 0.004778315926225662
+            },
+            "contrast": {
+              "bias": -0.0020435357860178693,
+              "mae": 0.006682858812989079
+            }
+          },
+          "reference_fit_mean_rmse": 0.013231392472772488
+        },
+        "n1/scale2": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.005193337019873801,
+              "mae": 0.008133473539566427
+            },
+            "projection_frequency": {
+              "bias": 0.005193339007373965,
+              "mae": 0.008133474334566492
+            },
+            "contrast": {
+              "bias": -0.0017251637487804394,
+              "mae": 0.0034442235910965235
+            }
+          },
+          "reference_fit_mean_rmse": 0.010122293376792215
+        },
+        "n2/scale2": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.001895944456126164,
+              "mae": 0.004911369944014965
+            },
+            "projection_frequency": {
+              "bias": 0.0018958435417071207,
+              "mae": 0.004911319486805443
+            },
+            "contrast": {
+              "bias": -0.0007377885148506791,
+              "mae": 0.00425940017394727
+            }
+          },
+          "reference_fit_mean_rmse": 0.009941786121818612
+        },
+        "n4/scale2": {
+          "seed_records": 20,
+          "informative": 20,
+          "abstentions": 0,
+          "availability": 1.0,
+          "availability_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_successes": 20,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "audio_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "identified": 20,
+          "inference_fraction": 1.0,
+          "inference_ci": [
+            0.8315665290169146,
+            1.0
+          ],
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "projection_frequency": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            },
+            "contrast": {
+              "successes": 20,
+              "total": 20,
+              "fraction": 1.0,
+              "ci": [
+                0.8315665290169146,
+                1.0
+              ]
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.0003758491778973028,
+              "mae": 0.004863782000437267
+            },
+            "projection_frequency": {
+              "bias": 0.0003759221494776366,
+              "mae": 0.004863774703279233
+            },
+            "contrast": {
+              "bias": 0.0003769667068631688,
+              "mae": 0.00685928935806005
+            }
+          },
+          "reference_fit_mean_rmse": 0.012598326524872186
+        },
+        "overall": {
+          "informative": 360,
+          "abstentions": 0,
+          "availability": 1.0,
+          "audio_successes": 360,
+          "audio_failures": 0,
+          "audio_fraction": 1.0,
+          "identified": 360,
+          "inference_fraction": 1.0,
+          "audio_success_full_denominator": 1.0,
+          "inference_full_denominator": 1.0,
+          "thresholds_met": true,
+          "empirical_interval_coverage": {
+            "frequency": {
+              "successes": 360,
+              "total": 360,
+              "fraction": 1.0
+            },
+            "projection_frequency": {
+              "successes": 360,
+              "total": 360,
+              "fraction": 1.0
+            },
+            "contrast": {
+              "successes": 360,
+              "total": 360,
+              "fraction": 1.0
+            }
+          },
+          "coverage_nominal": 0.9916666666666667,
+          "truth_errors": {
+            "frequency": {
+              "bias": 0.0022541708889426857,
+              "mae": 0.005251651158297331
+            },
+            "projection_frequency": {
+              "bias": 0.0022541886643747196,
+              "mae": 0.00525165045259622
+            },
+            "contrast": {
+              "bias": -0.0015345505991913727,
+              "mae": 0.004539695077659849
+            }
+          },
+          "reference_fit_mean_rmse": 0.010347516498307802,
+          "ci_basis": "see seed_summary: one threshold indicator per independent seed",
+          "record_count": 360
+        }
+      },
+      "seed_summary": {
+        "audio_pass": {
+          "successes": 20,
+          "total": 20,
+          "ci": [
+            0.8315665290169146,
+            1.0
+          ]
+        },
+        "inference_pass": {
+          "successes": 20,
+          "total": 20,
+          "ci": [
+            0.8315665290169146,
+            1.0
+          ]
+        }
+      },
+      "seed_results": [
+        {
+          "seed": 20261011500,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011501,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011502,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011503,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011504,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011505,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011506,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011507,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011508,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011509,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011510,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011511,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011512,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011513,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011514,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011515,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011516,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011517,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011518,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        },
+        {
+          "seed": 20261011519,
+          "availability": 1.0,
+          "audio_pass": true,
+          "inference_pass": true
+        }
+      ],
+      "record_count": 360,
+      "gate": {
+        "independent_science_pass": false,
+        "cloud_confirmation": false,
+        "implementation_handoff_only": false
+      }
+    },
+    "g1_gate": {
+      "gate": "g1",
+      "criteria": [
+        {
+          "name": "exact_fringe_control_and_parity_sign",
+          "threshold": "max absolute error <= 1e-10",
+          "value": 1.3322676295501878e-15,
+          "pass": true
+        },
+        {
+          "name": "equal_budget_accessible_baseline",
+          "threshold": "equal shots and zero resampling",
+          "value": true,
+          "pass": true
+        },
+        {
+          "name": "quick_decoder_precision",
+          "threshold": "|frequency error| <= 0.02 and |contrast error| <= 0.01 for every informative record",
+          "value": {
+            "passed": 72,
+            "total": 72
+          },
+          "pass": true
+        },
+        {
+          "name": "frozen_metrics_and_declared_budget",
+          "threshold": "full frozen evidence at 24 seeds x 6 scales x 3 widths, preliminary targets met",
+          "value": {
+            "evidence_exists": true,
+            "development_records": 72
+          },
+          "pass": true
+        },
+        {
+          "name": "js_bridge_and_audio_fallback",
+          "threshold": "main.js and index.html implement bridge plus playback/download fallback",
+          "value": {
+            "ui_files_present": false
+          },
+          "pass": false
+        },
+        {
+          "name": "calibrated_local_channel",
+          "threshold": "ARIA rates match ../../tools/ionq_noise_params.json; local approximation only",
+          "value": {
+            "r_1q": 0.0005,
+            "r_2q": 0.009,
+            "readout": 0.0,
+            "basis": [
+              "rz",
+              "sx",
+              "x",
+              "rxx"
+            ],
+            "noise_model": "aria-1"
+          },
+          "pass": true
+        }
+      ],
+      "overall": "FAIL",
+      "independent_pass": false,
+      "cloud_confirmed": false
+    }
+  },
+  "recorded_ionq_file": "recorded_ionq.py",
+  "scope": "Saved local simulation evidence only; Qollab IonQ simulator records are in recorded_ionq.py."
+}
