@@ -1,0 +1,1 @@
+Two panels show signed exact-instance mean advantage versus local modeled noise scale. Above zero favors the joint/hedge recipe. Below zero favors the ideal one-way reference/attained product. Shading marks bootstrap bands, hatched intervals crossover sets. See JSON analysis for values, unresolved/censored statuses and negative results.

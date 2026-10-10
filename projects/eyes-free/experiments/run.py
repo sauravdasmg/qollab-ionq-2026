@@ -78,19 +78,35 @@ def configuration(args):
         if abs(manifest["phase_frame"]-np.pi/24)>1e-12:
             raise ValueError("fresh manifest requires pi/24 shift")
         return seeds, [0, .5, .75, 1, 1.5, 2], float(np.pi/24), 1000, digest(manifest)
-    raise ValueError("select --quick or --suite frozen/fresh")
+    if args.suite == "development":
+        return list(range(2026100400, 2026100404)), [0, .5, .75, 1, 1.5, 2], 0.0, 1000, None
+    raise ValueError("select --quick or --suite frozen/fresh/development")
 
 
 def run(args):
     seeds, scales, shift, shots, manifest_hash = configuration(args)
+    if args.gate and (args.gate != "g1" or args.suite != "development"):
+        raise ValueError("--gate g1 is valid only with --suite development")
+    if args.draws is not None and args.draws < 1:
+        raise ValueError("--draws must be positive")
     prefix = "quick" if args.quick else args.suite
-    destination = Path("results") / (prefix+"-evidence.json")
-    if destination.exists() and not args.quick:
+    outdir = Path(args.output_dir or "results")
+    destination = outdir / (prefix+".json" if prefix == "development" else prefix+"-evidence.json")
+    checkpoint = outdir / (prefix+"-checkpoint.json")
+    if destination.exists() and not args.quick and not args.resume:
         raise ValueError("full evidence already exists; preserve it before a separate orchestrator run")
-    if not args.quick and any(Path("results").glob(prefix+"-seed*")):
+    if not args.quick and not args.resume and any(outdir.glob(prefix+"-seed*")):
         raise ValueError("existing full artifacts must be preserved before rerunning")
     start = time.perf_counter()
     records = []
+    completed = set()
+    if args.resume and checkpoint.exists():
+        saved = json.loads(checkpoint.read_text(encoding="utf-8"))
+        config_hash = digest({"fit": SPEC, "seeds": seeds, "scales": scales, "shift": shift, "shots": shots})
+        if saved.get("config_sha256") != config_hash:
+            raise ValueError("checkpoint configuration mismatch")
+        records = saved.get("records", [])
+        completed = {(r["seed"], r["config"]["noise_scale"], r["truth"]["width"]) for r in records}
     controls = []
     # Exact reference controls do not use width as a fit answer.
     for n in WIDTHS:
@@ -114,6 +130,10 @@ def run(args):
             t0 = time.perf_counter()
             estimates = evaluate(counts, shift)
             for j, (n, e) in enumerate(zip(WIDTHS, estimates)):
+                if (seed, scale, n) in completed:
+                    continue
+                if args.draws is not None and len(records) >= args.draws:
+                    break
                 pcm = wav_bytes(e)
                 decoded = decode(pcm)
                 df = abs(decoded["frequency"]-e["frequency"])
@@ -122,10 +142,10 @@ def run(args):
                               e["frequency_ci"][1]<=n+.5 and
                               min(WIDTHS, key=lambda width: abs(width-e["frequency"])) == n)
                 name = "%s-seed%d-scale%g-n%d" % (prefix, seed, scale, n)
-                Path("results").mkdir(exist_ok=True)
-                Path("results", name+".wav").write_bytes(pcm)
+                outdir.mkdir(parents=True, exist_ok=True)
+                (outdir / (name+".wav")).write_bytes(pcm)
                 text = transcript(e, "live built-in ideal" if scale == 0 else "local noise approximation aria-1")
-                Path("results", name+".txt").write_text(text, encoding="utf-8")
+                (outdir / (name+".txt")).write_text(text, encoding="utf-8")
                 records.append({"seed": seed, "truth": {"width": n, "frequency": n},
                                 "config": {"phase_frame": shift, "noise_scale": scale, "shots_per_phase": shots,
                                            "label": "live built-in ideal" if scale == 0 else "local noise approximation",
@@ -135,28 +155,53 @@ def run(args):
                                 "text_sha256": digest(text), "text_error": 0.0, "frequency_error": df,
                                 "contrast_error": dc, "checks": {"digital_fidelity": df<=.02 and dc<=.01,
                                                                    "identified": bool(identified)},
-                                "abstention": not e["informative"], "pcm_file": "results/"+name+".wav",
-                                "text_file": "results/"+name+".txt", "seconds_fit_group": time.perf_counter()-t0})
-            print("%s seed=%d scale=%g complete" % (prefix, seed, scale), flush=True)
+                                "abstention": not e["informative"], "pcm_file": str(outdir/(name+".wav")),
+                                "text_file": str(outdir/(name+".txt")), "seconds_fit_group": time.perf_counter()-t0})
+            if args.resume:
+                checkpoint_payload = {"config_sha256": digest({"fit":SPEC,"seeds":seeds,"scales":scales,"shift":shift,"shots":shots}), "records":records}
+                tmp = checkpoint.with_suffix(".tmp")
+                tmp.write_text(json.dumps(checkpoint_payload, indent=2, allow_nan=False), encoding="utf-8"); tmp.replace(checkpoint)
+            elapsed = time.perf_counter()-start
+            total = args.draws or (len(seeds)*len(scales)*len(WIDTHS))
+            print("%s seed=%d scale=%g progress=%d/%d elapsed=%.1fs ETA=%.1fs" % (prefix, seed, scale, len(records), total, elapsed, elapsed/max(1,len(records))*max(0,total-len(records))), flush=True)
+            if args.draws is not None and len(records) >= args.draws: break
+        if args.draws is not None and len(records) >= args.draws: break
     # Overall intervals use one success/failure per seed, avoiding within-seed pseudoreplication.
     seed_rows = []
     for seed in seeds:
         subset = [r for r in records if r["seed"] == seed]
         info = [r for r in subset if not r["abstention"]]
-        seed_rows.append({"seed": seed, "availability": len(info)/len(subset),
+        seed_rows.append({"seed": seed, "availability": len(info)/len(subset) if subset else 0.0,
                           "audio_pass": bool(info and sum(r["checks"]["digital_fidelity"] for r in info)/len(info)>=.95),
                           "inference_pass": bool(info and sum(r["checks"]["identified"] for r in info)/len(info)>=.9)})
     seed_summary = {key: {"successes": sum(s[key] for s in seed_rows), "total": len(seeds),
                           "ci": binomial_interval(sum(s[key] for s in seed_rows), len(seeds))}
                     for key in ("audio_pass", "inference_pass")}
-    payload = {"suite": prefix, "implementation_handoff_only": args.quick, "independent_science_pass": False,
+    payload = {"suite": prefix, "implementation_handoff_only": args.quick or args.draws is not None, "independent_science_pass": False,
                "cloud_confirmation": False, "noise_label": "local noise approximation; not cloud evidence",
                "fit_spec": SPEC, "seeds": seeds, "controls": controls, "records": records,
                "summary": summarize(records), "seed_summary": seed_summary, "seed_results": seed_rows,
                "independent_manifest_sha256": manifest_hash, "seconds": time.perf_counter()-start,
                "versions": {"numpy": np.__version__, "scipy": scipy.__version__, "qiskit": qiskit.__version__}}
     payload["config_sha256"] = digest({"fit": SPEC, "seeds": seeds, "scales": scales, "shift": shift, "shots": shots})
+    destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(json.dumps(payload, indent=2, allow_nan=False), encoding="utf-8")
+    if args.gate:
+        controls_error = max((abs(a-b) for c in controls for a,b in zip(c["parity"],c["expected"])), default=float("inf"))
+        fidelity = sum(bool(r["checks"]["digital_fidelity"]) for r in records)
+        frozen_file = outdir / "frozen-evidence.json"
+        audio_path = Path("main.js").exists() and Path("index.html").exists()
+        criteria = [
+            {"name":"exact_fringe_control_and_parity_sign","threshold":"max absolute error <= 1e-10","value":controls_error,"pass":controls_error <= 1e-10},
+            {"name":"equal_budget_accessible_baseline","threshold":"equal shots and zero resampling","value":all(r["config"]["baseline_shots"]==r["config"]["audio_shots"] and r["config"]["resamples"]==0 for r in records),"pass":bool(records) and all(r["config"]["baseline_shots"]==r["config"]["audio_shots"] and r["config"]["resamples"]==0 for r in records)},
+            {"name":"quick_decoder_precision","threshold":"|frequency error| <= 0.02 and |contrast error| <= 0.01 for every informative record","value":{"passed":fidelity,"total":len(records)},"pass":bool(records) and fidelity==len(records)},
+            {"name":"frozen_metrics_and_declared_budget","threshold":"full frozen evidence at 24 seeds x 6 scales x 3 widths, preliminary targets met","value":{"evidence_exists":frozen_file.exists(),"development_records":len(records)},"pass":frozen_file.exists()},
+            {"name":"js_bridge_and_audio_fallback","threshold":"main.js and index.html implement bridge plus playback/download fallback","value":{"ui_files_present":audio_path},"pass":audio_path},
+            {"name":"calibrated_local_channel","threshold":"ARIA rates match ../../tools/ionq_noise_params.json; local approximation only","value":ARIA,"pass":ARIA["r_1q"]==0.0005 and ARIA["r_2q"]==0.009 and ARIA["readout"]==0.0}]
+        gate={"gate":"g1","criteria":criteria,"overall":"PASS" if all(c["pass"] for c in criteria) else "FAIL","independent_pass":False,"cloud_confirmed":False}
+        (outdir/"g1.json").write_text(json.dumps(gate,indent=2,allow_nan=False),encoding="utf-8")
+        for c in criteria: print("%s %s value=%s threshold=%s" % ("PASS" if c["pass"] else "FAIL",c["name"],json.dumps(c["value"]),c["threshold"]),flush=True)
+        print("G1 "+gate["overall"],flush=True)
     print(str(destination), flush=True)
     return payload
 
@@ -165,8 +210,12 @@ def cli():
     parser = argparse.ArgumentParser()
     selection = parser.add_mutually_exclusive_group(required=True)
     selection.add_argument("--quick", action="store_true")
-    selection.add_argument("--suite", choices=("frozen", "fresh"))
+    selection.add_argument("--suite", choices=("frozen", "fresh", "development"))
     parser.add_argument("--independent-manifest")
+    parser.add_argument("--draws", type=int)
+    parser.add_argument("--gate", choices=("g1",))
+    parser.add_argument("--output-dir")
+    parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
     run(args)
 

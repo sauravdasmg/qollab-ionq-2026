@@ -1,5 +1,4 @@
 """Small-block local density-channel approximation for research harness only."""
-from __future__ import annotations
 
 import numpy as np
 
@@ -47,6 +46,18 @@ def apply_local_depolarizing(rho, qubits, probability):
                 u = np.kron(u, op)
             reduced += u @ out @ u.conj().T
         out = (1 - p) * out + (p / 4) * reduced
+    return out
+
+
+def apply_local_phase_flips(rho, probability):
+    """Independent per-wire (1-p)rho + p Z rho Z, before basis rotations."""
+    out = _validate_density(rho)
+    p = float(probability)
+    if not np.isfinite(p) or not 0 <= p <= 1:
+        raise ValueError("preparation phase-flip probability must be finite in [0,1]")
+    for q in range(out.shape[0].bit_length() - 1):
+        z = 1 - 2 * ((np.arange(out.shape[0]) >> q) & 1)
+        out = (1-p) * out + p * (z[:, None] * out * z[None, :])
     return out
 
 

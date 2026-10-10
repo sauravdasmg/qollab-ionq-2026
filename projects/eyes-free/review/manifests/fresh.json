@@ -1,0 +1,174 @@
+{
+  "schema": "eyes-free-independent-manifest-v1",
+  "suite": "fresh",
+  "owner": "independent_verifier",
+  "generated_utc": "2026-10-10T01:11:58.759826Z",
+  "generator_notes": [
+    "Independently assembled by WP-E-03 from the preregistered plan, before this reviewer sampled held-out counts. Seed ranges are prescribed, not randomly selected or outcome-tuned.",
+    "Each instance is one independently seeded suite over all widths/phases/scales; repeated settings do not increase independent instance count.",
+    "Development seeds 2026100400..2026100403 excluded. Frozen and fresh IDs and sampling seeds are disjoint.",
+    "Actual harness restarts NumPy default_rng(seed) at each noise scale and consumes multinomial draws in width-major then phase-major order; settings within a seed are correlated.",
+    "Five nonzero local noise scales plus ideal scale zero. phase_frame is added to all twelve evenly spaced phases; qubit/classical layout follows current harness without further random variation.",
+    "Current loader reads only fresh seeds and phase_frame, hashes the full fresh JSON, and ignores the frozen file entirely. Owner and instance IDs are reviewer metadata, not currently enforced."
+  ],
+  "instance_count": 20,
+  "seeds": [
+    20261011500,
+    20261011501,
+    20261011502,
+    20261011503,
+    20261011504,
+    20261011505,
+    20261011506,
+    20261011507,
+    20261011508,
+    20261011509,
+    20261011510,
+    20261011511,
+    20261011512,
+    20261011513,
+    20261011514,
+    20261011515,
+    20261011516,
+    20261011517,
+    20261011518,
+    20261011519
+  ],
+  "instances": [
+    {
+      "id": "eyes-free-fresh-01",
+      "seed": 20261011500,
+      "sampling_seed": 20261011500
+    },
+    {
+      "id": "eyes-free-fresh-02",
+      "seed": 20261011501,
+      "sampling_seed": 20261011501
+    },
+    {
+      "id": "eyes-free-fresh-03",
+      "seed": 20261011502,
+      "sampling_seed": 20261011502
+    },
+    {
+      "id": "eyes-free-fresh-04",
+      "seed": 20261011503,
+      "sampling_seed": 20261011503
+    },
+    {
+      "id": "eyes-free-fresh-05",
+      "seed": 20261011504,
+      "sampling_seed": 20261011504
+    },
+    {
+      "id": "eyes-free-fresh-06",
+      "seed": 20261011505,
+      "sampling_seed": 20261011505
+    },
+    {
+      "id": "eyes-free-fresh-07",
+      "seed": 20261011506,
+      "sampling_seed": 20261011506
+    },
+    {
+      "id": "eyes-free-fresh-08",
+      "seed": 20261011507,
+      "sampling_seed": 20261011507
+    },
+    {
+      "id": "eyes-free-fresh-09",
+      "seed": 20261011508,
+      "sampling_seed": 20261011508
+    },
+    {
+      "id": "eyes-free-fresh-10",
+      "seed": 20261011509,
+      "sampling_seed": 20261011509
+    },
+    {
+      "id": "eyes-free-fresh-11",
+      "seed": 20261011510,
+      "sampling_seed": 20261011510
+    },
+    {
+      "id": "eyes-free-fresh-12",
+      "seed": 20261011511,
+      "sampling_seed": 20261011511
+    },
+    {
+      "id": "eyes-free-fresh-13",
+      "seed": 20261011512,
+      "sampling_seed": 20261011512
+    },
+    {
+      "id": "eyes-free-fresh-14",
+      "seed": 20261011513,
+      "sampling_seed": 20261011513
+    },
+    {
+      "id": "eyes-free-fresh-15",
+      "seed": 20261011514,
+      "sampling_seed": 20261011514
+    },
+    {
+      "id": "eyes-free-fresh-16",
+      "seed": 20261011515,
+      "sampling_seed": 20261011515
+    },
+    {
+      "id": "eyes-free-fresh-17",
+      "seed": 20261011516,
+      "sampling_seed": 20261011516
+    },
+    {
+      "id": "eyes-free-fresh-18",
+      "seed": 20261011517,
+      "sampling_seed": 20261011517
+    },
+    {
+      "id": "eyes-free-fresh-19",
+      "seed": 20261011518,
+      "sampling_seed": 20261011518
+    },
+    {
+      "id": "eyes-free-fresh-20",
+      "seed": 20261011519,
+      "sampling_seed": 20261011519
+    }
+  ],
+  "widths": [
+    1,
+    2,
+    4
+  ],
+  "noise_scales": [
+    0.0,
+    0.5,
+    0.75,
+    1.0,
+    1.5,
+    2.0
+  ],
+  "phase_frame": 0.1308996938995747,
+  "phases_rad": [
+    0.1308996938995747,
+    0.6544984694978735,
+    1.1780972450961724,
+    1.7016960206944713,
+    2.22529479629277,
+    2.748893571891069,
+    3.2724923474893677,
+    3.7960911230876664,
+    4.319689898685965,
+    4.843288674284264,
+    5.366887449882563,
+    5.890486225480862
+  ],
+  "shots_per_phase": 1000,
+  "development_seeds_excluded": [
+    2026100400,
+    2026100401,
+    2026100402,
+    2026100403
+  ]
+}

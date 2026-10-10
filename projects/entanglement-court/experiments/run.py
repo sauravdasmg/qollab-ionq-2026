@@ -1,5 +1,4 @@
 """Local paired evidence harness. Full suites are orchestrator-run only."""
-from __future__ import annotations
 
 import argparse
 import hashlib
@@ -22,7 +21,8 @@ from circuit_pack import digest
 from experiments.noise import LABEL, config, ideal_probabilities
 from graphs import edges
 from measurements import graph_state, stabilizers, stabilizer_expectation, product_equatorial_state, biseparable_control_state
-from experiments.noise import apply_local_depolarizing, readout_probabilities
+from experiments.noise import apply_local_depolarizing, apply_local_phase_flips, readout_probabilities
+from witness import simultaneous_witness
 
 
 def parser():
@@ -171,6 +171,7 @@ def _control_probabilities(kind, case, scale, model, bias, block="target_Z", man
     else:
         raise ValueError("unknown control kind")
     rho = DensityMatrix.from_instruction(prep).data
+    rho = apply_local_phase_flips(rho, params.get("diagonal_preparation_noise", 0.))
     if model is not None:
         rates = RATES[model]
         # Preserve the declared aggregate local channel approximation.
@@ -197,9 +198,9 @@ def _sample_marginals(probabilities, manifest, kind, shots, rng):
     return marginals
 
 
-def _true_parities(probabilities, manifest, kind):
+def _true_parities(probabilities, manifest, kind, prefix="target"):
     means = []
-    for name in ("target_A", "target_B"):
+    for name in (prefix + "_A", prefix + "_B"):
         for mapping in manifest["blocks"][name]["parity_maps"]:
             signs = [mapping.get("sign", 1) * (-1) **
                      (sum((j >> q) & 1 for q in mapping["bits"]) % 2)
@@ -229,26 +230,108 @@ def _case_specs(suite, manifest_path=None):
     return out
 
 
-def _exact_checks(case_index):
-    gs = graph_state(edges(case_index)); prod = product_equatorial_state(__import__("cases").ANGLES[case_index])
-    graph_z = ideal_probabilities(gs); prod_z = ideal_probabilities(prod)
-    tv = float(.5 * np.abs(graph_z - prod_z).sum())
-    exp = [stabilizer_expectation(gs, x, z) for x, z in stabilizers(edges(case_index))]
-    return {"z_tv": tv, "z_uniform_max_error": float(max(np.max(np.abs(graph_z - 1/16)), np.max(np.abs(prod_z - 1/16)))),
-            "graph_stabilizer_expectations": exp, "stabilizer_max_error": float(max(abs(x - 1) for x in exp))}
+def _exact_checks(manifest):
+    """Manifest-specific analytic state and explicit phase-mask mixture references.
+
+    The reference uses little-endian amplitudes independently of preparation
+    circuits and the sequential channel implementation being checked.
+    """
+    from qiskit import QuantumCircuit
+    from qiskit.quantum_info import Operator
+    from measurements import append_measurement
+    from copy import deepcopy
+    m = manifest; params = m["generated_parameters"]
+    g = params["edges"]; frame = np.asarray(params["frame_radians"])
+    angles = np.asarray(params["product_angles_radians"])
+    p = float(params.get("diagonal_preparation_noise", 0.))
+    if not np.isfinite(p) or not 0 <= p <= 1:
+        raise ValueError("invalid manifest preparation noise")
+    bits = (np.arange(16)[:, None] >> np.arange(4)) & 1
+    frame_phase = np.exp(1j * ((bits - .5) @ frame))
+    states = {"graph": graph_state(g) * frame_phase,
+              "product": np.exp(1j * ((bits - .5) @ angles)) * frame_phase / 4}
+    clean = deepcopy(m); clean["generated_parameters"]["diagonal_preparation_noise"] = 0.
+    probabilities = {}; ideal_means = {}; mean_errors = []; distribution_errors = []
+    fidelities = {}
+    for kind, state in states.items():
+        rho = np.zeros((16, 16), complex)
+        for mask in range(16):
+            flips = mask.bit_count()
+            weight = p**flips * (1-p)**(4-flips)
+            signs = (-1.) ** (bits @ ((mask >> np.arange(4)) & 1))
+            noisy_state = state * signs
+            rho += weight * np.outer(noisy_state, noisy_state.conj())
+        fidelities[kind] = float(np.vdot(state, rho @ state).real)
+        probabilities[kind] = {}; clean_probs = {kind: {}}
+        for name in m["ordered_blocks"]:
+            u = np.eye(16)
+            if not name.endswith("_Z"):
+                basis = QuantumCircuit(4)
+                append_measurement(basis, 0, g, frame, 0 if name.endswith("_A") else 1)
+                u = Operator(basis).data
+            ref = np.diag(u @ rho @ u.conj().T).real
+            ideal = np.abs(u @ state)**2
+            probabilities[kind][name] = ref
+            clean_probs[kind][name] = ideal
+            actual = _probabilities(m["case_id"] % 4, name, kind, manifest=m)
+            actual_clean = _probabilities(m["case_id"] % 4, name, kind, manifest=clean)
+            distribution_errors.extend([float(np.max(abs(actual-ref))), float(np.max(abs(actual_clean-ideal)))])
+        ideal_means[kind] = _true_parities(clean_probs, m, kind)
+        actual_probs = {kind: {name: _probabilities(m["case_id"] % 4, name, kind, manifest=m)
+                              for name in m["ordered_blocks"]}}
+        mean_errors.extend(abs(a-b) for a, b in zip(_true_parities(actual_probs, m, kind),
+                                                    _true_parities(probabilities, m, kind)))
+    graph_z = np.abs(states["graph"])**2; prod_z = np.abs(states["product"])**2
+    tv = float(.5 * abs(graph_z-prod_z).sum())
+    uniform = float(max(abs(graph_z-1/16).max(), abs(prod_z-1/16).max()))
+    stab_error = float(max(abs(x-1) for x in ideal_means["graph"]))
+    graph_means = _true_parities(probabilities, m, "graph")
+    formula_error = float(max(abs(x-(1-2*p)) for x in graph_means))
+    if (tv > 1e-12 or uniform > 1e-12 or stab_error > 1e-10 or
+            max(distribution_errors) > 1e-12 or max(mean_errors) > 1e-10 or
+            formula_error > 1e-10 or abs(fidelities["graph"]-(1-p)**4) > 1e-10):
+        raise ValueError("manifest exact reference check failed")
+    return {"manifest_hash": digest(m), "z_tv": tv, "z_uniform_max_error": uniform,
+            "graph_stabilizer_expectations": ideal_means["graph"], "stabilizer_max_error": stab_error,
+            "pre_noise": {"z_tv": tv, "graph_means": ideal_means["graph"], "product_means": ideal_means["product"]},
+            "post_preparation_channel": {"probabilities": {k: {n: v.tolist() for n, v in blocks.items()}
+                                                           for k, blocks in probabilities.items()},
+                "graph_means": graph_means, "product_means": _true_parities(probabilities, m, "product"),
+                "graph_fidelity": fidelities["graph"], "witness_reference": 1-sum(1-x for x in graph_means)/2,
+                "product_witness_reference": 1-sum(1-x for x in _true_parities(probabilities, m, "product"))/2},
+            "distribution_max_error": max(distribution_errors), "mean_max_error": float(max(mean_errors)),
+            "checked": True}
 
 
-def _draw_record(spec, draws, shots, base_seed):
+def _round_coverage(analysis, probabilities, manifest, kind):
+    """Conjunction of all eight intervals from the same two-preparation draw."""
+    covered = []
+    for prefix, source in (("target", kind), ("impostor", "product")):
+        parities = [term for name in (prefix+"_A", prefix+"_B")
+                    for term in analysis["blocks"][name]]
+        truth = _true_parities(probabilities, manifest, source, prefix)
+        expected_ids = [mapping["generator"] for name in (prefix+"_A", prefix+"_B")
+                        for mapping in manifest["blocks"][name]["parity_maps"]]
+        if len(parities) != 4 or [t["generator"] for t in parities] != expected_ids or len(truth) != 4:
+            raise ValueError("round coverage generator identity mismatch")
+        bounds = simultaneous_witness(parities)["terms"]
+        covered.extend(t["L_lower"] <= mu + 1e-12 for t, mu in zip(bounds, truth))
+    return covered
+
+
+def _draw_record(spec, draws, shots, base_seed, configurations=None):
     m = spec["manifest"]; idx = spec["case_index"]
     configs = [{"name": "ideal", "model": None, "scale": 0., "bias": 0.}]
     configs += [{"name": f"{model}@{scale:g}", "model": model, "scale": scale, "bias": 0.}
                 for model in ("aria", "forte", "forte-enterprise") for scale in NOISE_SCALES]
+    if configurations is not None:
+        configs = configurations
+    exact_reference = _exact_checks(m)
     rows = []
     for cfg in configs:
         probabilities = {kind: {name: _probabilities(idx, name, kind, cfg["scale"],
                                 cfg["model"], cfg["bias"], m) for name in m["ordered_blocks"]}
                          for kind in ("graph", "product", "biseparable")}
-        true_means_by_kind = {kind: _true_parities(probabilities, m, kind) for kind in probabilities}
         outcomes = {k: {"certificates": 0, "false_certificates": 0, "inconclusive": 0,
                         "coverage": 0, "simultaneous_coverage": 0, "baseline_certificates": 0,
                         "paired_difference_sum": 0, "f_lower_sum": 0., "counts": []}
@@ -269,8 +352,7 @@ def _draw_record(spec, draws, shots, base_seed):
                 rec["f_lower_sum"] += float(w.get("F_lower", 0.))
                 rec["counts"].append(marginals)
                 if w.get("terms"):
-                    true_means = true_means_by_kind[kind]
-                    covered = [t["L_lower"] <= mu + 1e-12 for t, mu in zip(w["terms"], true_means)]
+                    covered = _round_coverage(analysis, probabilities, m, kind)
                     rec["coverage"] += sum(covered)
                     rec["simultaneous_coverage"] += int(all(covered))
         for kind, rec in outcomes.items():
@@ -284,7 +366,7 @@ def _draw_record(spec, draws, shots, base_seed):
                                "simultaneous_coverage_rate": rec["simultaneous_coverage"] / trials,
                                "coverage_interval": binomial_interval(rec["simultaneous_coverage"], trials)}
             rec.pop("counts")
-        rows.append({"noise": cfg, "controls": outcomes, "exact_reference": _exact_checks(idx),
+        rows.append({"noise": cfg, "controls": outcomes, "exact_reference": exact_reference,
                      "shots_per_block": shots, "draws": draws})
     return rows
 
@@ -311,9 +393,23 @@ def run_suite(suite, draws=1000, shots=100, seed=2026100100, output_dir=None, re
     result_dir, figure_dir = _output_paths(output_dir)
     result_path = result_dir / f"{suite}.json"
     specs = _case_specs(suite, manifest_path)
+    staged_count = len(specs)
+    smoke = suite in ("frozen", "fresh") and result_dir.name.lower().startswith("quick-")
+    configurations = None
+    if smoke:
+        if not 1 <= draws <= 10 or g1_cloud_projection or resume:
+            raise ValueError("independent smoke requires <=10 draws, no gate/projection/resume")
+        # Preserve all manifest validation, but sample only one easy and one
+        # near-threshold instance, with no model/scale sweep.
+        for spec in specs:
+            _exact_checks(spec["manifest"])
+        specs = [specs[0], specs[len(specs)//2]]
+        configurations = [{"name": "ideal", "model": None, "scale": 0., "bias": 0.}]
     result = {"schema_version": "1.0", "suite": suite, "created_utc": datetime.now(timezone.utc).isoformat(),
-              "config": {"draws": draws, "shots": shots, "seed": seed, "noise_scales": list(NOISE_SCALES),
-                         "models": ["aria", "forte", "forte-enterprise"], "controls": ["graph", "separable-product", "known-biseparable"],
+              "config": {"draws": draws, "shots": shots, "seed": seed, "noise_scales": [] if smoke else list(NOISE_SCALES),
+                         "models": [] if smoke else ["aria", "forte", "forte-enterprise"], "controls": ["graph", "separable-product", "known-biseparable"],
+                         "bounded_smoke": smoke, "staged_manifest_count": staged_count,
+                         "sampled_case_ids": [s["case_id"] for s in specs], "coverage_intervals_per_round": 8,
                          "alpha": .05, "alpha_allocation": ".05/(2*4) per generator", "noise_label": LABEL},
               "versions": {"python": sys.version, "platform": platform.platform(), "numpy": np.__version__,
                            "scipy": __import__("scipy").__version__, "qiskit": __import__("qiskit").__version__},
@@ -337,7 +433,7 @@ def run_suite(suite, draws=1000, shots=100, seed=2026100100, output_dir=None, re
         else:
             row = {"case_id": spec["case_id"], "generation_seed": spec.get("generation_seed"),
                    "sampling_seed": spec.get("sampling_seed", seed + i), "manifest": spec["manifest"],
-                   "manifest_hash": digest(spec["manifest"]), "noise_results": _draw_record(spec, draws, shots, seed)}
+                   "manifest_hash": digest(spec["manifest"]), "noise_results": _draw_record(spec, draws, shots, seed, configurations)}
             if g1_cloud_projection:
                 cloud = [x for x in _draw_record(spec, draws, 200, seed)
                          if x["noise"]["name"] == "aria@1"]
@@ -354,7 +450,9 @@ def run_suite(suite, draws=1000, shots=100, seed=2026100100, output_dir=None, re
     for row in result["cases"]:
         rates.extend(x["controls"]["graph"]["summary"]["certification_rate"] for x in row["noise_results"] if x["noise"]["name"] == "ideal")
     result["summary"] = {"case_count": len(result["cases"]), "graph_certification_rate_mean": float(np.mean(rates)) if rates else 0.,
-                         "draws_per_case_noise_control": draws, "complete": len(result["cases"]) == len(specs)}
+                         "draws_per_case_noise_control": draws, "complete": len(result["cases"]) == len(specs),
+                         "full_campaign_complete": not smoke and len(result["cases"]) == staged_count,
+                         "science_verdict": None}
     _atomic_json(result_path, result)
     figure_dir.mkdir(parents=True, exist_ok=True)
     _save_figure(result, figure_dir / f"{suite}.png")

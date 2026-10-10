@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entanglement Court — Quantum Unlocked</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <header role="banner">
+    <h1>Entanglement Court</h1>
+    <p class="subtitle">Where matched Z histograms face cross-examination</p>
+    <div class="seal" aria-hidden="true"></div>
+  </header>
+
+  <main role="main">
+    <section class="courtroom" aria-label="Courtroom docket">
+      <!-- Sealed preparations docket -->
+      <article class="docket" id="docket" aria-labelledby="docket-title">
+        <header class="docket-header">
+          <h2 id="docket-title">Sealed Preparations <span class="case-id" id="case-id">Case 0</span></h2>
+          <p class="note" id="sealed-note" aria-live="polite">
+            <span class="symbol" aria-hidden="true">⚠</span>
+            A Z histogram alone cannot settle this case. Matching computational-basis distributions can conceal fundamentally different correlations in other measurement bases.
+          </p>
+        </header>
+        <div class="docket-body">
+          <div class="preparation target" id="prep-target">
+            <h3>Preparation A — Target (Graph State)</h3>
+            <div class="histogram" id="hist-target" role="img" aria-label="Target Z histogram: 16 uniform bars at probability 1/16">
+              <div class="histogram-bar" id="bars-target"></div>
+            </div>
+            <div class="histogram-legend">
+              <span class="legend-item"><span class="swatch target" aria-hidden="true"></span>Target</span>
+            </div>
+            <table class="histogram-table" id="table-target" aria-label="Target Z outcome probabilities">
+              <caption class="visually-hidden">Target preparation Z-basis outcome probabilities</caption>
+              <thead>
+                <tr><th>Outcome</th><th>Probability</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="preparation impostor" id="prep-impostor">
+            <h3>Preparation B — Impostor (Product State)</h3>
+            <div class="histogram" id="hist-impostor" role="img" aria-label="Impostor Z histogram: 16 uniform bars at probability 1/16">
+              <div class="histogram-bar" id="bars-impostor"></div>
+            </div>
+            <div class="histogram-legend">
+              <span class="legend-item"><span class="swatch impostor" aria-hidden="true"></span>Impostor</span>
+            </div>
+            <table class="histogram-table" id="table-impostor" aria-label="Impostor Z outcome probabilities">
+              <caption class="visually-hidden">Impostor preparation Z-basis outcome probabilities</caption>
+              <thead>
+                <tr><th>Outcome</th><th>Probability</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="verdict-panel">
+          <h3>Tentative Verdict</h3>
+          <div class="verdict-options" role="radiogroup" aria-label="Select tentative verdict" id="verdict-options">
+            <button type="button" class="verdict-btn" role="radio" aria-checked="false" data-verdict="A" id="verdict-A">Preparation A is entangled</button>
+            <button type="button" class="verdict-btn" role="radio" aria-checked="false" data-verdict="B" id="verdict-B">Preparation B is entangled</button>
+            <button type="button" class="verdict-btn" role="radio" aria-checked="false" data-verdict="both" id="verdict-both">Both are entangled</button>
+            <button type="button" class="verdict-btn" role="radio" aria-checked="false" data-verdict="insufficient" id="verdict-insufficient">Insufficient evidence</button>
+          </div>
+          <p class="verdict-note" id="verdict-note" aria-live="polite">
+            <span class="symbol" aria-hidden="true">📝</span>
+            <span id="verdict-note-text">Select a verdict above to proceed.</span>
+          </p>
+        </div>
+      </article>
+
+      <!-- Evidence docket with tabs -->
+      <article class="evidence-docket" id="evidence-docket" aria-labelledby="evidence-title" hidden>
+        <header class="docket-header">
+          <h2 id="evidence-title">Evidence Docket <span class="case-id" id="evidence-case-id">Case 0</span></h2>
+        </header>
+        <nav class="evidence-tabs" role="tablist" aria-label="Measurement settings" id="evidence-tabs">
+          <button role="tab" aria-selected="true" aria-controls="panel-Z" id="tab-Z" class="evidence-tab" data-tab="Z">Exhibit Z — Computational Basis</button>
+          <button role="tab" aria-selected="false" aria-controls="panel-A" id="tab-A" class="evidence-tab" data-tab="A">Exhibit A — Color 0 Stabilizers</button>
+          <button role="tab" aria-selected="false" aria-controls="panel-B" id="tab-B" class="evidence-tab" data-tab="B">Exhibit B — Color 1 Stabilizers</button>
+          <button role="tab" aria-selected="false" aria-controls="panel-stamp" id="tab-stamp" class="evidence-tab" data-tab="stamp">Evidence Stamp — Receipt</button>
+        </nav>
+
+        <div role="tabpanel" id="panel-Z" aria-labelledby="tab-Z" class="evidence-panel" aria-hidden="false">
+          <div class="parity-chart" id="parity-Z"></div>
+          <table class="parity-table" id="table-parity-Z" aria-label="Z basis parity intervals">
+            <caption class="visually-hidden">Exhibit Z parity estimates with 95% confidence intervals</caption>
+            <thead><tr><th>Preparation</th><th>Generator</th><th>Estimate</th><th>95% Interval</th><th>Shots</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div role="tabpanel" id="panel-A" aria-labelledby="tab-A" class="evidence-panel" aria-hidden="true" hidden>
+          <div class="parity-chart" id="parity-A"></div>
+          <table class="parity-table" id="table-parity-A" aria-label="Color A parity intervals">
+            <caption class="visually-hidden">Exhibit A parity estimates with 95% confidence intervals</caption>
+            <thead><tr><th>Preparation</th><th>Generator</th><th>Estimate</th><th>95% Interval</th><th>Shots</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div role="tabpanel" id="panel-B" aria-labelledby="tab-B" class="evidence-panel" aria-hidden="true" hidden>
+          <div class="parity-chart" id="parity-B"></div>
+          <table class="parity-table" id="table-parity-B" aria-label="Color B parity intervals">
+            <caption class="visually-hidden">Exhibit B parity estimates with 95% confidence intervals</caption>
+            <thead><tr><th>Preparation</th><th>Generator</th><th>Estimate</th><th>95% Interval</th><th>Shots</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div role="tabpanel" id="panel-stamp" aria-labelledby="tab-stamp" class="evidence-panel" aria-hidden="true" hidden>
+          <div class="evidence-stamp" id="evidence-stamp" role="img" aria-label="Evidence stamp showing fidelity lower bound vs threshold">
+            <h3>Per-Round Simultaneous Bound</h3>
+            <div class="stamp-content" id="stamp-content"></div>
+          </div>
+          <table class="parity-table" id="table-stamp" aria-label="Receipt details">
+            <caption class="visually-hidden">Full receipt details</caption>
+            <thead><tr><th>Term</th><th>Value</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </article>
+
+      <!-- Loading state -->
+      <div class="loading" id="loading" hidden aria-live="polite" aria-busy="true">
+        <div class="spinner" aria-hidden="true"></div>
+        <p id="loading-text">Convening the court…</p>
+      </div>
+
+      <!-- Error display -->
+      <div class="error-display" id="error-display" hidden role="alert" aria-live="assertive">
+        <h3>⚠ Courtroom Error</h3>
+        <pre id="error-text"></pre>
+      </div>
+    </section>
+
+    <aside class="sidebar" aria-label="Exhibit details">
+      <!-- Circuit & meaning panel -->
+      <section class="sidebar-panel" id="panel-circuit">
+        <header><h3>📜 Circuit & Meaning</h3></header>
+        <div class="panel-body">
+          <div class="meaning" id="meaning-text" aria-live="polite"></div>
+          <pre class="circuit-text" id="circuit-text" aria-label="Circuit diagram as text"></pre>
+        </div>
+      </section>
+
+      <!-- Live vs Recorded comparison -->
+      <section class="sidebar-panel" id="panel-comparison">
+        <header><h3>⚖ Live vs Recorded</h3></header>
+        <div class="panel-body">
+          <div class="comparison">
+            <div class="col target">
+              <h4>Live Built-In (Ideal)</h4>
+              <div class="value" id="live-values"></div>
+            </div>
+            <div class="col recorded">
+              <h4>Recorded IonQ (aria-1)</h4>
+              <div class="value" id="recorded-values"></div>
+            </div>
+          </div>
+          <div class="meta" id="comparison-meta"></div>
+        </div>
+      </section>
+
+      <!-- Case selector -->
+      <section class="sidebar-panel" id="panel-case-select">
+        <header><h3>📁 Case Selection</h3></header>
+        <div class="panel-body">
+          <div class="comparison" style="grid-template-columns: 1fr;">
+            <div class="col">
+              <label for="case-select" style="display:block; font-size:0.8rem; color:var(--ink-muted); margin-bottom:0.5rem;">Select Case</label>
+              <select id="case-select" style="width:100%; padding:0.5rem; font-family:inherit; font-size:0.9rem; background:var(--parchment); border:1px solid var(--border); border-radius:4px; color:var(--ink);">
+                <option value="0">Case 0 — Path graph (0-1-2-3)</option>
+                <option value="1">Case 1 — Star graph (0 connected to 1,2,3)</option>
+                <option value="2">Case 2 — T graph (0-1-2, 1-3)</option>
+                <option value="3">Case 3 — Alternate path (0-1, 0-2, 2-3)</option>
+              </select>
+            </div>
+          </div>
+          <div class="comparison" style="grid-template-columns: 1fr;">
+            <div class="col">
+              <label for="challenge-select" style="display:block; font-size:0.8rem; color:var(--ink-muted); margin-bottom:0.5rem;">Challenge Mode</label>
+              <select id="challenge-select" style="width:100%; padding:0.5rem; font-family:inherit; font-size:0.9rem; background:var(--parchment); border:1px solid var(--border); border-radius:4px; color:var(--ink);">
+                <option value="sealed">Sealed (24 qubits, 6 blocks)</option>
+                <option value="anchor">Anchor (24 qubits, reference)</option>
+                <option value="audited16">Audited 16-qubit (witness only)</option>
+              </select>
+            </div>
+          </div>
+          <div class="comparison" style="grid-template-columns: 1fr;">
+            <div class="col">
+              <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                <input type="checkbox" id="trust-toggle" style="width:18px; height:18px; accent-color:var(--copper);">
+                <span style="font-size:0.85rem;">Assume trusted measurements</span>
+              </label>
+            </div>
+          </div>
+          <button type="button" id="remeasure-btn" class="verdict-btn" style="width:100%; margin-top:0.5rem;" disabled>
+            Remeasure (Built-In Only)
+          </button>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <footer role="contentinfo">
+    <p>Entanglement Court — Qollab × IonQ Hackathon 2026</p>
+    <p class="attribution">This effort is supported by Qollab & IonQ.</p>
+  </footer>
+
+  <!-- Status region for screen readers -->
+  <div class="status-region" id="status-region" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  </body>
+</html>

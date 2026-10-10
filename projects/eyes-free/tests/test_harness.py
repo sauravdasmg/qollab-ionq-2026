@@ -32,3 +32,11 @@ def test_full_denominator_abstention():
     assert s["audio_success_full_denominator"]==.5
     assert not s["thresholds_met"]
     assert binomial_interval(0,0)==[0.,1.]
+
+
+def test_development_suite_manifest():
+    a=argparse.Namespace(quick=False,suite="development",independent_manifest=None)
+    seeds,scales,shift,shots,h=configuration(a)
+    assert seeds==[2026100400,2026100401,2026100402,2026100403]
+    assert scales==[0,.5,.75,1,1.5,2]
+    assert shift==0 and shots==1000 and h is None

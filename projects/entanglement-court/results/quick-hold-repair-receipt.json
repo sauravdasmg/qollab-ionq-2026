@@ -1,0 +1,24 @@
+{
+  "utc": "2026-10-10T00:56:06.895484+00:00",
+  "stage": "WP-C-08 hold repairs",
+  "files": [
+    "experiments/run.py",
+    "experiments/noise.py",
+    "witness.py",
+    "tests/test_hold_fixes.py"
+  ],
+  "fixes": [
+    "manifest local phase flips on both preparations and biseparable control",
+    "manifest-specific independent pre-noise and post-channel exact checks",
+    "eight-interval same-draw two-preparation coverage",
+    "reject negative/nonfinite bias and document probability-error semantics",
+    "two-instance ideal-only independent smoke; full campaign unchanged"
+  ],
+  "tests": "12 passed; tests/test_hold_fixes.py and tests/test_core.py",
+  "smoke": "frozen/fresh: five draws on one easy and one near-threshold input; deterministic exact checks of all 44 manifests",
+  "manifest_sha256_unchanged": {
+    "frozen": "138f4e8a58778026ceeebf8698db44d73e92c9e7148d22f6a5b9b258536bd1fa",
+    "fresh": "8a35cb25777dd374edfa86e3c0afc2e137e0f5c6e5370ec94378a1bec7ad216c"
+  },
+  "science_verdict": null
+}

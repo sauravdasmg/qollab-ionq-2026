@@ -1,0 +1,73 @@
+[
+  {
+    "source": "D:\\Quantum Projects\\Qollab\\projects\\two-whispers\\core.py",
+    "destination": "whispers_core.py",
+    "source_sha256": "a2ab292c47a947ea25858660703852bdcfa90db5942a24edcb16c54171a8ff15",
+    "destination_sha256_at_import": "84a3438d65f40527314a876cb31c42e2c63f5eeeee977803c04e8e243bce14ae",
+    "utc": "2026-10-10T01:08:30.097684+00:00"
+  },
+  {
+    "source": "D:\\Quantum Projects\\Qollab\\projects\\never-lose-twice\\core.py",
+    "destination": "hedging_core.py",
+    "source_sha256": "5b6944b91c5a25beda608e0e10fd2d92413f29d012b68cc822edd0858331c13e",
+    "destination_sha256_at_import": "8b3236efbb5555b9badb96ca870379bd1115e32f84be00ade07da12c087dc3fc",
+    "utc": "2026-10-10T01:08:30.097934+00:00"
+  },
+  {
+    "source": "D:\\Quantum Projects\\Qollab\\projects\\never-lose-twice\\strategies.py",
+    "destination": "hedging_strategies.py",
+    "source_sha256": "1916c29071773e77e7bf591ae2f05229d075847b117ec4ddf0a9c28840964cf7",
+    "destination_sha256_at_import": "1916c29071773e77e7bf591ae2f05229d075847b117ec4ddf0a9c28840964cf7",
+    "utc": "2026-10-10T01:08:30.098142+00:00"
+  },
+  {
+    "source": "D:\\Quantum Projects\\Qollab\\projects\\never-lose-twice\\product_bounds.py",
+    "destination": "product_bounds.py",
+    "source_sha256": "479d0861d935cde73e0b7551d8dc57a0f1cc88b40f6e38ba04d5cd16f4694a08",
+    "destination_sha256_at_import": "479d0861d935cde73e0b7551d8dc57a0f1cc88b40f6e38ba04d5cd16f4694a08",
+    "utc": "2026-10-10T01:08:30.098345+00:00"
+  },
+  {
+    "source": "D:\\Quantum Projects\\Qollab\\projects\\two-whispers\\circuit_pack.py",
+    "destination": "circuit_pack.py",
+    "source_sha256": "837f8c85f213e7c6f529ad1fa1cce44c2728542706de98948ef6c0388a7aaf82",
+    "destination_sha256_at_import": "837f8c85f213e7c6f529ad1fa1cce44c2728542706de98948ef6c0388a7aaf82",
+    "utc": "2026-10-10T01:08:30.098545+00:00"
+  },
+  {
+    "source": "D:\\Quantum Projects\\Qollab\\projects\\two-whispers\\synthesis.py",
+    "source_sha256": "39939b815823f0823702fbc2297cee3e5d5b8fc52b4e2c66d21674041fe9ed7f",
+    "destination": "adapted algorithm/reference; see REUSE_MANIFEST.md",
+    "utc": "2026-10-10T01:08:30.098605+00:00"
+  },
+  {
+    "source": "D:\\Quantum Projects\\Qollab\\projects\\two-whispers\\experiments\\noise.py",
+    "source_sha256": "8b9de9364470bc4e73ef0721784fcd637d9e95689f0161652473870ae7d41875",
+    "destination": "adapted algorithm/reference; see REUSE_MANIFEST.md",
+    "utc": "2026-10-10T01:08:30.098662+00:00"
+  },
+  {
+    "source": "D:\\Quantum Projects\\Qollab\\projects\\never-lose-twice\\experiments\\noise.py",
+    "source_sha256": "021565307e7186f06510d13bd751c48b5272196d3e56cc40fd8adc6f1f34cb21",
+    "destination": "adapted algorithm/reference; see REUSE_MANIFEST.md",
+    "utc": "2026-10-10T01:08:30.098710+00:00"
+  },
+  {
+    "source": "D:\\Quantum Projects\\Qollab\\projects\\two-whispers\\receipt.py",
+    "source_sha256": "0af406a359775825c411462df631e9b2949ce6e055ba9f93180fa48022bf1ad6",
+    "destination": "adapted algorithm/reference; see REUSE_MANIFEST.md",
+    "utc": "2026-10-10T01:08:30.098757+00:00"
+  },
+  {
+    "source": "D:\\Quantum Projects\\Qollab\\tools\\ionq_noise_params.json",
+    "source_sha256": "b1b9bbdadb59a971905cc9da1a4cf5135093d9ae2b5fb527bbaba719cd15a5a8",
+    "destination": "adapted algorithm/reference; see REUSE_MANIFEST.md",
+    "utc": "2026-10-10T01:08:30.098800+00:00"
+  },
+  {
+    "source": "D:\\Quantum Projects\\Qollab\\tools\\qollab_local.py",
+    "source_sha256": "a95871410bf7bec69ece3084ed76e3d24abe73cfc5ac0999142a8b644a14ddf9",
+    "destination": "adapted algorithm/reference; see REUSE_MANIFEST.md",
+    "utc": "2026-10-10T01:08:30.098845+00:00"
+  }
+]
