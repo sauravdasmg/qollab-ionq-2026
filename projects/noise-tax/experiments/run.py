@@ -7,6 +7,7 @@ from pathlib import Path
 import sys
 import time
 import hashlib
+from datetime import datetime, timezone
 import numpy as np
 import qiskit
 from qiskit.quantum_info import Statevector
@@ -20,6 +21,7 @@ import crossover
 from product_bounds import ideal_certificate, ideal_product_pass
 from receipt import digest, utc_now
 from figures import plot_results, plot_cloud_comparison
+from hedging_strategies import DEVELOPMENT_SEEDS as N_DEVELOPMENT_SEEDS
 import recorded_ionq
 from recorded_parser import summarize_record
 
@@ -31,6 +33,10 @@ IMPLEMENTATION_FILES = ('whispers_core.py', 'hedging_core.py', 'hedging_strategi
                         'crossover.py', 'circuit_pack.py', 'receipt.py', 'main.py',
                         'recorded_ionq.py', 'recorded_parser.py', 'figures.py',
                         'experiments/run.py', 'experiments/PLAN.md')
+# WP-NT-07 changes only loader validation and bounded smoke execution. The
+# verifier froze this loader before the requested repair; all scientific files
+# must still match exactly. Record both hashes in every consumed receipt.
+PRE_REPAIR_LOADER_SHA256 = '3264943e0e6097ff524165547c4de6131ae82b0a7dbfae0f302f36ae0b781820'
 
 def atomic_json(path, value):
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
@@ -38,7 +44,7 @@ def atomic_json(path, value):
     temporary.write_text(json.dumps(value, indent=2, allow_nan=False), encoding='utf-8')
     os.replace(temporary, path)
 
-def build_manifest(suite, quick=False, gate=None):
+def build_manifest(suite, quick=False, gate=None, instances=None):
     ws, ns, sampling = SUITES[suite]
     count = 2 if quick else 24
     grid = [0., 2.] if quick else [k/40 for k in range(81)]
@@ -46,8 +52,9 @@ def build_manifest(suite, quick=False, gate=None):
     configuration = {'suite': suite, 'quick': quick, 'gate': gate, 'grid': grid,
         'models': list(channel.MODELS), 'primary_model': 'aria-1', 'n_instances': count,
         'construction_rng': 'NumPy default_rng PCG64 Gaussian QR SU2 / uniform alpha theta',
-        'instances': {'W': [w.make_instance(ws+i) for i in range(count)],
-                      'N': [n.make_instance(ns+i) for i in range(count)]},
+        'instances': instances if instances is not None else {
+            'W': [w.make_instance(ws+i) for i in range(count)],
+            'N': [n.make_instance(ns+i) for i in range(count)]},
         'sampling_base': sampling, 'sampling_rng': 'SeedSequence [base,game,seed,model,scale,arm] / PCG64',
         'shots': {'W_per_label_per_arm': 1000, 'N_per_arm': 4000},
         'fixed_prize': .02, 'channel': {m: channel.configuration(m) for m in channel.MODELS},
@@ -61,6 +68,92 @@ def build_manifest(suite, quick=False, gate=None):
         'machine': platform.node(), 'simulator': 'exact NumPy small-block density evolution',
         'independent_verification': 'fresh seeds only; reviewer validation pending'}
     return {'frozen_utc': utc_now(), 'configuration': configuration, 'configuration_sha256': digest(configuration)}
+
+
+def validate_independent_manifest(manifest, suite):
+    """Validate the complete verifier envelope without regenerating instances."""
+    def require(condition, message):
+        if not condition:
+            raise ValueError('independent manifest: '+message)
+
+    require(isinstance(manifest, dict), 'expected an object')
+    require(manifest.get('owner') == 'independent_verifier', 'invalid owner')
+    try:
+        timestamp = datetime.fromisoformat(manifest['generated_utc'].replace('Z', '+00:00'))
+        require(timestamp.utcoffset() == timezone.utc.utcoffset(timestamp), 'generated_utc must be UTC')
+    except (KeyError, TypeError, AttributeError, ValueError) as exc:
+        raise ValueError('independent manifest: invalid generated_utc') from exc
+    generator = manifest.get('generator')
+    require(isinstance(generator, dict) and isinstance(generator.get('name'), str)
+            and bool(generator['name'].strip()) and bool(generator.get('version'))
+            and all(isinstance(generator.get(k), str) and generator[k].strip()
+                    for k in ('rng', 'W', 'N')), 'invalid generator provenance')
+    cfg = manifest.get('configuration')
+    require(isinstance(cfg, dict), 'missing configuration')
+    require(suite in ('frozen', 'fresh') and cfg.get('suite') == suite, 'suite mismatch')
+    require(manifest.get('configuration_sha256') == digest(cfg), 'configuration digest mismatch')
+    require(cfg.get('n_instances') == 24 and cfg.get('quick') is False, 'expected 24 cases per game')
+    instances = cfg.get('instances')
+    ids = manifest.get('instance_ids')
+    require(isinstance(instances, dict) and set(instances) == {'W', 'N'}, 'invalid instances')
+    require(isinstance(ids, dict) and set(ids) == {'W', 'N'}, 'invalid instance_ids')
+    require(manifest.get('instances_sha256') == digest(instances), 'instance digest mismatch')
+    development = set(w.DEVELOPMENT_SEEDS) | set(N_DEVELOPMENT_SEEDS)
+    for base in SUITES['development'][:2]:
+        development.update(range(base, base+24))
+    seen_seeds, seen_ids = set(), set()
+    other = 'fresh' if suite == 'frozen' else 'frozen'
+    other_seeds = {seed for base in SUITES[other][:2] for seed in range(base, base+24)}
+    for game in ('W', 'N'):
+        require(isinstance(instances[game], list) and len(instances[game]) == 24
+                and isinstance(ids[game], list) and len(ids[game]) == 24, 'expected 24 cases per game')
+        id_seeds = set()
+        for entry in ids[game]:
+            require(isinstance(entry, dict), 'invalid id entry')
+            identity, seed = entry.get('id'), entry.get('seed')
+            require(isinstance(identity, str) and bool(identity.strip()) and identity not in seen_ids, 'duplicate/invalid id')
+            require(type(seed) is int and seed not in id_seeds, 'duplicate/invalid id seed')
+            seen_ids.add(identity); id_seeds.add(seed)
+        for spec in instances[game]:
+            require(isinstance(spec, dict) and spec.get('game') == game, 'invalid game specification')
+            seed = spec.get('seed')
+            require(type(seed) is int and 0 <= seed < 2**32 and seed not in seen_seeds, 'duplicate/invalid construction seed')
+            require(seed not in development and seed != SUITES['development'][2], 'development seed overlap')
+            require(seed not in other_seeds and seed not in [v[2] for v in SUITES.values()], 'suite/sampling seed overlap')
+            seen_seeds.add(seed)
+            if game == 'W':
+                require(set(spec) == {'game', 'seed', 'frame'}, 'invalid W specification fields')
+                try:
+                    frame = np.asarray(spec['frame'], dtype=float)
+                    require(frame.shape == (2, 2, 2) and np.isfinite(frame).all(), 'invalid W frame')
+                    matrix = frame[:, :, 0] + 1j*frame[:, :, 1]
+                    require(np.allclose(matrix.conj().T@matrix, np.eye(2), atol=1e-12, rtol=0)
+                            and np.isclose(np.linalg.det(matrix), 1, atol=1e-12, rtol=0), 'W frame is not SU(2)')
+                except (TypeError, ValueError) as exc:
+                    raise ValueError('independent manifest: invalid W frame') from exc
+            else:
+                require(set(spec) == {'game', 'seed', 'alpha', 'theta'}, 'invalid N specification fields')
+                for key, center in (('alpha', np.pi/4), ('theta', np.pi/8)):
+                    angle = spec[key]
+                    require(type(angle) in (int, float) and np.isfinite(angle)
+                            and center-.04 <= angle <= center+.04, 'invalid N '+key)
+        require(id_seeds == {s['seed'] for s in instances[game]}, 'ids do not map one-to-one to instances')
+        base = SUITES[suite][int(game == 'N')]
+        require(id_seeds == set(range(base, base+24)), 'construction seeds differ from preregistered suite')
+    # Specs are authoritative. Machine, reviewer status and requested gate are
+    # bookkeeping, not immutable scientific settings.
+    expected = build_manifest(suite, instances=instances)['configuration']
+    excluded = {'instances', 'machine', 'independent_verification', 'gate', 'implementation_sha256'}
+    require({k: v for k, v in cfg.items() if k not in excluded}
+            == {k: v for k, v in expected.items() if k not in excluded}, 'immutable experiment/channel settings mismatch')
+    hashes = cfg.get('implementation_sha256')
+    require(isinstance(hashes, dict) and set(hashes) == set(IMPLEMENTATION_FILES), 'invalid implementation hashes')
+    for name, current in expected['implementation_sha256'].items():
+        allowed = {current}
+        if name == 'experiments/run.py':
+            allowed.add(PRE_REPAIR_LOADER_SHA256)
+        require(hashes[name] in allowed, 'implementation mismatch: '+name)
+    return cfg
 
 def sampling_seed(cfg, game, seed, model_index, scale_index, arm_index):
     return np.random.SeedSequence([cfg['sampling_base'], int(game == 'N'), seed,
@@ -135,13 +228,14 @@ def evaluate_case(game, spec, cfg, model, model_index, checkpoint, resume=False)
     for j in range(len(partial['points']), len(cfg['grid'])):
         scale = cfg['grid'][j]; noise = channel.configuration(model, scale)
         probs = [channel.probabilities(c, noise, p) for c, p in zip(compiled, prepared)]
-        seeds = [sampling_seed(cfg, game, spec['seed'], model_index, j, a) for a in range(len(probs))]
+        grid_index = cfg.get('_grid_indices', list(range(len(cfg['grid']))))[j]
+        seeds = [sampling_seed(cfg, game, spec['seed'], model_index, grid_index, a) for a in range(len(probs))]
         shots = 1000 if game == 'W' else 4000
         counts = [channel.histogram(p, shots, seed) for p, seed in zip(probs, seeds)]
         if game == 'W':
             exact = w.analyze_probabilities(probs, manifest)
             sampled = w.analyze_counts(counts, manifest)
-            extra_seeds = [sampling_seed(cfg, game, spec['seed'], model_index, j, a+3) for a in range(3)]
+            extra_seeds = [sampling_seed(cfg, game, spec['seed'], model_index, grid_index, a+3) for a in range(3)]
             reference_counts = [channel.histogram(p, shots, seed) for p, seed in zip(reference_probs, extra_seeds)]
             reference_sampled = w.analyze_counts(reference_counts, reference_manifest)
             extra = {'ideal_oneway_probabilities': reference_probs, 'ideal_oneway_synthetic_counts': reference_counts,
@@ -203,28 +297,53 @@ def calibration_sensitivity(spec, grid, model):
             'excludes': 'remote pulse-model mismatch and statistical calibration coverage'}
 
 def run(args):
-    if args.independent_manifest and args.suite != 'fresh':
-        raise ValueError('--independent-manifest is for the fresh suite only')
+    validate_only = getattr(args, 'validate_only', False)
+    if args.independent_manifest and args.suite not in ('frozen', 'fresh'):
+        raise ValueError('--independent-manifest requires frozen or fresh')
+    if args.suite in ('frozen', 'fresh') and not args.independent_manifest:
+        raise ValueError('frozen/fresh evaluation requires a verifier-owned --independent-manifest')
+    if args.independent_manifest and args.quick:
+        raise ValueError('use --validate-only with the full independent manifest, not --quick')
+    if validate_only and not args.independent_manifest:
+        raise ValueError('--validate-only requires --independent-manifest')
     if args.gate == 'g1' and args.suite != 'development':
         raise ValueError('G1 uses development pilot seeds only')
     if args.gate == 'g2' and args.suite != 'frozen':
         raise ValueError('G2 uses frozen evaluation seeds only')
     output = Path(args.output_dir) if args.output_dir else ROOT/'results'
-    output.mkdir(parents=True, exist_ok=True)
-    suite_name = 'quick' if args.quick else args.suite
+    suite_name = args.suite+'-validate' if validate_only else 'quick' if args.quick else args.suite
     manifest_path = output/(suite_name+'-manifest.json')
-    candidate = build_manifest(args.suite, args.quick, args.gate)
-    if args.independent_manifest and args.independent_manifest != 'generate':
+    consumed_sha256 = None
+    if args.independent_manifest:
         manifest_path = Path(args.independent_manifest)
-    if manifest_path.exists():
-        if not args.resume and not args.independent_manifest:
-            raise FileExistsError('manifest exists; use --resume or a new output directory')
-        manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
-        if manifest['configuration_sha256'] != digest(manifest['configuration']) or manifest['configuration_sha256'] != candidate['configuration_sha256']:
-            raise ValueError('frozen manifest differs from current implementation/configuration')
+        # read_bytes fails for every missing explicit path, including 'generate'.
+        raw = manifest_path.read_bytes()
+        consumed_sha256 = hashlib.sha256(raw).hexdigest()
+        manifest = json.loads(raw.decode('utf-8'))
+        validate_independent_manifest(manifest, args.suite)
     else:
-        manifest = candidate; atomic_json(manifest_path, manifest)
+        candidate = build_manifest(args.suite, args.quick, args.gate)
+        if manifest_path.exists():
+            if not args.resume:
+                raise FileExistsError('manifest exists; use --resume or a new output directory')
+            raw = manifest_path.read_bytes()
+            consumed_sha256 = hashlib.sha256(raw).hexdigest()
+            manifest = json.loads(raw.decode('utf-8'))
+            if manifest['configuration_sha256'] != digest(manifest['configuration']) or manifest['configuration_sha256'] != candidate['configuration_sha256']:
+                raise ValueError('frozen manifest differs from current implementation/configuration')
+        else:
+            manifest = candidate; atomic_json(manifest_path, manifest)
+            consumed_sha256 = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+    output.mkdir(parents=True, exist_ok=True)
+    if validate_only and (output/(suite_name+'.json')).exists() and not args.resume:
+        raise FileExistsError('smoke result exists; use --resume or a new output directory')
     cfg = dict(manifest['configuration'], _hash=manifest['configuration_sha256'])
+    if validate_only:
+        indices = [0, 40, 80]
+        cfg = dict(cfg, grid=[cfg['grid'][i] for i in indices], _grid_indices=indices,
+                   instances={g: cfg['instances'][g][:2] for g in ('W', 'N')}, n_instances=2)
+        cfg['_hash'] = digest({'manifest_sha256': consumed_sha256, 'mode': 'validate-only',
+                               'grid_indices': indices, 'instances': cfg['instances']})
     analysis_config = {'draws': args.draws, 'confidence': .975, 'seeds': {'W': 2026104401, 'N': 2026104402}}
     atomic_json(output/(suite_name+'-analysis-config.json'), analysis_config)
     total = 2*cfg['n_instances']*len(channel.MODELS); done = 0; start = time.monotonic()
@@ -232,6 +351,12 @@ def run(args):
     results = {'suite': suite_name, 'source_suite': args.suite, 'grid': cfg['grid'], 'manifest': manifest,
                'analysis_config': analysis_config, 'cases': {'W': {}, 'N': {}}, 'analysis': {},
                'started_utc': utc_now(), 'label': 'LOCAL MODEL approximate IonQ effective-basis channel'}
+    results['consumed_manifest_sha256'] = consumed_sha256
+    results['executed_implementation_sha256'] = {
+        p: hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in IMPLEMENTATION_FILES}
+    results['evaluation_selection'] = {'mode': 'validate-only' if validate_only else 'full',
+        'grid_indices': cfg.get('_grid_indices', list(range(len(cfg['grid'])))),
+        'seeds': {g: [s['seed'] for s in cfg['instances'][g]] for g in ('W', 'N')}}
     for game in ('W', 'N'):
         for mi, model in enumerate(channel.MODELS):
             cases = []
@@ -242,6 +367,8 @@ def run(args):
                 elapsed = time.monotonic()-start; eta = elapsed/done*(total-done)
                 print(f'LOCAL MODEL {suite_name} {game}/{model} {done}/{total}; elapsed={elapsed:.1f}s ETA={eta:.1f}s', flush=True)
             results['cases'][game][model] = cases
+            if validate_only:
+                continue
             curves = [[p['exact_advantage'] for p in case['points']] for case in cases]
             if game == 'W':
                 analysis = crossover.deterministic(cfg['grid'], curves)
@@ -251,6 +378,12 @@ def run(args):
                 analysis = crossover.analyze(cfg['grid'], curves, draws=args.draws,
                                              seed=analysis_config['seeds'][game])
             results['analysis'].setdefault(game, {})[model] = analysis
+    if validate_only:
+        results['gate'] = {'decision': 'SMOKE_ONLY', 'inference_adequate': False}
+        results['ended_utc'] = utc_now(); results['elapsed_seconds'] = time.monotonic()-start
+        atomic_json(output/(suite_name+'.json'), results)
+        print('LOCAL MODEL manifest validated; bounded smoke complete; no inference evidence', flush=True)
+        return results
     results['diagnostic_controls'] = diagnostic_controls()
     records, statuses = recorded_ionq.parse_records()
     anchors = [a for r in records for a in summarize_record(r)]
@@ -288,7 +421,9 @@ def main():
     parser.add_argument('--suite', choices=tuple(SUITES), default='development')
     parser.add_argument('--gate', choices=('g1', 'g2'))
     parser.add_argument('--draws', type=int, default=4000)
-    parser.add_argument('--independent-manifest', nargs='?', const='generate')
+    parser.add_argument('--independent-manifest', help='existing verifier-owned frozen/fresh JSON file')
+    parser.add_argument('--validate-only', action='store_true',
+                        help='validate all 48 cases then smoke 2 per game on 3 original grid points')
     parser.add_argument('--resume', action='store_true')
     parser.add_argument('--output-dir')
     args = parser.parse_args()

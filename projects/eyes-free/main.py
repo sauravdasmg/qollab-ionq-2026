@@ -8,6 +8,7 @@ from receipt import make_record, parse_records, transcript
 from recorded_ionq import RECORDED
 from sonify import wav_bytes
 from figures import chart
+from cloud_slots import SLOTS, build_slot
 
 
 def analyze(counts, phase_frame=0.0):
@@ -16,7 +17,28 @@ def analyze(counts, phase_frame=0.0):
     return [fit_counts(PHASES+phase_frame, counts[j*12:(j+1)*12]) for j in range(3)]
 
 
-def main(shots: int=256, phase_frame: float=0.0):
+def main(shots: int=256, phase_frame: float=0.0, slot: str = ""):
+    if slot:
+        if slot not in SLOTS: raise ValueError("unknown cloud slot")
+        spec = SLOTS[slot]
+        if shots != spec["shots"]: raise ValueError("slot shot budget is fixed at %d" % spec["shots"])
+        q, manifest = build_slot(slot)
+        effective = "ideal"
+        if backend.name == "ionq_simulator":
+            backend.set_options(noise_model="aria-1")
+            effective = getattr(backend.options, "noise_model", None)
+            if effective != "aria-1": raise ValueError("effective aria-1 option not confirmed")
+        job = backend.run(q, shots=shots)
+        result = job.result()
+        counts = result.get_counts()
+        record = {"slot":slot,"suite":spec["suite"],"manifest_hash":spec["manifest_hash"],
+                  "shots":shots,"effective_noise_model":effective,"counts":counts,"manifest":manifest}
+        if slot != "E01":
+            record["fits"] = {str(n): {"frequency":None,"frequency_ci":None,"contrast":None,
+                "contrast_ci":None,"phase_points_received":3,"status":"awaiting complete twelve-phase suite"} for n in WIDTHS}
+            print("Slot frequency and contrast fits require combining all four preregistered batches.", flush=True)
+        print("RECORD_JSON " + json.dumps(record, sort_keys=True), flush=True)
+        return record
     if not 1 <= shots <= 1000 or not np.isfinite(phase_frame):
         raise ValueError("shots must be 1..1000 and phase_frame finite")
     print("Eyes-Free: starting one counts job", flush=True)

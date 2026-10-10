@@ -71,3 +71,8 @@ No coverage threshold was specified previously; report observed coverage at nomi
 calibrated intervals. Full science PASS still requires independent verification,
 full suites and Qollab confirmation. Quick truncations are partial evidence only.
 Local ideal samples are labelled local ideal simulation, not live Qollab execution.
+
+
+## WP-E-06 cloud slot amendment (2026-10-10T03:42:34Z)
+
+The executable slot ledger is `cloud_slots.py`. E01 is the 19-wire asymmetric mapping smoke (100 shots); E02-E05 are frozen phase triples at k*pi/2 (1000 shots); E06-E09 are fresh triples at k*pi/2+pi/24 (1000 shots). E10 is the single representative logged-out acceptance/export pack; E11/E12 are reserved frozen/fresh repair slots. Frozen and fresh hashes are SHA-256 of the exact independent manifest bytes in `review/manifests/frozen.json` and `fresh.json`; E01 has the explicit marker `smoke-v1`. All ordinary phase packs hold nine disjoint blocks in phase-major n=1,2,4 order (21 qubits). A single slot has only three phase points, so frequency and contrast estimates are explicitly pending until all four batches of that suite have been joined; no partial fit is reported as an estimate. IonQ slot execution is one circuit, one job and one result fetch, with `aria-1` guarded by backend identity. Built-in slot execution uses the same circuit ideally.

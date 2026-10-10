@@ -97,3 +97,16 @@ def test_builtin_list_and_download(monkeypatch):
     assert {n:t for n,t,d in downloads} == {"eyes-free.wav":"audio/wav", "eyes-free-receipt.txt":"text/plain"}
     assert {n:d for n,t,d in downloads}["eyes-free.wav"].startswith(b"RIFF")
     assert isinstance({n:d for n,t,d in downloads}["eyes-free-receipt.txt"], bytes)
+
+
+def test_slots_and_single_ionq_submission(monkeypatch):
+    from cloud_slots import SLOTS, build_slot
+    for slot in SLOTS:
+        q, _ = build_slot(slot)
+        assert q.num_qubits <= 25
+    b=Backend()
+    monkeypatch.setattr(app,"backend",b,raising=False)
+    record=app.main(100,"ignored",slot="E01")
+    assert record["slot"] == "E01" and record["suite"] == "smoke"
+    assert {"manifest_hash","shots","effective_noise_model"} <= record.keys()
+    assert b.calls==b.job.fetches==b.job.value.fetches==1
