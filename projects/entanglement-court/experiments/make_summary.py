@@ -85,7 +85,7 @@ def build_summary(generated_utc=None):
             "generator": "experiments/make_summary.py",
             "generator_sha256": sha256(Path(__file__)),
         },
-        "evidence_label": "LOCAL MODEL (calibrated IonQ-like approximation, not device)",
+        "evidence_label": "LOCAL MODEL (IonQ-like noise approximation with preliminary rates; not official calibration, not device)",
         "description": "Compact LOCAL MODEL statistics derived from repository-only frozen, fresh and development result files. Full sources are repository evidence, not top-level Qollab uploads; source SHA-256s are included. Aggregates can be summed, but original sampled draws cannot be audited from retained counts.",
         "campaigns": campaigns,
         "gate_decisions": summarize_gate(gate_path),

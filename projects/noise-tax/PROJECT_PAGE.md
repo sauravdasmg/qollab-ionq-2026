@@ -2,7 +2,7 @@
 
 **Run it (judges):** built-in simulator, default settings (512 shots, aria-1), press **Run**, about 1 s; check the live W and N scores, recorded anchors, and modeled curves.
 
-**Summary.** The Noise Tax compares two specific quantum-game recipes with their stated references while increasing a calibrated local noise model. Both modeled margins cross zero across 24 paired instances; RECORDED cloud slots T01-T08 show positive W (+0.002 to +0.011) and negative N (-0.035 to -0.022). Local crossings are not device thresholds.
+**Summary.** The Noise Tax compares two specific quantum-game recipes with their stated references while increasing a calibrated local noise model. Both modeled margins cross zero across 24 paired instances; RECORDED Qollab IonQ simulator slots T01-T08 show W +0.002 to +0.011 and N -0.035 to -0.022. Local crossings are not device thresholds.
 
 **Problem.** Ideal quantum strategies can have an advantage over a chosen reference, but a noisy implementation may change that margin. This demo makes the comparison and assumptions visible. The project plan supplies no paper identifiers to cite here; it adds none.
 
@@ -20,27 +20,27 @@
 
 ![Recorded anchors. Alt text: Discrete Qollab IonQ simulator measurements sit beside local-model values; they are observations at named models, not a cloud noise sweep.](results/figures/frozen-anchors.png)
 
-**RECORDED** Qollab IonQ simulator case-0 anchors were recorded on 2026-10-10 UTC: W at 1,000 shots per label; N at 4,000 shots per arm for aria-1 and 1,000 per arm for forte-1 and forte-enterprise-1. Recorded anchors do not establish a cloud crossover: **RECORDED cloud result (2026-10-10 UTC):** across Qollab IonQ simulator slots T01-T08, the W signed advantage was positive (+0.002 to +0.011) and the N fixed-prize advantage was negative (-0.035 to -0.022), consistent with the LOCAL MODEL at the matching scales; these are discrete anchors, not a cloud crossover..
+**RECORDED** Qollab IonQ simulator slots T01-T08 (2026-10-10 UTC) show W signed advantages from +0.002 to +0.011 and N advantages from -0.035 to -0.022. They are discrete anchors, not a cloud crossover; per-slot outcomes and reproduction settings follow below.
 
 ## Cloud evidence (RECORDED, Qollab IonQ simulator)
 
-The campaign ran the W double-trine suite in slots T01, T03, T05, and T07, and the N hedging suite in T02, T04, T06, and T08 on 2026-10-10 UTC. W used 1,000 shots per label; N used 4,000 shots per arm. Each slot used its recorded noise model below.
+On 2026-10-10 UTC, slots T01-T08 ran the W double-trine suite (T01, T03, T05, T07) and N hedging suite (T02, T04, T06, T08). W used 1,000 shots per label; N used 4,000 shots per arm. The recorded noise models and signed outcomes are:
 
 | Slot | Suite / comparison | Noise model | Shots | Signed outcome |
 |---|---|---|---:|---:|
-| T01 | W: joint vs ideal one-way | aria-2 | 1,000 per label | +0.0053 |
-| T02 | N: product vs published hedge | aria-2 | 4,000 per arm | -0.0299 |
-| T03 | W: joint vs ideal one-way | aria-1 | 1,000 per label | +0.0023 |
-| T04 | N: product vs published hedge | aria-1 | 4,000 per arm | -0.0216 |
-| T05 | W: joint vs ideal one-way | forte-1 | 1,000 per label | +0.0047 |
-| T06 | N: product vs published hedge | forte-1 | 4,000 per arm | -0.0353 |
-| T07 | W: joint vs ideal one-way (fixed fresh corroboration) | aria-1 | 1,000 per label | +0.0107 |
-| T08 | N: product vs published hedge (fixed fresh corroboration) | aria-1 | 4,000 per arm | -0.0220 |
+| T01 | W: joint vs ideal one-way | aria-2 | 1,000 per label | +0.005 |
+| T02 | N: product vs published hedge | aria-2 | 4,000 per arm | -0.030 |
+| T03 | W: joint vs ideal one-way | aria-1 | 1,000 per label | +0.002 |
+| T04 | N: product vs published hedge | aria-1 | 4,000 per arm | -0.022 |
+| T05 | W: joint vs ideal one-way | forte-1 | 1,000 per label | +0.005 |
+| T06 | N: product vs published hedge | forte-1 | 4,000 per arm | -0.035 |
+| T07 | W: joint vs ideal one-way (fixed fresh corroboration) | aria-1 | 1,000 per label | +0.011 |
+| T08 | N: product vs published hedge (fixed fresh corroboration) | aria-1 | 4,000 per arm | -0.022 |
 
-Positive W favors the joint measurement; negative N means the attained product strategy has lower fixed-prize loss than the published hedge. These are discrete simulator measurements and do not establish a cloud noise threshold. Reproduce a record by selecting **IonQ Aria 1**, setting **Slot=Txx** and **Shots=1000** for W or **Shots=4000** for N, then running the project. Slot T05/T06 used forte-1 and T01/T02 used aria-2 as recorded in the table; their stored records identify the model and slot configuration. All raw records are in [`recorded_ionq.py`](recorded_ionq.py), and the compact index and outcomes are in [`evidence_summary.json`](evidence_summary.json), both included in this project. The console exports are retained under `results/exports/`.
 
-**Deviations and superseded runs:** no Noise Tax campaign run is identified as superseded or deviating in the project provenance. T07/T08 are additional fixed-seed corroboration, not replacements. (The preparation-noise omission noted for Entanglement Court applies to that separate project.)
+Positive W favors the joint measurement over the ideal one-way reference. Negative N means the attained product strategy has lower fixed-prize loss than the published hedge. These are discrete simulator anchors, not a cloud noise sweep or threshold. Reproduce each run by selecting **IonQ Aria 1**, setting **Slot=Txx** and **Shots=1000** for W or **Shots=4000** for N, then running the project; the slot selects the recorded noise model shown above (including Forte 1 on T05/T06). All raw `RECORD_JSON` lines for these eight valid runs are in [`recorded_ionq.py`](recorded_ionq.py), with the compact index and outcomes in [`evidence_summary.json`](evidence_summary.json); both files are included in this project. Original Qollab console exports are retained under `results/exports/`.
 
+**Deviations and superseded runs:** the campaign provenance and evidence summary report no Noise Tax cloud deviations or superseded runs. T07/T08 are fixed-seed fresh corroboration and are additional runs, not replacements. No Entanglement Court preparation-noise deviation applies to this project.
 
 Finite-shot estimates can cross a bound by sampling chance; interpret each estimate with its uncertainty interval. **LIVE** built-in results are the judge-facing run; **RECORDED** denotes the named Qollab IonQ simulator runs; **LOCAL MODEL** denotes the calibrated approximation.
 

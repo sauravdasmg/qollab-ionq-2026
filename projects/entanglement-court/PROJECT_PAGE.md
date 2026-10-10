@@ -57,9 +57,9 @@ Deviation and superseded runs: C02-C07 omitted the declared per-wire preparation
 
 *Alt text: Static LOCAL MODEL chart from saved fresh aggregates at 100 shots/block: 20 cases, ideal device channel versus Aria-like scale 1; easy cases certify more often than near-threshold cases. Deliberate preparation noise remains in both series.*
 
-![Static LOCAL MODEL chart from saved development aggregates at 100 shots/block: four development cases, ideal device channel versus Aria-like scale 1, all certification fractions equal 1.0. This is a bar chart, not an interactive web screenshot.](development.png)
+![Static LOCAL MODEL chart from saved development aggregates at 100 shots/block: four development cases, ideal device channel (all 1.000) versus Aria-like scale 1 (0.974, 0.969, 0.956, 0.966; mean 0.966), 1,000 draws per case. This is a bar chart, not an interactive web screenshot.](development.png)
 
-*Alt text: Static LOCAL MODEL chart from saved development aggregates at 100 shots/block: four development cases, ideal device channel versus Aria-like scale 1, all certification fractions equal 1.0. This is a bar chart, not an interactive web screenshot.*
+*Alt text: Static LOCAL MODEL chart from saved development aggregates at 100 shots/block: four development cases, ideal device channel (all 1.000) versus Aria-like scale 1 (0.974, 0.969, 0.956, 0.966; mean 0.966), 1,000 draws per case. This is a bar chart, not an interactive web screenshot.*
 
 
 These three figures are static LOCAL charts. The companion interactive courtroom is implemented separately in `web/index.html`, `web/main.js`, `web/main.css` and `web/court_bridge.py`; its Z/parity/witness panels are not depicted in these PNGs. Short axis suffixes map to full case IDs in the repository results.

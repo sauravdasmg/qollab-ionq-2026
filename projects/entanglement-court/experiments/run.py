@@ -469,7 +469,8 @@ def _save_figure(result, path):
     for model, shift, color, label in (("ideal", -.2, "#28345a", "Ideal device channel"),
                                       ("aria@1", .2, "#ad6334", "Aria-like scale 1")):
         rows = [(i, x["controls"]["graph"]["summary"]["certification_rate"])
-                for i, r in enumerate(cases) for x in r["noise_results"] if x["noise"]["name"] == model]
+                for i, r in enumerate(cases) for x in r["noise_results"] if x["noise"]["name"] == model
+                and x.get("shots_per_block", result["config"]["shots"]) == result["config"]["shots"]]
         if rows:
             ax.bar([i + shift for i, _ in rows], [v for _, v in rows], width=.4, color=color, label=label)
     ax.set_xticks(range(len(cases)), [str(r["case_id"])[-2:] for r in cases], fontsize=8)
