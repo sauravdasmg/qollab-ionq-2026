@@ -18,5 +18,5 @@ def parity_estimates(counts,width,maps):
     return out
 def block_parities(counts,manifest,block,local=False):
     s=manifest['blocks'][block]
-    width=4 if local else manifest['total_width']
+    width=s.get('width',4) if local else manifest['total_width']
     return parity_estimates(counts,width,[dict(m,offset=0 if local else s['offset']) for m in s['parity_maps']])

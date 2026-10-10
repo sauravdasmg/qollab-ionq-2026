@@ -85,6 +85,23 @@ def load_records(text=None):
             line = line[len('RECORD_JSON'):].lstrip(': ')
         try:
             record = validate_record(json.loads(line))
+            manifest = record['settings']['manifest']
+            if manifest.get('original_manifest_hash') and not (
+                    record.get('prep_noise') == 'ancilla phase-flip channel'
+                    and record.get('prep_noise_per_wire_p') == manifest.get('prep_noise_per_wire_p')):
+                raise ValueError('campaign receipt missing preparation-channel metadata')
+            if (record.get('prep_noise') != 'ancilla phase-flip channel'
+                    and manifest['generated_parameters'].get('diagonal_preparation_noise', 0.) > 0.):
+                from campaign import SLOTS
+                from recorded_ionq import LEGACY_PREP_NOISE_STATUS
+                old = next((r for r in SLOTS if str(r['case_id']) == record['case_id']), None)
+                if old and old['slot'] in LEGACY_PREP_NOISE_STATUS:
+                    label = LEGACY_PREP_NOISE_STATUS[old['slot']]
+                    status.append(old['slot'] + ': ' + label)
+                    if old['stratum'] == 'near-threshold':
+                        continue
+                    record = dict(record, prep_noise=label,
+                                  evidence_deviation='Declared easy phase flips were omitted; p < 0.015.')
             valid.append(record)
             status.append('Recorded: ' + record['backend'] + ', ' + record['noise_model'] + ', ' + str(record['shots']) + ' shots, ' + record['utc_end'] + ('; terminal error' if record['error'] else ''))
         except (ValueError, TypeError, KeyError, AttributeError, OverflowError) as exc:

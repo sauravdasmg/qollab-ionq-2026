@@ -1,0 +1,129 @@
+{
+  "created_utc": "2026-10-10T13:49:08.021025+00:00",
+  "task": "WP-C-14",
+  "policy": "Raw HTML exports are immutable historical data. This status index supersedes their original stratum evidence labels. C08-C13 are excluded from near-threshold evidence; C02-C07 retained only with the documented omitted easy preparation noise. No corrected cloud results yet.",
+  "slot_status": {
+    "C08": "prep-noise omitted (superseded)",
+    "C09": "prep-noise omitted (superseded)",
+    "C10": "prep-noise omitted (superseded)",
+    "C11": "prep-noise omitted (superseded)",
+    "C12": "prep-noise omitted (superseded)",
+    "C13": "prep-noise omitted (superseded)",
+    "C02": "prep-noise omitted (easy; small documented deviation)",
+    "C03": "prep-noise omitted (easy; small documented deviation)",
+    "C04": "prep-noise omitted (easy; small documented deviation)",
+    "C05": "prep-noise omitted (easy; small documented deviation)",
+    "C06": "prep-noise omitted (easy; small documented deviation)",
+    "C07": "prep-noise omitted (easy; small documented deviation)"
+  },
+  "exports": [
+    {
+      "slot": "C02",
+      "source": "results/exports/saurav-entanglement-court-output-completed-2026-10-10T13-34-13.915Z.html",
+      "sha256": "439a169e0b03e05f3f7f813833074d3e198fb3a74ca5ac520f8aef4e7873dece",
+      "status": "prep-noise omitted (easy; small documented deviation)",
+      "declared_per_wire_p": 0.0017434960457388792,
+      "eligible_near_threshold_evidence": false,
+      "retain_easy_with_deviation": true
+    },
+    {
+      "slot": "C03",
+      "source": "results/exports/saurav-entanglement-court-output-completed-2026-10-10T13-35-05.958Z.html",
+      "sha256": "e0d75f5b85ff28e8b70cf8d2a36cf8d89608dc6554c16f49ea9cb6355c638ef5",
+      "status": "prep-noise omitted (easy; small documented deviation)",
+      "declared_per_wire_p": 0.0010903169695118508,
+      "eligible_near_threshold_evidence": false,
+      "retain_easy_with_deviation": true
+    },
+    {
+      "slot": "C04",
+      "source": "results/exports/saurav-entanglement-court-output-completed-2026-10-10T13-35-38.562Z.html",
+      "sha256": "ebbb269d98440490cbc994384647eb18265b8b866c1adfef4f3728fabcc7157b",
+      "status": "prep-noise omitted (easy; small documented deviation)",
+      "declared_per_wire_p": 0.005901966730070698,
+      "eligible_near_threshold_evidence": false,
+      "retain_easy_with_deviation": true
+    },
+    {
+      "slot": "C05",
+      "source": "results/exports/saurav-entanglement-court-output-completed-2026-10-10T13-36-08.644Z.html",
+      "sha256": "e6acbb730d4681912d29b0193fb9168e0f44694b2eb1138d79d74bb124127af7",
+      "status": "prep-noise omitted (easy; small documented deviation)",
+      "declared_per_wire_p": 0.014939985422026824,
+      "eligible_near_threshold_evidence": false,
+      "retain_easy_with_deviation": true
+    },
+    {
+      "slot": "C06",
+      "source": "results/exports/saurav-entanglement-court-output-completed-2026-10-10T13-36-37.690Z.html",
+      "sha256": "2e5f7533445b52f02e3aef376efbad7d76331227d9cdb17fa92bb53516106f7f",
+      "status": "prep-noise omitted (easy; small documented deviation)",
+      "declared_per_wire_p": 0.014952533336762393,
+      "eligible_near_threshold_evidence": false,
+      "retain_easy_with_deviation": true
+    },
+    {
+      "slot": "C07",
+      "source": "results/exports/saurav-entanglement-court-output-completed-2026-10-10T13-37-08.514Z.html",
+      "sha256": "888db0e06d796151843473fcff7956bf947455dfca7d1392641ea8cfa2ef8536",
+      "status": "prep-noise omitted (easy; small documented deviation)",
+      "declared_per_wire_p": 0.013425230306667875,
+      "eligible_near_threshold_evidence": false,
+      "retain_easy_with_deviation": true
+    },
+    {
+      "slot": "C08",
+      "source": "results/exports/saurav-entanglement-court-output-completed-2026-10-10T13-37-36.409Z.html",
+      "sha256": "fa15e1d4dc3dacc880373654ee4c73b54ee0aba6276dff683370979da2ab4342",
+      "status": "prep-noise omitted (superseded)",
+      "declared_per_wire_p": 0.12430841310983293,
+      "eligible_near_threshold_evidence": false,
+      "retain_easy_with_deviation": false
+    },
+    {
+      "slot": "C09",
+      "source": "results/exports/saurav-entanglement-court-output-completed-2026-10-10T13-38-06.796Z.html",
+      "sha256": "2dc08f5897014acecb0c533e40a689605a97a3b3172693e7acebb903b05932fc",
+      "status": "prep-noise omitted (superseded)",
+      "declared_per_wire_p": 0.1240104780696041,
+      "eligible_near_threshold_evidence": false,
+      "retain_easy_with_deviation": false
+    },
+    {
+      "slot": "C10",
+      "source": "results/exports/saurav-entanglement-court-output-completed-2026-10-10T13-41-28.319Z.html",
+      "sha256": "8637397a9d0887bdf28f22d0d0fe53ee726cdaf63c4ae5a019e6d219fbff31ca",
+      "status": "prep-noise omitted (superseded)",
+      "declared_per_wire_p": 0.127303445027418,
+      "eligible_near_threshold_evidence": false,
+      "retain_easy_with_deviation": false
+    },
+    {
+      "slot": "C11",
+      "source": "results/exports/saurav-entanglement-court-output-completed-2026-10-10T13-41-56.124Z.html",
+      "sha256": "01cccdfbe701f11258aea699900730549468b46dafb40a33e2f5498d103836ab",
+      "status": "prep-noise omitted (superseded)",
+      "declared_per_wire_p": 0.12314737662746217,
+      "eligible_near_threshold_evidence": false,
+      "retain_easy_with_deviation": false
+    },
+    {
+      "slot": "C12",
+      "source": "results/exports/saurav-entanglement-court-output-completed-2026-10-10T13-42-22.876Z.html",
+      "sha256": "fac6544a7df085e8e83235b9947bbdca7622594853c225e5e81288263f889ae5",
+      "status": "prep-noise omitted (superseded)",
+      "declared_per_wire_p": 0.12136121525304758,
+      "eligible_near_threshold_evidence": false,
+      "retain_easy_with_deviation": false
+    },
+    {
+      "slot": "C13",
+      "source": "results/exports/saurav-entanglement-court-output-completed-2026-10-10T13-42-49.422Z.html",
+      "sha256": "2c49977af4618b457fd7578e5b02e06c21ff8b277a25a06efa1ce0ea9d3051f6",
+      "status": "prep-noise omitted (superseded)",
+      "declared_per_wire_p": 0.12424367103555119,
+      "eligible_near_threshold_evidence": false,
+      "retain_easy_with_deviation": false
+    }
+  ]
+}

@@ -68,6 +68,12 @@ def build_summary():
                          "implementation_handoff_only": data.get("implementation_handoff_only")},
             }
             sources[rel] = sha256(path)
+    cloud_path = RESULTS / "cloud_fit.json"
+    cloud_fit = None
+    if cloud_path.exists():
+        cloud = json.loads(cloud_path.read_text(encoding="utf-8"))
+        cloud_fit = {"label": cloud.get("combined", {}).get("label"), "suites": cloud.get("combined", {}).get("suites", {})}
+        sources[cloud_path.relative_to(ROOT).as_posix()] = sha256(cloud_path)
     config = suites.get("frozen", {}).get("configuration", {})
     payload = {
         "evidence_label": "LOCAL MODEL (calibrated IonQ-like approximation, not device)",
@@ -80,6 +86,7 @@ def build_summary():
                    "noise_scales": config.get("noise_scales"), "grid": config.get("grid", config.get("fit_spec")),
                    "gate": suites.get("g1_gate")},
         "suites": suites,
+        "cloud_fit": cloud_fit,
         "recorded_ionq_file": "recorded_ionq.py",
         "scope": "Saved local simulation evidence only; Qollab IonQ simulator records are in recorded_ionq.py.",
     }

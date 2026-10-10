@@ -102,3 +102,53 @@ This effort is supported by Qollab & IonQ.
 
 **Repository:** https://github.com/sauravdasmg/Qollab  
 **Demo video:** [[VIDEO LINK]]
+
+## Preparation-channel correction (WP-C-14)
+
+Cloud campaign slots now prepare the manifest's independent per-wire phase-flip
+channel with an ancilla for each X-measured center, for both target and product
+impostor A/B blocks. Each ancilla starts in |0>, receives
+RY(2 asin sqrt(p)), then CZ to its data wire immediately after preparation and
+before the diagonal frame and measurement rotations. Measuring and ignoring the
+ancilla gives exactly (1-p) rho + p Z rho Z. The four data bits alone enter the
+parities; higher ancilla bits are marginalised.
+
+A Z flip on a Z-measured wire commutes with the frame and every measurement
+projector. Its two branches therefore have identical full outcome distributions,
+including their correlations with other measured wires. No ancilla is needed
+for those wires. Both Z exhibits are invariant under this preparation channel:
+their ideal distribution is uniform with probability 1/16 per outcome. The
+extra eight ancillas would raise the six-block cloud circuit to 32 qubits, so
+cloud slots omit both Z blocks and use 24 qubits. Built-in campaign runs retain
+the Z exhibits in separate small circuits in one list job. The measured ideal
+Z exhibits from a bounded 200-shot C08 built-in run are saved in
+`results/quick-wpc14-builtin-Z.txt` and `results/quick-wpc14-reference.json`.
+These sampled histograms fluctuate around the exact uniform reference.
+
+Historical C08-C13 records are **prep-noise omitted (superseded)** and are
+excluded from near-threshold evidence. C02-C07 are retained with the explicit
+label **prep-noise omitted (easy; small documented deviation)**. Their omitted
+per-wire p is below 0.015: each ideal target-generator mean changes by 2p < 0.03
+and the four-generator population fidelity bound changes by 4p < 0.06.
+This is a documented deviation, not exact execution of the declared manifest.
+`results/cloud_record_status.json` binds these labels to hashes of the original
+exports, whose raw contents remain preserved. Receipt loading excludes old
+near-threshold entries and labels retained easy entries. Corrected campaign
+RECORD_JSON lines include `prep_noise: "ancilla phase-flip channel"` and
+`prep_noise_per_wire_p`, with one probability for each of the four data wires.
+The frozen original manifest hash remains distinct from the implemented circuit
+manifest hash, which records ancillas and omitted Z blocks.
+
+Quick regression: exact reduced density matrices for all 24 cloud slots match
+the harness's measured block probabilities to absolute tolerance 1e-10 at
+ideal device noise; every cloud slot is 24 qubits. Under the same aggregate local
+Aria approximation, C08's expected F_lower is -0.0073394064 at 100 shots and
+0.1345209705 at 200 shots. The former agrees with the saved 1,000-draw harness
+mean (-0.0029472076) within sampling variation; that saved case has zero
+certificates. Ten bounded 200-shot regression draws also yield zero certificates.
+Those ten draws are only a smoke check. Added RY/CZ gates incur device noise;
+these local numbers do not model their server-compiled gate errors separately.
+Corrected cloud confirmation and independent verification remain pending.
+
+Reproduce focused checks:
+`../../.venv/Scripts/python.exe -m pytest tests/test_preparation_channel.py tests/test_campaign.py tests/test_runtime.py -q -p no:cacheprovider`.

@@ -35,14 +35,16 @@ def main(case: int=0, shots: int=200, challenge: str="sealed", assume_trusted_me
     for status in statuses:
         print(status, flush=True)
     if slot:
-        circuits, manifest, campaign_row = build_slot(slot)
+        active_name = getattr(globals().get('backend'), 'name', '')
+        if callable(active_name): active_name = active_name()
+        circuits, manifest, campaign_row = build_slot(slot, include_z=not str(active_name).startswith('ionq'))
         case = manifest['case_id']
         challenge = 'campaign'
     else:
         circuits, manifest = make_demo(case, recipe={'audited16': challenge == 'audited16'})
     manifest['shared_helpers'] = ['circuit_pack.py', 'receipt.py']
     blocks = circuits if campaign_row else demo_blocks(circuits, manifest)
-    packed, layout = pack_circuits(blocks)
+    packed, layout = pack_circuits(blocks, max_qubits=32 if campaign_row and not manifest["dropped_Z_exhibits"] else 25)
     active = globals().get('backend')
     if active is None:
         from qiskit.providers.basic_provider import BasicSimulator
@@ -77,6 +79,8 @@ def main(case: int=0, shots: int=200, challenge: str="sealed", assume_trusted_me
                   raw_counts={}, marginals={}, uncertainty={}, assumptions=assumptions, job_id=None,
                   source_file='results/exports/qollab-console.txt', receipt_path='recorded_ionq.py',
                   result_path='recorded_ionq.py', error=None)
+    if campaign_row:
+        record.update(slot=slot, prep_noise=manifest['prep_noise'], prep_noise_per_wire_p=manifest['prep_noise_per_wire_p'])
     print('Running ' + ('one packed IonQ circuit' if ionq else str(len(blocks)) + ' tiny built-in circuits in one list job') + '.', flush=True)
     try:
         job = active.run(packed if ionq else blocks, shots=shots)
@@ -121,7 +125,7 @@ def main(case: int=0, shots: int=200, challenge: str="sealed", assume_trusted_me
     if ionq:
         emit_record(record)
     if campaign_row:
-        campaign_record = {'slot':slot, 'suite':campaign_row['suite'], 'case_id':campaign_row['case_id'], 'stratum':campaign_row['stratum'], 'manifest_hash':campaign_row['manifest_hash'], 'shots':shots, 'noise_model':effective or 'ideal'}
+        campaign_record = {'slot':slot, 'suite':campaign_row['suite'], 'case_id':campaign_row['case_id'], 'stratum':campaign_row['stratum'], 'manifest_hash':campaign_row['manifest_hash'], 'shots':shots, 'noise_model':effective or 'ideal', 'prep_noise':manifest['prep_noise'], 'prep_noise_per_wire_p':manifest['prep_noise_per_wire_p'], 'max_qubits':packed.num_qubits}
         print('Campaign verdict: ' + str(analysis.get('simultaneous_witness',{}).get('receipt','inconclusive')) + ' (conditional on trusted ideal rotations/readout).', flush=True)
         print('RECORD_JSON ' + json.dumps(campaign_record, sort_keys=True), flush=True)
     source = ('Live Qollab IonQ simulator | ' + effective + ' | UTC ' + record['utc_end']) if ionq else 'Live built-in ideal'

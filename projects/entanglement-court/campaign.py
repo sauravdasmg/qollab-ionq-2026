@@ -29,18 +29,71 @@ def slot_data(slot):
                 raise ValueError("embedded manifest hash mismatch for " + slot)
             return row
     raise ValueError("slot must be C02 through C25")
-def build_slot(slot):
-    row=slot_data(slot); m=row["manifest"]; params=m["generated_parameters"]
-    edges=[tuple(e) for e in params["edges"]]; frame=params["frame_radians"]; angles=params["product_angles_radians"]
-    circuits=[]
-    for name in m["ordered_blocks"]:
-        target=name.startswith("target"); qc=QuantumCircuit(4,4,name=name)
-        append_preparation(qc,0,edges,frame,angles,"graph" if target else "product")
-        maps=m["blocks"][name]["parity_maps"]
+def build_slot(slot, include_z=False):
+    """Realise the declared preparation channel; retain Z only for built-in runs.
+
+    RY(2 asin sqrt(p)) then CZ purifies (1-p)rho + p Z rho Z.
+    RZ frames commute with Z, so insertion before the frame is equivalent.
+    Z on non-center wires commutes with every measurement projector: its
+    two mixture branches have identical full outcome probabilities.
+    """
+    import copy
+    import math
+    row = slot_data(slot)
+    m = copy.deepcopy(row["manifest"])
+    params = m["generated_parameters"]
+    edges = [tuple(e) for e in params["edges"]]
+    frame = params["frame_radians"]
+    angles = params["product_angles_radians"]
+    probability = float(params["diagonal_preparation_noise"])
+    if not math.isfinite(probability) or not 0 <= probability <= 1:
+        raise ValueError("invalid per-wire preparation phase-flip probability")
+    names = list(m["ordered_blocks"])
+    required = sum(4 + len(m["blocks"][n]["parity_maps"]) for n in names)
+    dropped = []
+    if required > 25 and not include_z:
+        dropped = [n for n in names if n.endswith("_Z")]
+        names = [n for n in names if n not in dropped]
+    circuits = []
+    offset = 0
+    for name in names:
+        maps = m["blocks"][name]["parity_maps"]
+        centers = sorted(p["generator"] for p in maps)
+        width = 4 + len(centers)
+        qc = QuantumCircuit(width, width, name=name)
+        append_preparation(qc, 0, edges, [0.] * 4, angles,
+                           "graph" if name.startswith("target") else "product")
+        ancillas = {}
+        for j, wire in enumerate(centers, 4):
+            qc.ry(2 * math.asin(math.sqrt(probability)), j)
+            qc.cz(j, wire)
+            ancillas[str(wire)] = j
+        for q, angle in enumerate(frame):
+            qc.rz(float(angle), q)
         if not name.endswith("_Z"):
-            centers={p["generator"] for p in maps}
-            for q,p in enumerate(frame): qc.rz(-float(p),q)
-            for q in centers: qc.h(q)
-        for q in range(4): qc.measure(q,q)
+            for q, angle in enumerate(frame):
+                qc.rz(-float(angle), q)
+            for q in centers:
+                qc.h(q)
+        for q in range(width):
+            qc.measure(q, q)
         circuits.append(qc)
-    return circuits,m,row
+        m["blocks"][name].update(offset=offset, width=width,
+                                  data_width=4, ancilla_bits=ancillas)
+        offset += width
+    m["ordered_blocks"] = names
+    m["blocks"] = {n: m["blocks"][n] for n in names}
+    m["decoding_maps"] = {n: m["blocks"][n]["parity_maps"] for n in names}
+    m["total_width"] = offset
+    m["exact_Z_reference"] = bool(dropped)
+    m["prep_noise"] = "ancilla phase-flip channel"
+    m["prep_noise_per_wire_p"] = [probability] * 4
+    m["original_manifest_hash"] = row["manifest_hash"]
+    m["dropped_Z_exhibits"] = dropped
+    m["source_assumptions"] += [
+        "Ancilla bits are measured and marginalised; only the four data bits enter parities.",
+        "Phase flips on Z-measured wires leave the full measured distribution invariant.",
+        "Added RY/CZ gates incur device noise; local aggregate noise is an approximation."]
+    if not include_z and offset > 25:
+        raise ValueError("cloud slot exceeds 25 qubits")
+    return circuits, m, row
