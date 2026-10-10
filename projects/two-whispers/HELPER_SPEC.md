@@ -1,4 +1,4 @@
-﻿# Shared-helper implementation specification
+# Shared-helper implementation specification
 
 This internal specification defines an interface, not a shared implementation or project page. Each admitted project's runtime owner writes circuit_pack.py and receipt.py anew inside its submission folder during the Oct 9-11, 2026 build window. Never transplant implementations from another entry, tools, rehearsal, templates or an old Qollab draft. This task creates only HELPER_SPEC.md; backend ownership and project physics remain with their respective authors.
 

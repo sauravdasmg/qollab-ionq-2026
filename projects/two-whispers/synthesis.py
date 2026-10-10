@@ -1,9 +1,8 @@
-﻿"""Development-only bounded synthesis and frozen JSON receiver recipes.
+"""Development-only bounded synthesis and frozen JSON receiver recipes.
 
 Full development: eight frames, seeds 2026100900..2026100907, exactly 128
 objective/compiler calls per family/frame. No runtime search or noise evidence.
 """
-from __future__ import annotations
 import hashlib
 import json
 import math

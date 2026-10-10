@@ -9,7 +9,6 @@ inference and presentation are described on each project page.
 Only pure Python + Qiskit 2.x APIs are used (no qiskit-aer), so the module also runs in Qollab's
 browser (Pyodide) runtime.
 """
-from __future__ import annotations
 
 import hashlib
 import json
@@ -21,7 +20,7 @@ from qiskit import QuantumCircuit
 PACKED_NAME = "packed"
 _DYNAMIC_OPS = ("if_else", "switch_case", "for_loop", "while_loop", "break", "continue",
                 "reset", "store", "jump", "box", "control_flow")
-_UINT_MAX = 1 << 63
+_UINT_MAX = (1 << 63) - 1
 
 
 def _format_param(value):
@@ -45,6 +44,8 @@ def _instruction_signature(circuit, instruction) -> list:
 def circuit_digest(circuit: QuantumCircuit) -> str:
     """Stable SHA-256 of the constituent instructions of a circuit (used as layout manifest_hash)."""
     digest = hashlib.sha256()
+    digest.update(json.dumps([circuit.num_qubits, circuit.num_clbits,
+                              _format_param(circuit.global_phase)]).encode("utf-8"))
     for instruction in circuit.data:
         digest.update(json.dumps(_instruction_signature(circuit, instruction), sort_keys=True).encode("utf-8"))
         digest.update(b"\n")
@@ -80,7 +81,7 @@ def _validate_sub_circuit(circuit: QuantumCircuit, index: int) -> None:
             measured_qubits.add(q_local)
             measured_clbits.add(c_local)
         else:
-            if seen_measure and op_name not in ("barrier", "delay"):
+            if seen_measure and op_name != "barrier":
                 raise ValueError(
                     f"circuit {name!r} has {op_name!r} after a measurement; measurements must be terminal"
                 )
@@ -104,6 +105,8 @@ def pack_circuits(circuits, max_qubits: int = 25):
         raise ValueError("pack_circuits received no circuits")
     if isinstance(max_qubits, bool) or not isinstance(max_qubits, numbers.Integral) or max_qubits <= 0:
         raise ValueError("max_qubits must be a positive integer")
+    if any(not isinstance(circuit, QuantumCircuit) for circuit in circuits):
+        raise ValueError("every block must be a QuantumCircuit")
     total_qubits = sum(circuit.num_qubits for circuit in circuits)
     if total_qubits > max_qubits:
         raise ValueError(f"packed circuit needs {total_qubits} qubits, which exceeds max_qubits={max_qubits}")
@@ -199,23 +202,30 @@ def unpack_counts(raw_counts, layout) -> dict:
         raise ValueError("layout is empty")
     if not isinstance(raw_counts, dict) or not raw_counts:
         raise ValueError("raw_counts must be a non-empty mapping of bitstring to shot count")
-    total_clbits = sum(int(entry["clbit_width"]) for entry in layout)
     offset = 0
     names = set()
     for entry in layout:
+        if not isinstance(entry, dict) or not {"name", "clbit_offset", "clbit_width"} <= entry.keys():
+            raise ValueError("layout entries require name, clbit_offset and clbit_width")
         width = entry["clbit_width"]
         if isinstance(width, bool) or not isinstance(width, numbers.Integral) or width <= 0:
             raise ValueError("invalid classical width")
-        if entry["clbit_offset"] != offset or entry["name"] in names:
+        if (isinstance(entry["clbit_offset"], bool)
+                or not isinstance(entry["clbit_offset"], numbers.Integral)
+                or not isinstance(entry["name"], str) or not entry["name"]
+                or entry["clbit_offset"] != offset or entry["name"] in names):
             raise ValueError("layout must have contiguous disjoint offsets and unique names")
         names.add(entry["name"])
         offset += width
+    total_clbits = offset
     marginals = {}
     total = 0
     for key, raw_value in raw_counts.items():
         text = _normalize_key(key, total_clbits)
         count = _as_int_count(raw_value)
         total += count
+        if total > _UINT_MAX:
+            raise ValueError("total shot count overflows the integer range")
         for entry in layout:
             offset = int(entry["clbit_offset"])
             width = int(entry["clbit_width"])

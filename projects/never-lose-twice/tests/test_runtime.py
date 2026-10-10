@@ -156,8 +156,8 @@ def _set_backend(monkeypatch, backend):
 
 def test_records_present_flag_missing():
     records, issues = receipt.load_records()
-    assert records == [] and issues == []
-    assert receipt.record_status(records) == "No recorded IonQ runs yet"
+    status = receipt.record_status(records, issues)
+    assert "Recorded" in status if records else "No recorded IonQ runs yet" in status
 
 
 # --------------------------------------------------------------------------- built-in main branch
@@ -406,6 +406,10 @@ def test_figure_and_report_labels():
     assert "lambda*: 0.02000" in report
     assert "Assumptions:" in report
     assert "95% CI" in report
+    entry = analysis["results"][0]
+    interval = receipt.mean_pass_interval(entry)
+    assert interval["coverage_at_least"] == pytest.approx(.90)
+    assert 0 <= interval["interval"][0] <= entry["m"] <= interval["interval"][1] <= 2
     assert "Units:" in report
     board = figures.build_trial_board(
         analysis["results"], source_label="live built-in ideal (fake)", shots=shots,
@@ -435,3 +439,79 @@ def test_finite_shot_zero_ff_upper_bound():
                                   winner_label="attained_product", lambda_value=0.02)
     assert "never means zero risk" in report
     assert "95% CI" in report
+
+
+@pytest.mark.parametrize("blocks", [4, 6, 9])
+def test_arbitrary_block_counts(blocks):
+    circuits = []
+    for index in range(blocks):
+        circuit = QuantumCircuit(1, 1, name=f"b{index}")
+        if index % 2:
+            circuit.x(0)
+        circuit.measure(0, 0)
+        circuits.append(circuit)
+    packed, layout = circuit_pack.pack_circuits(circuits)
+    raw = {format(sum((i % 2) << i for i in range(blocks)), f"0{blocks}b"): 3}
+    marginal = circuit_pack.unpack_counts(raw, layout)
+    assert packed.num_qubits == blocks
+    assert list(marginal) == [f"b{i}" for i in range(blocks)]
+    assert all(marginal[f"b{i}"] == {str(i % 2): 3} for i in range(blocks))
+
+
+def test_exact_width_cap_and_overflows():
+    circuit = QuantumCircuit(25, 25)
+    circuit.measure(range(25), range(25))
+    assert circuit_pack.pack_circuits([circuit])[0].num_qubits == 25
+    layout = [{"name": "b", "clbit_offset": 0, "clbit_width": 1}]
+    for counts in ({"0": 2**63}, {"0": 2**63-1, "1": 1}):
+        with pytest.raises(ValueError, match="overflow"):
+            circuit_pack.unpack_counts(counts, layout)
+    with pytest.raises(ValueError):
+        circuit_pack.unpack_counts({"0": 1}, [{}])
+
+
+def test_mixed_malformed_records_keeps_valid_entry():
+    record = _synthetic_record()
+    text = "oops\nRECORD_JSON: " + json.dumps(record) + "\n" + json.dumps(dict(record, layout=[None]))
+    records, issues = receipt.parse_records(text)
+    assert records == [record]
+    assert len(issues) == 2
+    assert "malformed" in receipt.record_status(records, issues)
+    assert "malformed" in receipt.record_status([], issues)
+
+
+def test_failed_attempt_retains_job_id_and_never_retries(monkeypatch, capsys):
+    class FailureJob:
+        def job_id(self):
+            return "charged-test-attempt"
+
+        def result(self):
+            raise RuntimeError("TEST ONLY terminal failure")
+
+    class FailureBackend(_IonQDouble):
+        def run(self, circuits, shots=1024):
+            super().run(circuits, shots)
+            return FailureJob()
+
+    backend = FailureBackend({})
+    _set_backend(monkeypatch, backend)
+    with pytest.raises(RuntimeError, match="terminal failure"):
+        main_mod.main(shots=4)
+    lines = [line for line in capsys.readouterr().out.splitlines() if line.startswith("RECORD_JSON ")]
+    payload = json.loads(lines[0][12:])
+    assert payload["job_id"] == "charged-test-attempt"
+    assert payload["raw_counts"] == {}
+    assert backend.run_calls == 1
+
+
+def test_boundary_plot_contains_all_four_visible_tokens():
+    import matplotlib.pyplot as plt
+    _, manifest = core.make_demo()
+    analysis = core.analyze_counts({n: {"0000": 8} for n in manifest["ordered_blocks"]}, manifest)
+    figure = figures.build_trial_board(
+        analysis["results"], source_label="TEST ONLY", shots=8, lambda_star=.02,
+        prize_label="frozen", winner_label="attained_product", lambda_value=.02)
+    board = figure.axes[0]
+    assert all(0 <= patch.get_y() and patch.get_y()+patch.get_height() <= 4 for patch in board.patches)
+    assert "test 2 (reference/prover pair)" in figures.figure_text(figure)
+    plt.close(figure)

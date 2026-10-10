@@ -4,11 +4,11 @@ Every number is labelled with its source, shot count, intervals, units and assum
 the only channel (each outcome cell also carries a code and a hatch pattern). This module is presentation-only:
 it never submits jobs and never reads the network.
 """
-from __future__ import annotations
 
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch
+from receipt import mean_pass_interval
 
 PALETTE = {
     "slate": "#39424E",
@@ -66,6 +66,11 @@ def plain_report(block_results, *, source_label, shots, lambda_star, prize_label
         lines.append(f"    test 2 pass p2 = {p2:.5f}  (95% CI [{p2_low:.5f}, {p2_high:.5f}])")
         ff_low, ff_high = entry["uncertainties"]["ff_interval"]
         lines.append(f"    double-failure f = {entry['f']:.5f}  (95% CI [{ff_low:.5f}, {ff_high:.5f}])")
+        mean_interval = mean_pass_interval(entry)
+        lo, hi = mean_interval["interval"]
+        lines.append(f"    mean passes = {entry['m']:.5f}  "
+                     f"(at least {100*mean_interval['coverage_at_least']:.0f}% CI [{lo:.5f}, {hi:.5f}], "
+                     "union bound on marginal intervals; no test independence assumed)")
         if entry.get("double_failure_upper_if_zero") is not None:
             lines.append(f"    zero observed double failures: exact 95% upper bound "
                          f"1-0.05^(1/{int(entry['shots'])}) = {entry['double_failure_upper_if_zero']:.6f} "
@@ -76,7 +81,7 @@ def plain_report(block_results, *, source_label, shots, lambda_star, prize_label
                      + (f"p = {p_bound:.6f}" if p_bound is not None else "n/a"))
         if product_tail is not None:
             lines.append(f"    ideal product double-failure lower bound (1-p)^2 = {product_tail:.6f}; "
-                         "a product arm's true tail can only sit at or above this bound")
+                         "applies to independent ideal product arms; no noisy-tail bound is claimed")
     lines += [
         "--------------------------------------------------------------------------------",
         "Finite-shot note: estimates are finite-shot samples and may cross theoretical bounds; "
@@ -134,7 +139,7 @@ def build_trial_board(block_results, *, source_label, shots, lambda_star, prize_
         total = int(star["shots"])
         for index, key in enumerate(OUTCOME_ORDER):
             x = index % 2
-            y = 2 - index // 2
+            y = 1 - index // 2
             patch = FancyBboxPatch((x * 2 + 0.15, y * 2 + 0.15), 1.7, 1.7, boxstyle="round,pad=0.05,rounding_size=0.12",
                                    linewidth=1.2, edgecolor=PALETTE["ink"], facecolor=OUTCOME_FILL[key],
                                    hatch=OUTCOME_HATCH[key], alpha=0.9)
@@ -181,7 +186,7 @@ def build_trial_board(block_results, *, source_label, shots, lambda_star, prize_
     if star is not None:
         p1, p2 = star["marginal_pass"]
         (p1_low, p1_high), (p2_low, p2_high) = star["uncertainties"]["marginal_pass_intervals"]
-        bars = meters_ax.barh(["test 1 (reference)", "test 2 (prover)"], [p1, p2],
+        bars = meters_ax.barh(["test 1 (reference/prover pair)", "test 2 (reference/prover pair)"], [p1, p2],
                               color=[PALETTE["sky"], PALETTE["amber"]], xerr=[[p1 - p1_low, p2 - p2_low],
                                                                               [p1_high - p1, p2_high - p2]],
                               capsize=5)

@@ -1,9 +1,8 @@
-﻿"""Exact double-trine receivers. One-way bounds assume ideal product sources.
+"""Exact double-trine receivers. One-way bounds assume ideal product sources.
 
 No general separable/LOCC bound or communication speedup is claimed.
 Unrestricted classical two-bit labels transmit the three words perfectly.
 """
-from __future__ import annotations
 import itertools
 import math
 import numbers

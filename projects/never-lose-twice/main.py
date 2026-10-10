@@ -19,7 +19,6 @@ Only one backend is used per run and noise_model is set exactly as
 
 Qollab itself calls main() - never call it from this module.
 """
-from __future__ import annotations
 
 import hashlib
 import json
@@ -75,14 +74,20 @@ def _environment() -> str:
 def _run_single_job(backend, target, shots):
     """Exactly one backend.run, one job.result() and one result.get_counts(); no polling or retry."""
     job = backend.run(target, shots=shots)
-    result = job.result()
-    counts = result.get_counts()
-    raw_job_id = getattr(job, "job_id", None) or getattr(job, "id", None) or getattr(result, "job_id", None)
+    raw_job_id = getattr(job, "job_id", None) or getattr(job, "id", None)
     if callable(raw_job_id):
         try:
             raw_job_id = raw_job_id()
         except Exception:  # noqa: BLE001 - a non-callable fallback stays as-is
-            pass
+            raw_job_id = None
+    try:
+        result = job.result()
+        counts = result.get_counts()
+    except Exception as exc:
+        failed = RuntimeError(str(exc))
+        failed.charged_attempt_id = raw_job_id
+        raise failed from exc
+    raw_job_id = raw_job_id or getattr(result, "job_id", None)
     return counts, "" if raw_job_id is None else str(raw_job_id)
 
 
@@ -104,15 +109,8 @@ def _effective_noise_model(backend, requested) -> str:
 
 def _pad_histogram(histogram, width=4) -> dict:
     """Full-width binary keys so decoding never depends on dropped leading zeros."""
-    padded = {}
-    for key, value in histogram.items():
-        text = str(key).replace(" ", "")
-        if text[:2].lower() == "0x":
-            number = int(text, 16)
-        else:
-            number = int(text, 2)
-        padded[format(number, f"0{width}b")] = int(value)
-    return padded
+    return circuit_pack.unpack_counts(histogram, [
+        {"name": "block", "clbit_offset": 0, "clbit_width": width}])["block"]
 
 
 def _circuits_hash(circuits) -> str:
@@ -163,6 +161,8 @@ def main(case: int = 0, shots: int = 1024, noise_model: str = "aria-1", prize: s
             _log(f"Note: noise_model={noise_model!r} applies to the IonQ simulator and is ignored on the "
                  "built-in backend.")
     effective_model = _effective_noise_model(backend, noise_model) if is_ionq else None
+    if is_ionq and effective_model not in NOISE_MODELS:
+        raise ValueError("Backend effective noise_model is unsupported; no job submitted")
     _log(f"Backend: {getattr(backend, 'name', '?')} ({'IonQ simulator' if is_ionq else 'built-in'})")
 
     if is_ionq:
@@ -177,9 +177,9 @@ def main(case: int = 0, shots: int = 1024, noise_model: str = "aria-1", prize: s
             utc_end = receipt.utc_now_string()
             source_file, receipt_path, result_path = _make_record_paths(case, utc_start)
             failed = receipt.error_record(
-                case_id=case, shots=shots, noise_model=noise_model, environment=_environment(),
+                case_id=case, shots=shots, noise_model=effective_model, environment=_environment(),
                 qiskit_version=_qiskit_version(), utc_start=utc_start, utc_end=utc_end, reason=str(exc),
-                job_id=getattr(backend, "_last_job_id", None), source_file=source_file,
+                job_id=getattr(exc, "charged_attempt_id", None), source_file=source_file,
                 receipt_path=receipt_path, result_path=result_path)
             _log("IonQ run FAILED; recording the charged attempt (no auto-resubmission).")
             _log("RECORD_JSON " + receipt.redact_for_log(failed))
@@ -241,28 +241,37 @@ def main(case: int = 0, shots: int = 1024, noise_model: str = "aria-1", prize: s
 
     recorded_view = None
     if records:
-        record = receipt.preferred_record(records)
-        recorded_frozen = receipt.analyze_record(record, lambda_value=lambda_star)
+        record = receipt.preferred_record([r for r in records if r["case_id"] == case] or records)
+        recorded_lambda = float(record["parameters"]["lambda_star"])
+        recorded_frozen = receipt.analyze_record(record, lambda_value=recorded_lambda)
+        recorded_p = product_bounds.ideal_product_pass(record["parameters"]["alpha"], record["parameters"]["theta"])
         recorded_winner = receipt.winner_strategy(recorded_frozen)
         recorded_label = (f"recorded Qollab IonQ simulator ({record['backend']}, {receipt.effective_model_label(record)}), "
                           f"case {record.get('case_id')}, {record.get('shots')} shots, UTC {record['utc_end']}")
         recorded_view = {"record": record, "analysis": recorded_frozen, "winner": recorded_winner,
                          "label": recorded_label}
-        _log(f"Fixed-prize decision at frozen lambda*={lambda_star:.4f}:")
-        _log(f"  mathematical anchor reference: joint loss {ideal_joint_loss:.4f}; "
-             f"best legal product loss {ideal_product_loss:.4f} (anchor case 0 only).")
+        _log(figures.plain_report(
+            recorded_frozen["results"], source_label=recorded_label, shots=record["shots"],
+            lambda_star=recorded_lambda, prize_label="frozen", winner_label=recorded_winner,
+            lambda_value=recorded_lambda, p_bound=recorded_p,
+            product_tail=(1-recorded_p)**2, record_status=records_status))
+        _log(f"Fixed-prize decision at frozen lambda*={recorded_lambda:.4f}:")
+        same_anchor = (case == 0 and record['case_id'] == 0
+                       and record['hashes']['recipe'] == manifest['recipe_hash'])
+        if same_anchor:
+            _log(f"  mathematical anchor reference: joint loss {ideal_joint_loss:.4f}; "
+                 f"best legal product loss {ideal_product_loss:.4f}.")
         if recorded_winner == "optimized_joint" or recorded_winner == "published_hedge":
             _log(f"  recorded noisy playback also prefers {recorded_winner}; no reversal in this record.")
-        elif recorded_winner == "attained_product" and record['case_id'] == 0 and case == 0:
+        elif recorded_winner == "attained_product" and same_anchor:
             _log(f"  recorded noisy playback prefers {recorded_winner}: the fixed-prize strategy choice "
-                 f"reverses under IonQ-simulator noise.")
+                 f"reverses in these sample estimates under IonQ-simulator noise; "
+                 "this point estimate alone does not establish a population ordering.")
         else:
             _log("  No supported anchor product/joint reversal claim for this selected record.")
     else:
         _log("Readiness gap: no recorded Qollab IonQ runs yet; the live ideal game stands alone and is "
              "never mislabelled as a noisy measurement.")
-        for issue in record_issues:
-            _log(f"  record parser line {issue['line']}: {issue['reason']}")
 
     _log("Drawing the two-door trial board ...")
     _log("Readiness gap: development optimization/selection evidence and N01 asymmetric/projector/wire "
@@ -279,9 +288,9 @@ def main(case: int = 0, shots: int = 1024, noise_model: str = "aria-1", prize: s
     if recorded_view is not None:
         figures.build_trial_board(
             recorded_view["analysis"]["results"], source_label=recorded_view["label"],
-            shots=recorded_view["record"]["shots"], lambda_star=lambda_star, prize_label="frozen",
-            winner_label=recorded_view["winner"], lambda_value=lambda_star,
-            record_status=records_status, p_bound=p_bound, product_tail=product_tail)
+            shots=recorded_view["record"]["shots"], lambda_star=recorded_lambda, prize_label="frozen",
+            winner_label=recorded_view["winner"], lambda_value=recorded_lambda,
+            record_status=records_status, p_bound=recorded_p, product_tail=(1-recorded_p)**2)
     plt.show()
     _log(f"Done in {time.time() - started:.1f}s ({OUTCOME_ORDER[0]}/{OUTCOME_ORDER[1]}/{OUTCOME_ORDER[2]}/"
          f"{OUTCOME_ORDER[3]} counts, per-test passes, tail, mean and finite-shot intervals above).")

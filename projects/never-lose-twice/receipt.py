@@ -11,7 +11,6 @@ validates them, serializes cached results and derives summaries. Live built-in i
 the mathematical reference, recorded Qollab IonQ evidence and any local noise approximation are kept
 as distinct labels and are never conflated.
 """
-from __future__ import annotations
 
 import json
 import hashlib
@@ -90,7 +89,7 @@ def validate_record(record) -> list:
     if not isinstance(record["layout"], (list, tuple)) or not record["layout"]:
         problems.append("layout must be a non-empty ordered list")
     for field in ("job_id", "source_file", "receipt_path", "result_path", "environment", "qiskit_version"):
-        if not isinstance(record[field], str) or not record[field].strip():
+        if not isinstance(record[field], str) or (field != "job_id" and not record[field].strip()):
             problems.append(f"{field} must be a non-empty string")
     # dates inside the build window
     try:
@@ -148,7 +147,7 @@ def validate_record(record) -> list:
                     problems.append("recipe/circuit hash mismatch")
                 if not record["uncertainties"].get("assumptions"):
                     problems.append("explicit uncertainty assumptions required")
-        except (ValueError, TypeError, KeyError, AttributeError, OverflowError) as exc:
+        except (ValueError, TypeError, KeyError, AttributeError, OverflowError, IndexError) as exc:
             problems.append(f"invalid construction/count evidence: {exc}")
     return problems
 
@@ -196,8 +195,9 @@ def load_records():
 
 def record_status(records, issues=None) -> str:
     if not records:
-        return "No recorded IonQ runs yet"
-    status = f"Recorded IonQ runs: {len(records)}"
+        status = "No recorded IonQ runs yet"
+    else:
+        status = f"Recorded IonQ runs: {len(records)}"
     if issues:
         status += f"; {len(issues)} malformed line(s) skipped"
     return status
@@ -245,11 +245,25 @@ def compact_uncertainties(analysis, lambda_star):
             entry["block"]: {
                 "double_failure_interval": entry["uncertainties"]["ff_interval"],
                 "marginal_pass_intervals": entry["uncertainties"]["marginal_pass_intervals"],
+                "mean_pass_interval": mean_pass_interval(entry),
                 "double_failure_upper_if_zero": entry["double_failure_upper_if_zero"],
             }
             for entry in results
         },
     }
+
+
+def mean_pass_interval(entry):
+    """Sum exact marginal intervals; union bound covers both without test independence.
+
+    Two individual 95% intervals give at least 90% coverage for their sum.
+    This is an interval for population mean passes (0..2), not a trial prediction.
+    """
+    intervals = entry["uncertainties"]["marginal_pass_intervals"]
+    confidence = entry["uncertainties"]["confidence"]
+    return {"interval": [sum(i[0] for i in intervals), sum(i[1] for i in intervals)],
+            "coverage_at_least": max(0., 1-2*(1-confidence)),
+            "method": "sum of exact marginal binomial intervals; union bound; IID shots"}
 
 
 def assemble_record(*, manifest, layout, raw_counts, marginals, analysis, lambda_star, prize, shots,

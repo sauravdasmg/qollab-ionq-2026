@@ -1,0 +1,2 @@
+# Bundled Qiskit 2.x + NumPy + SciPy + Matplotlib dependencies only;
+# no additional wheels are required.
