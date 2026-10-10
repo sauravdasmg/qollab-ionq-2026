@@ -38,7 +38,7 @@ Audio fidelity means frequency error no greater than 0.02 and contrast error no 
 
 **Cloud evidence:** [[CLOUD: completed Qollab IonQ simulator date, noise model, shots, and measured results]].
 
-## Run it yourself
+## How to run (and replicate)
 
 **Built-in:** Open in Qollab, choose its built-in simulator, leave `shots=256` and all other defaults unchanged, and press **Run**. Inspect the ideal parity chart, text receipt, and WAV download if `sendFile` is available. Runtime: [[CLOUD: measured built-in default runtime in seconds]]. The built-in simulator is the judges’ required run path.
 
@@ -51,6 +51,10 @@ python experiments/run.py --quick
 python experiments/run.py --suite frozen --independent-manifest review/manifests/frozen.json
 python experiments/run.py --suite fresh --independent-manifest review/manifests/fresh.json
 ```
+
+### Replicate and extend
+
+To replicate the local evidence, run `python experiments/run.py --suite frozen --independent-manifest review/manifests/frozen.json` (and `--suite fresh`). To extend it, add more GHZ widths or another sonification mapping in `sonify.py`, keeping the text/table alternative for every sound.
 
 ## What is new
 

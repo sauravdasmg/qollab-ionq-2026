@@ -38,7 +38,7 @@ The audio agreement thresholds were absolute frequency error at most 0.02 and co
 
 **RECORDED (Qollab IonQ simulator):** [[CLOUD: date, noise model, shot count, complete sweep outcome, and any failed or inconclusive records]]. Cloud values are pending and are not inferred from local simulations.
 
-## Run it yourself
+## How to run (and replicate)
 
 ### Built-in simulator
 
@@ -59,6 +59,10 @@ python experiments/run.py --suite fresh --independent-manifest review/manifests/
 ```
 
 The full commands generate local simulation evidence and can take longer; they do not submit cloud jobs. Each run writes JSON evidence, text receipts, and WAV files under `results/`. To inspect the live Qollab integration, run `main.py` through Qollab rather than invoking it as a standalone script.
+
+### Replicate and extend
+
+To replicate the local evidence, run `python experiments/run.py --suite frozen --independent-manifest review/manifests/frozen.json` (and `--suite fresh`). To extend it, add more GHZ widths or another sonification mapping in `sonify.py`, keeping the text/table alternative for every sound.
 
 ## What is new
 

@@ -44,7 +44,7 @@ The local noise model approximates IonQ-like errors and is not a device result. 
 
 *Alt text: Development exhibit showing matched Z histograms, stabilizer parity intervals, and a conditional witness lower bound.*
 
-## Run it yourself
+## How to run (and replicate)
 
 ### Built-in simulator
 
@@ -64,6 +64,10 @@ From this folder, use the repository Python environment:
 ```
 
 These commands describe how to reproduce local campaigns; they are not claims that those commands were run for this page. The local IonQ-like simulation is an approximation, not a Qollab cloud receipt.
+
+### Replicate and extend
+
+To replicate the local evidence, run `python experiments/run.py --suite frozen --independent-manifest review/manifests/frozen.json` (and `--suite fresh` with `fresh.json`) from the repository. To extend it, add new graph/product preparations in `cases.py` or new witness terms in `witness.py`, then add matching independent manifests.
 
 ## What is new
 

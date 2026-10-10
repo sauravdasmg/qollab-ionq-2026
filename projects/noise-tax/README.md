@@ -49,7 +49,7 @@ All table values below are **LOCAL MODEL** (calibrated IonQ-like approximation; 
 
 **Sampling noise:** finite-shot estimates can cross a theoretical or comparison bound by chance; read the reported uncertainty interval with the estimate. A local-model interval describes instance variation under the stated approximation and does not cover remote pulse-model mismatch.
 
-## Run it yourself
+## How to run (and replicate)
 
 ### Built-in simulator
 
@@ -70,6 +70,10 @@ From the parent Qollab repository, run the experiment suites and built-in emulat
 ```
 
 These commands describe how to reproduce the work; their outcomes are reported in the results files, not promised by the command text.
+
+### Replicate and extend
+
+To replicate the local curves, run `python experiments/run.py --suite frozen --independent-manifest review/manifests/frozen.json` (and `--suite fresh`), then `python experiments/make_curves.py`. To extend it, add a third quantum game with an analytic ideal reference and its own advantage definition, or a new calibrated noise model in `noise_channel.py`.
 
 ## What is new
 

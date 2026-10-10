@@ -37,7 +37,7 @@ Every successful receipt states its assumptions. Cloud inference is conditional 
 
 *Alt text: A sample courtroom display with paired Z histograms, parity intervals, and a witness-bound panel.*
 
-## Run it yourself
+## How to run (and replicate)
 
 **Judging run:** select Qollab's Built-in simulator, keep the default form settings, and press Run. Check the paired Z exhibits and whether the finite-shot witness receipt is conditional or inconclusive. The live runtime will be recorded here: [[CLOUD: built-in run duration in seconds]].
 
@@ -51,6 +51,10 @@ Every successful receipt states its assumptions. Cloud inference is conditional 
 ```
 
 The local IonQ-like noise model is an approximation and is not hardware or Qollab cloud evidence.
+
+### Replicate and extend
+
+To replicate the local evidence, run `python experiments/run.py --suite frozen --independent-manifest review/manifests/frozen.json` (and `--suite fresh` with `fresh.json`) from the repository. To extend it, add new graph/product preparations in `cases.py` or new witness terms in `witness.py`, then add matching independent manifests.
 
 ## What is new
 

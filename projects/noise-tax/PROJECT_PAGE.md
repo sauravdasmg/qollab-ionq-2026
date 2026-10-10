@@ -24,13 +24,15 @@
 
 Finite-shot estimates can cross a bound by sampling chance; interpret each estimate with its uncertainty interval. **LIVE** built-in results are the judge-facing run; **RECORDED** denotes the named Qollab IonQ simulator runs; **LOCAL MODEL** denotes the calibrated approximation.
 
-**Run it yourself.** On Qollab, select the built-in simulator, keep defaults, and press Run. On the IonQ simulator, use a slot defined in `cloud_slots.py`; the slot receipt records its noise model and shots. Local reproduction from the repository root:
+**How to run (and replicate).** On Qollab, select the built-in simulator, keep defaults, and press Run. On the IonQ simulator, use a slot defined in `cloud_slots.py`; the slot receipt records its noise model and shots. Local reproduction from the repository root:
 
 ```powershell
 .\.venv\Scripts\python.exe experiments\run.py --suite frozen
 .\.venv\Scripts\python.exe experiments\run.py --suite fresh
 .\.venv\Scripts\python.exe tools\qollab_local.py run projects\noise-tax --backend ideal --shots 512
 ```
+
+**Replicate and extend.** To replicate the local curves, run `python experiments/run.py --suite frozen --independent-manifest review/manifests/frozen.json` (and `--suite fresh`), then `python experiments/make_curves.py`. To extend it, add a third quantum game with an analytic ideal reference and its own advantage definition, or a new calibrated noise model in `noise_channel.py`.
 
 **What is new.** One inspectable demo presents two different quantum comparisons, their modeled crossings, instance uncertainty, calibration sensitivity, and discrete measured anchors together. It does not claim new ideal strategies or new noise physics.
 
