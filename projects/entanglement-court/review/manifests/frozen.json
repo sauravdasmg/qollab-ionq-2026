@@ -1,0 +1,6139 @@
+{
+  "owner": "independent_verifier",
+  "generated_utc": "2026-10-10T00:49:49.319305+00:00",
+  "suite": "frozen",
+  "schema_version": "1.0",
+  "generator": "WP-C-07 independent verifier v1. Fresh construction using graphs.edges(case_id % 4), cases._maps, and NumPy default_rng(case_id); no development manifests copied. For each instance draw four frame angles uniform[-pi,pi), then four product angles uniform[0,2pi), then p uniform[0,.015) for easy or uniform[.12,.13) for near-threshold. Generation seed and distinct sampling seed equal preregistered case ID; no outcomes used for selection.",
+  "stratum_definition": "Verifier operationalization frozen before sampling: the plans specify ordering and varied diagonal local preparation noise but give no numeric p ranges. Easy has population witness 1-4p in (.94,1]; near-threshold has 1-4p in (.48,.52]. Threshold is p=1/8. Both targets remain entangled: true graph fidelity (1-p)^4 > 1/2 throughout these ranges. These are population witness strata, not empirical power guarantees.",
+  "implementation_status": "HOLD at generation: experiments.run._control_probabilities does not apply diagonal_preparation_noise. Do not treat current suite samples as these declared noisy preparations.",
+  "source_sha256": {
+    "cases.py": "315bd0e1472c964bfeacc810f44860951bf37b8523f4d8259aa21452c1761463",
+    "graphs.py": "9caa60eb6cba2b50215609a19d98b33c203f83e8a125adbaf73aec833a1b425f",
+    "measurements.py": "840b4bc34483dcd4b0f77e0d0601e8e209f1b4018633d7d33b61447f60aee804",
+    "witness.py": "3c00c64a44b3fc7c5e61fa32cb5cea02f411569b54083f3e3088ae5d30c5366d",
+    "experiments/run.py": "461196b21bf4e9a0fdd4f7c1d4cb6ee3fba497f2aea6efaea1144c2f1da2531b",
+    "experiments/PLAN.md": "0cadf951118a625efab5c64ddcb97a5753bc4071acee59283f8ee62e2164d756"
+  },
+  "instances": [
+    {
+      "stratum": "easy",
+      "label": "frozen-00-easy",
+      "sampling_seed": 2026100200,
+      "manifest": {
+        "case_id": 2026100200,
+        "seed": 2026100200,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "frame_radians": [
+            -2.405950470998637,
+            0.962870332727987,
+            -1.41158017615317,
+            1.7888254755718647
+          ],
+          "product_angles_radians": [
+            1.3202098736005876,
+            6.037192734597523,
+            5.233518876911905,
+            5.205576291596035
+          ],
+          "diagonal_preparation_noise": 0.0017434960457388792
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "172b1b935252949b8c0e7808010c29f916a6b4e21639dfe7ff2a299eacf261d3",
+      "analytic_reference": {
+        "generator_mean": 0.9965130079085223,
+        "population_generator_fidelity_lower": 0.9930260158170445,
+        "graph_target_fidelity": 0.9930442332976869
+      }
+    },
+    {
+      "stratum": "easy",
+      "label": "frozen-01-easy",
+      "sampling_seed": 2026100201,
+      "manifest": {
+        "case_id": 2026100201,
+        "seed": 2026100201,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "frame_radians": [
+            -1.78893629118218,
+            -2.650442878465527,
+            -2.059194349582199,
+            2.5949496200324313
+          ],
+          "product_angles_radians": [
+            2.3754207606261195,
+            0.585712435013338,
+            3.4672042444225815,
+            0.501309045072132
+          ],
+          "diagonal_preparation_noise": 0.0010903169695118508
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "5bbfa08ddcbedc2e0d3fdce936b0d27ccecfa81b41b3cff7b8f830ecb59dccfa",
+      "analytic_reference": {
+        "generator_mean": 0.9978193660609763,
+        "population_generator_fidelity_lower": 0.9956387321219526,
+        "graph_target_fidelity": 0.9956458596852933
+      }
+    },
+    {
+      "stratum": "easy",
+      "label": "frozen-02-easy",
+      "sampling_seed": 2026100202,
+      "manifest": {
+        "case_id": 2026100202,
+        "seed": 2026100202,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "frame_radians": [
+            2.6928515351372004,
+            -0.8297620852798837,
+            -1.1576169856107983,
+            -0.9501947738241681
+          ],
+          "product_angles_radians": [
+            3.3372675544130814,
+            4.645053092324512,
+            2.2816828351986116,
+            3.4930238753989697
+          ],
+          "diagonal_preparation_noise": 0.005901966730070698
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "6125407bdc61dbda9e7bee761787feca5194c803926bf9f64f2fab082d246823",
+      "analytic_reference": {
+        "generator_mean": 0.9881960665398586,
+        "population_generator_fidelity_lower": 0.9763921330797172,
+        "graph_target_fidelity": 0.9766003112229505
+      }
+    },
+    {
+      "stratum": "easy",
+      "label": "frozen-03-easy",
+      "sampling_seed": 2026100203,
+      "manifest": {
+        "case_id": 2026100203,
+        "seed": 2026100203,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "frame_radians": [
+            -2.9172380738431474,
+            -0.5161229860499525,
+            0.022467713133030642,
+            1.270594299125615
+          ],
+          "product_angles_radians": [
+            2.4504252274670586,
+            6.21238914400964,
+            4.965932836085307,
+            2.589596786846436
+          ],
+          "diagonal_preparation_noise": 0.014939985422026824
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "c832414ce5ccdbc785ee92c24693e0777d71b2c5cacc185e02ae9d704457106b",
+      "analytic_reference": {
+        "generator_mean": 0.9701200291559463,
+        "population_generator_fidelity_lower": 0.9402400583118927,
+        "graph_target_fidelity": 0.9415659885099179
+      }
+    },
+    {
+      "stratum": "easy",
+      "label": "frozen-04-easy",
+      "sampling_seed": 2026100204,
+      "manifest": {
+        "case_id": 2026100204,
+        "seed": 2026100204,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "frame_radians": [
+            0.23610968004776467,
+            -0.39466304935720986,
+            1.8592229062763623,
+            -2.6838976860420947
+          ],
+          "product_angles_radians": [
+            2.8344090978549072,
+            4.307590471755909,
+            4.801527627331528,
+            1.0066801954855364
+          ],
+          "diagonal_preparation_noise": 0.014952533336762393
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "48123f097706c37fa1d303ded6ed848305b22dd9c7dcfbf5c835a7a6938010dc",
+      "analytic_reference": {
+        "generator_mean": 0.9700949333264752,
+        "population_generator_fidelity_lower": 0.9401898666529505,
+        "graph_target_fidelity": 0.9415180139141711
+      }
+    },
+    {
+      "stratum": "easy",
+      "label": "frozen-05-easy",
+      "sampling_seed": 2026100205,
+      "manifest": {
+        "case_id": 2026100205,
+        "seed": 2026100205,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "frame_radians": [
+            -0.9607952797733414,
+            -2.943517213821191,
+            0.7276521078505738,
+            -1.3320334637242002
+          ],
+          "product_angles_radians": [
+            5.32477706496871,
+            5.780645675225082,
+            3.294863299607379,
+            0.31235889991554466
+          ],
+          "diagonal_preparation_noise": 0.013425230306667875
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "ce249d796075cdb756a0758bb43732f85bb8706dd8e655243d22a2f22e772aea",
+      "analytic_reference": {
+        "generator_mean": 0.9731495393866643,
+        "population_generator_fidelity_lower": 0.9462990787733285,
+        "graph_target_fidelity": 0.9473708532286874
+      }
+    },
+    {
+      "stratum": "easy",
+      "label": "frozen-06-easy",
+      "sampling_seed": 2026100206,
+      "manifest": {
+        "case_id": 2026100206,
+        "seed": 2026100206,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "frame_radians": [
+            -0.24853094310380497,
+            2.072604196909105,
+            -1.1006823995819506,
+            2.271644905921348
+          ],
+          "product_angles_radians": [
+            0.8137857829988303,
+            0.6453223315374879,
+            2.807571191504657,
+            2.648973787806755
+          ],
+          "diagonal_preparation_noise": 0.008261786632710773
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "ad95113012aa1cd7db024c52303f881f2689ca3512a8a42c40ea98b5645c5180",
+      "analytic_reference": {
+        "generator_mean": 0.9834764267345785,
+        "population_generator_fidelity_lower": 0.9669528534691569,
+        "graph_target_fidelity": 0.9673601451353852
+      }
+    },
+    {
+      "stratum": "easy",
+      "label": "frozen-07-easy",
+      "sampling_seed": 2026100207,
+      "manifest": {
+        "case_id": 2026100207,
+        "seed": 2026100207,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "frame_radians": [
+            1.4093354888802372,
+            -1.6304369354007184,
+            1.0192173903636998,
+            0.41047468793700137
+          ],
+          "product_angles_radians": [
+            4.356325723647597,
+            1.2205643721791766,
+            0.8433909334487706,
+            1.2331099723736922
+          ],
+          "diagonal_preparation_noise": 0.006612976402702213
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "c7fa49cea30ff2082a252e29583e1ef3d8a518d95a1dc7a22bf4c28c0bfcace8",
+      "analytic_reference": {
+        "generator_mean": 0.9867740471945956,
+        "population_generator_fidelity_lower": 0.9735480943891911,
+        "graph_target_fidelity": 0.9738093282626775
+      }
+    },
+    {
+      "stratum": "easy",
+      "label": "frozen-08-easy",
+      "sampling_seed": 2026100208,
+      "manifest": {
+        "case_id": 2026100208,
+        "seed": 2026100208,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "frame_radians": [
+            -1.2852244371957922,
+            1.7307248041491574,
+            -1.2605251873466001,
+            0.7109166975531771
+          ],
+          "product_angles_radians": [
+            3.286682319743231,
+            4.31206964973626,
+            5.280039842559016,
+            0.3458025685839534
+          ],
+          "diagonal_preparation_noise": 0.014629787810503942
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "67101e70fa0ae1a47a4f4b2df2fd28cb64834f4565dbccf769f25a2d8f2f7f68",
+      "analytic_reference": {
+        "generator_mean": 0.9707404243789921,
+        "population_generator_fidelity_lower": 0.9414808487579842,
+        "graph_target_fidelity": 0.942752553821004
+      }
+    },
+    {
+      "stratum": "easy",
+      "label": "frozen-09-easy",
+      "sampling_seed": 2026100209,
+      "manifest": {
+        "case_id": 2026100209,
+        "seed": 2026100209,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "frame_radians": [
+            2.3352512888305066,
+            -1.8845099407956531,
+            -2.126525430890534,
+            -0.1279337507914291
+          ],
+          "product_angles_radians": [
+            0.09972708364500234,
+            3.486738756207106,
+            5.768840620439178,
+            1.4385628466841855
+          ],
+          "diagonal_preparation_noise": 0.01225520160774701
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "76cab0c3af830376ffb61480de52c7dd37d6f0c8707419244519a365834d61d6",
+      "analytic_reference": {
+        "generator_mean": 0.975489596784506,
+        "population_generator_fidelity_lower": 0.950979193569012,
+        "graph_target_fidelity": 0.9518729934914443
+      }
+    },
+    {
+      "stratum": "easy",
+      "label": "frozen-10-easy",
+      "sampling_seed": 2026100210,
+      "manifest": {
+        "case_id": 2026100210,
+        "seed": 2026100210,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "frame_radians": [
+            1.640730430229067,
+            2.5974152244274666,
+            1.5705206069019484,
+            0.22106408452776094
+          ],
+          "product_angles_radians": [
+            2.1188995878820407,
+            1.7517958700629084,
+            1.6346365157040987,
+            2.5712217314249717
+          ],
+          "diagonal_preparation_noise": 0.0068105642365655725
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "09cfd3ceb25310019569e114f974f770894ce90a8cd4c83d134866410c7048c4",
+      "analytic_reference": {
+        "generator_mean": 0.9863788715268689,
+        "population_generator_fidelity_lower": 0.9727577430537377,
+        "graph_target_fidelity": 0.9730347843175204
+      }
+    },
+    {
+      "stratum": "easy",
+      "label": "frozen-11-easy",
+      "sampling_seed": 2026100211,
+      "manifest": {
+        "case_id": 2026100211,
+        "seed": 2026100211,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "frame_radians": [
+            -0.12035039652478075,
+            -2.04323703069307,
+            2.6471120824591363,
+            1.2003602091520316
+          ],
+          "product_angles_radians": [
+            6.174270426439696,
+            0.06935948210097563,
+            2.3151892587492524,
+            2.4575841467065325
+          ],
+          "diagonal_preparation_noise": 0.00710349998392638
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "45479779c0c5125cd9964951d0096558fdb4abeaf5d5fabb9ae1683558af7e26",
+      "analytic_reference": {
+        "generator_mean": 0.9857930000321472,
+        "population_generator_fidelity_lower": 0.9715860000642945,
+        "graph_target_fidelity": 0.9718873271203529
+      }
+    },
+    {
+      "stratum": "near-threshold",
+      "label": "frozen-12-near-threshold",
+      "sampling_seed": 2026100212,
+      "manifest": {
+        "case_id": 2026100212,
+        "seed": 2026100212,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "frame_radians": [
+            1.7489670307238052,
+            -0.5358021521048557,
+            1.183770454927454,
+            -2.940608074108333
+          ],
+          "product_angles_radians": [
+            1.5376673766890772,
+            4.989251297528177,
+            2.828029391341824,
+            4.526780579931711
+          ],
+          "diagonal_preparation_noise": 0.12430841310983293
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "90e5a35ed7b8fbfa5eae2c8560e1b5ab3139d62709a1f51f1c0a76df8eb0c2ca",
+      "analytic_reference": {
+        "generator_mean": 0.7513831737803341,
+        "population_generator_fidelity_lower": 0.5027663475606683,
+        "graph_target_fidelity": 0.5880370756835411
+      }
+    },
+    {
+      "stratum": "near-threshold",
+      "label": "frozen-13-near-threshold",
+      "sampling_seed": 2026100213,
+      "manifest": {
+        "case_id": 2026100213,
+        "seed": 2026100213,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "frame_radians": [
+            -0.7873357233380616,
+            1.8310127469584003,
+            0.43977723042421824,
+            -1.4358004897120187
+          ],
+          "product_angles_radians": [
+            2.4833104228492986,
+            3.6082294115509255,
+            3.9674294166087236,
+            0.5975111141148514
+          ],
+          "diagonal_preparation_noise": 0.1240104780696041
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "0b674b206964b481e49f045d5a93d50dc8559979c31295c8df35a3a51321762d",
+      "analytic_reference": {
+        "generator_mean": 0.7519790438607918,
+        "population_generator_fidelity_lower": 0.5039580877215837,
+        "graph_target_fidelity": 0.5888377515520287
+      }
+    },
+    {
+      "stratum": "near-threshold",
+      "label": "frozen-14-near-threshold",
+      "sampling_seed": 2026100214,
+      "manifest": {
+        "case_id": 2026100214,
+        "seed": 2026100214,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "frame_radians": [
+            0.5230301750758839,
+            3.0835322438425283,
+            0.5481536506145983,
+            1.1070467215565856
+          ],
+          "product_angles_radians": [
+            3.2522036929823557,
+            2.464459067013962,
+            2.0530464398832953,
+            2.6924823307339194
+          ],
+          "diagonal_preparation_noise": 0.127303445027418
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "d974544b7276603d0ffb5c95f1117f0417e1b8d01189fdf956b5cc38f88093fb",
+      "analytic_reference": {
+        "generator_mean": 0.7453931099451641,
+        "population_generator_fidelity_lower": 0.490786219890328,
+        "graph_target_fidelity": 0.5800334588198575
+      }
+    },
+    {
+      "stratum": "near-threshold",
+      "label": "frozen-15-near-threshold",
+      "sampling_seed": 2026100215,
+      "manifest": {
+        "case_id": 2026100215,
+        "seed": 2026100215,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "frame_radians": [
+            -1.5146239889077717,
+            -1.783048656581737,
+            2.123027581358036,
+            -1.851695500799755
+          ],
+          "product_angles_radians": [
+            2.441767270008238,
+            5.462485741451296,
+            5.808253544074241,
+            4.321948006016098
+          ],
+          "diagonal_preparation_noise": 0.12314737662746217
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "39ef395433edb3cc97619b5646ad27c8a8bf8f7829148b765e5b4e8b2a8642d0",
+      "analytic_reference": {
+        "generator_mean": 0.7537052467450757,
+        "population_generator_fidelity_lower": 0.5074104934901513,
+        "graph_target_fidelity": 0.5911618813155975
+      }
+    },
+    {
+      "stratum": "near-threshold",
+      "label": "frozen-16-near-threshold",
+      "sampling_seed": 2026100216,
+      "manifest": {
+        "case_id": 2026100216,
+        "seed": 2026100216,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "frame_radians": [
+            2.652251026297619,
+            -1.996586877252046,
+            -2.336024732638741,
+            1.1017911367066233
+          ],
+          "product_angles_radians": [
+            5.6185340834931425,
+            2.0293025393302018,
+            5.250266709377426,
+            4.389307341620288
+          ],
+          "diagonal_preparation_noise": 0.12136121525304758
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "1a203efdc7e62634fc52d18d208feb4f522cb748e232ef449f4e62fc3767a240",
+      "analytic_reference": {
+        "generator_mean": 0.7572775694939049,
+        "population_generator_fidelity_lower": 0.5145551389878097,
+        "graph_target_fidelity": 0.5959934401484944
+      }
+    },
+    {
+      "stratum": "near-threshold",
+      "label": "frozen-17-near-threshold",
+      "sampling_seed": 2026100217,
+      "manifest": {
+        "case_id": 2026100217,
+        "seed": 2026100217,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "frame_radians": [
+            2.7365870099550307,
+            2.2541111448814926,
+            -1.5944178747387288,
+            -0.878097408664626
+          ],
+          "product_angles_radians": [
+            0.0738736779974162,
+            4.743313424454565,
+            5.043489652431907,
+            0.08689847378882586
+          ],
+          "diagonal_preparation_noise": 0.12424367103555119
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "1a40148825d24c97e61116fcda3ba0ad3aecd8bd41158170d746639b7ae3776a",
+      "analytic_reference": {
+        "generator_mean": 0.7515126579288977,
+        "population_generator_fidelity_lower": 0.5030253158577953,
+        "graph_target_fidelity": 0.5882109951904098
+      }
+    },
+    {
+      "stratum": "near-threshold",
+      "label": "frozen-18-near-threshold",
+      "sampling_seed": 2026100218,
+      "manifest": {
+        "case_id": 2026100218,
+        "seed": 2026100218,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "frame_radians": [
+            0.48547328607040496,
+            -2.6353165699691843,
+            1.1254342178386558,
+            -2.412994342335841
+          ],
+          "product_angles_radians": [
+            1.9616486089720446,
+            3.2631604935345715,
+            5.965407350549724,
+            1.8820565516683803
+          ],
+          "diagonal_preparation_noise": 0.12261500397289515
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "badd10f577ca698ba201fcb7207ef0e0da6113981a2f30ec97bdbe62395936d2",
+      "analytic_reference": {
+        "generator_mean": 0.7547699920542097,
+        "population_generator_fidelity_lower": 0.5095399841084194,
+        "graph_target_fidelity": 0.5925988623774981
+      }
+    },
+    {
+      "stratum": "near-threshold",
+      "label": "frozen-19-near-threshold",
+      "sampling_seed": 2026100219,
+      "manifest": {
+        "case_id": 2026100219,
+        "seed": 2026100219,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "frame_radians": [
+            3.119497226640517,
+            -2.689495994090985,
+            2.3738015492417555,
+            1.457456949770946
+          ],
+          "product_angles_radians": [
+            5.613259431045319,
+            2.5757187493770384,
+            5.276025368049348,
+            6.010997685238484
+          ],
+          "diagonal_preparation_noise": 0.1282422367013544
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "e8543920f0223492ee0e3425e866782cda3ed66798f8faab8b0c6c92713e633f",
+      "analytic_reference": {
+        "generator_mean": 0.7435155265972913,
+        "population_generator_fidelity_lower": 0.4870310531945824,
+        "graph_target_fidelity": 0.5775416302393388
+      }
+    },
+    {
+      "stratum": "near-threshold",
+      "label": "frozen-20-near-threshold",
+      "sampling_seed": 2026100220,
+      "manifest": {
+        "case_id": 2026100220,
+        "seed": 2026100220,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "frame_radians": [
+            0.3090322218152921,
+            0.7039541256547062,
+            0.7503677166985008,
+            1.6087799046581326
+          ],
+          "product_angles_radians": [
+            0.18350077404572532,
+            5.006024427127763,
+            5.947732259830917,
+            5.725750825461788
+          ],
+          "diagonal_preparation_noise": 0.1240246104785801
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "b0a5278a04233d228dd0e6bf23c2bac31fa690599503c857fb5fff26bd29e628",
+      "analytic_reference": {
+        "generator_mean": 0.7519507790428398,
+        "population_generator_fidelity_lower": 0.5039015580856796,
+        "graph_target_fidelity": 0.5887997534055331
+      }
+    },
+    {
+      "stratum": "near-threshold",
+      "label": "frozen-21-near-threshold",
+      "sampling_seed": 2026100221,
+      "manifest": {
+        "case_id": 2026100221,
+        "seed": 2026100221,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "frame_radians": [
+            1.255361625694083,
+            -0.5130742755785294,
+            -0.8218983185023228,
+            0.010430021787131594
+          ],
+          "product_angles_radians": [
+            1.1145817302740249,
+            4.715965015386064,
+            0.9841420368393271,
+            4.530495984184321
+          ],
+          "diagonal_preparation_noise": 0.12069885036363058
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "9daeb5d5b50cd540f8e9abe9fc0d51d846f06f2b19026f51a88121d4c4757ed0",
+      "analytic_reference": {
+        "generator_mean": 0.7586022992727388,
+        "population_generator_fidelity_lower": 0.5172045985454776,
+        "graph_target_fidelity": 0.5977926402426036
+      }
+    },
+    {
+      "stratum": "near-threshold",
+      "label": "frozen-22-near-threshold",
+      "sampling_seed": 2026100222,
+      "manifest": {
+        "case_id": 2026100222,
+        "seed": 2026100222,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "frame_radians": [
+            -0.435940544816106,
+            -2.0998530840323744,
+            -2.53474509173254,
+            2.8200531879543806
+          ],
+          "product_angles_radians": [
+            5.683792384283881,
+            3.5338429462344774,
+            4.6810758633804905,
+            1.0309909990266315
+          ],
+          "diagonal_preparation_noise": 0.12517510676563345
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  1
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  1
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                1
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                1
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "986511b05465513db401a7084095ff0b7ffcb9ab81584ccfd5b6e244aafad205",
+      "analytic_reference": {
+        "generator_mean": 0.749649786468733,
+        "population_generator_fidelity_lower": 0.4992995729374662,
+        "graph_target_fidelity": 0.5857125500504805
+      }
+    },
+    {
+      "stratum": "near-threshold",
+      "label": "frozen-23-near-threshold",
+      "sampling_seed": 2026100223,
+      "manifest": {
+        "case_id": 2026100223,
+        "seed": 2026100223,
+        "generated_parameters": {
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "frame_radians": [
+            -1.2757870173620356,
+            0.6725667498268981,
+            2.3668237196772806,
+            -2.1138896355654486
+          ],
+          "product_angles_radians": [
+            2.9751824013671104,
+            0.9912812636717236,
+            0.10149192658516148,
+            5.157754447391032
+          ],
+          "diagonal_preparation_noise": 0.12160302954569145
+        },
+        "ordered_blocks": [
+          "target_Z",
+          "impostor_Z",
+          "target_A",
+          "target_B",
+          "impostor_A",
+          "impostor_B"
+        ],
+        "blocks": {
+          "target_Z": {
+            "offset": 0,
+            "width": 4,
+            "parity_maps": []
+          },
+          "impostor_Z": {
+            "offset": 4,
+            "width": 4,
+            "parity_maps": []
+          },
+          "target_A": {
+            "offset": 8,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "target_B": {
+            "offset": 12,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_A": {
+            "offset": 16,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 0,
+                "bits": [
+                  0,
+                  1,
+                  2
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 3,
+                "bits": [
+                  3,
+                  2
+                ],
+                "sign": 1
+              }
+            ]
+          },
+          "impostor_B": {
+            "offset": 20,
+            "width": 4,
+            "parity_maps": [
+              {
+                "generator": 1,
+                "bits": [
+                  1,
+                  0
+                ],
+                "sign": 1
+              },
+              {
+                "generator": 2,
+                "bits": [
+                  2,
+                  3,
+                  0
+                ],
+                "sign": 1
+              }
+            ]
+          }
+        },
+        "total_width": 24,
+        "decoding_maps": {
+          "target_Z": [],
+          "impostor_Z": [],
+          "target_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "target_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_A": [
+            {
+              "generator": 0,
+              "bits": [
+                0,
+                1,
+                2
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 3,
+              "bits": [
+                3,
+                2
+              ],
+              "sign": 1
+            }
+          ],
+          "impostor_B": [
+            {
+              "generator": 1,
+              "bits": [
+                1,
+                0
+              ],
+              "sign": 1
+            },
+            {
+              "generator": 2,
+              "bits": [
+                2,
+                3,
+                0
+              ],
+              "sign": 1
+            }
+          ]
+        },
+        "source_assumptions": [
+          "connected four-qubit graph target with local RZ frame",
+          "equatorial product impostor with the same local RZ frame",
+          "independent local phase-flip channel on each of four qubits: E_p(rho)=(1-p)*rho+p*Z*rho*Z, applied to both preparations after preparation and before basis rotations",
+          "diagonal_preparation_noise is the per-qubit phase-flip probability p, not a depolarizing parameter or rotation angle",
+          "arbitrary diagonal frame inverse applied before witness basis",
+          "trusted ideal basis rotations and readout for mathematical reference; simulator noise assumptions must be separately stated",
+          "uniform computational Z distribution is preserved by the declared diagonal preparation channel"
+        ],
+        "recipe_identity": {
+          "audited16": false
+        },
+        "exact_Z_reference": false,
+        "smoke_controls": [
+          "impostor_Z",
+          "impostor_A",
+          "impostor_B"
+        ]
+      },
+      "manifest_hash": "d21fe9e928b2e58d9b9712ae7a3dfd3834bca81349b1fd8d24ff25fc82b2ff3d",
+      "analytic_reference": {
+        "generator_mean": 0.7567939409086171,
+        "population_generator_fidelity_lower": 0.5135878818172341,
+        "graph_target_fidelity": 0.5953376063757677
+      }
+    }
+  ]
+}

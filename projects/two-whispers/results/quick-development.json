@@ -1,0 +1,1975 @@
+{
+  "schema_version": "1.0",
+  "evidence_label": "development-only local IonQ-like approximation",
+  "configuration": {
+    "suite": "development",
+    "gate": null,
+    "draws": 200,
+    "models": [
+      "aria",
+      "forte",
+      "fe"
+    ],
+    "scales": [
+      0.5,
+      0.75,
+      1,
+      1.25,
+      1.5,
+      1.75,
+      2
+    ],
+    "readout_stresses": [
+      0.001,
+      0.005
+    ],
+    "source_noise": true,
+    "recipe_file": null,
+    "fresh_manifest": null,
+    "sampling_seed": 2026101100
+  },
+  "configuration_hash": "d3e8621dddf2711f7d4519840b882c3bdd3b327a7b6f61a382fa298792640f1b",
+  "environment": {
+    "utc_start": "2026-10-10T00:30:36.480009+00:00",
+    "machine": "Windows-11-10.0.26300-SP0",
+    "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "2.5.3",
+    "qiskit": "2.5.2"
+  },
+  "generation_seeds": [
+    2026100900,
+    2026100901
+  ],
+  "sampling_seeds": [
+    2026101100,
+    2026201100
+  ],
+  "recipe": {
+    "identity": "frozen-2026100900-budget2",
+    "families": {
+      "collective": {
+        "family": "collective",
+        "parameters": {
+          "relabel": 0,
+          "row_phases": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "completion_phase": 0.0,
+          "optimization_level": 1,
+          "compiler_seed": 0,
+          "decomposition": "default"
+        },
+        "identity": "collective-2026100900-0"
+      },
+      "textbook": {
+        "family": "textbook",
+        "parameters": {
+          "relabel": 0,
+          "row_phases": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "completion_phase": 0.0,
+          "optimization_level": 1,
+          "compiler_seed": 0,
+          "decomposition": "default"
+        },
+        "identity": "textbook-2026100900-0"
+      },
+      "deferred-sequential": {
+        "family": "deferred-sequential",
+        "parameters": {
+          "relabel": 0,
+          "row_phases": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "completion_phase": 0.0,
+          "optimization_level": 1,
+          "compiler_seed": 0,
+          "decomposition": "default"
+        },
+        "identity": "deferred-sequential-2026100900-0"
+      }
+    }
+  },
+  "noise_configurations": [
+    {
+      "label": "local IonQ-like approximation",
+      "model": "aria",
+      "scale": 1.0,
+      "rates": {
+        "one_qubit": 0.0005,
+        "two_qubit": 0.007,
+        "readout": 0.0
+      },
+      "source": "preliminary raw operation error approximation; not official calibration"
+    }
+  ],
+  "rows": [
+    {
+      "case_id": 1,
+      "construction_seed": 2026100900,
+      "sampling_seed": 2026101105,
+      "manifest_hash": "2d6f567fd30b9a5c48ef85e90787afb7c4a8d721abab1435f7d645dab59e6a77",
+      "recipe_hash": "989c7c764254a667e2ce67871fd78b08be27e33288889afae16128b304b35766",
+      "regime": {
+        "model": "ideal",
+        "scale": 0.0
+      },
+      "draws_per_circuit": 2,
+      "analysis": {
+        "collective": {
+          "confusion_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "decoded_counts": [
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          "shots_per_label": [
+            2,
+            2,
+            2
+          ],
+          "success_probability": 1.0,
+          "word_error": 0.0,
+          "per_label_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "standard_error": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "confusion_intervals_95": [
+            [
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.34238022750665303,
+                1.0
+              ]
+            ]
+          ],
+          "success_interval_95": [
+            0.25869408467032207,
+            1.0
+          ],
+          "word_error_interval_95": [
+            0.0,
+            0.7413059153296779
+          ],
+          "per_label_error_intervals_95": [
+            [
+              0.0,
+              0.657619772493347
+            ],
+            [
+              0.0,
+              0.657619772493347
+            ],
+            [
+              0.0,
+              0.657619772493347
+            ]
+          ],
+          "unused_outcome_counts": [
+            0,
+            0,
+            0
+          ],
+          "unused_outcome_assignment": "all unused outcomes map to fixed label 0 and are counted in matrix",
+          "data_complete": true
+        },
+        "textbook": {
+          "confusion_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.5,
+              0.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "decoded_counts": [
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          "shots_per_label": [
+            2,
+            2,
+            2
+          ],
+          "success_probability": 0.8333333333333334,
+          "word_error": 0.16666666666666663,
+          "per_label_error": [
+            0.0,
+            0.5,
+            0.0
+          ],
+          "standard_error": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.3535533905932738,
+              0.3535533905932738
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "confusion_intervals_95": [
+            [
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.34238022750665303,
+                1.0
+              ]
+            ]
+          ],
+          "success_interval_95": [
+            0.19563084978283377,
+            0.9768318733307142
+          ],
+          "word_error_interval_95": [
+            0.023168126669285805,
+            0.8043691502171663
+          ],
+          "per_label_error_intervals_95": [
+            [
+              0.0,
+              0.657619772493347
+            ],
+            [
+              0.09453120573423068,
+              0.9054687942657693
+            ],
+            [
+              0.0,
+              0.657619772493347
+            ]
+          ],
+          "unused_outcome_counts": [
+            0,
+            0,
+            0
+          ],
+          "unused_outcome_assignment": "all unused outcomes map to fixed label 0 and are counted in matrix",
+          "data_complete": true
+        },
+        "deferred-sequential": {
+          "confusion_matrix": [
+            [
+              0.5,
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "decoded_counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          "shots_per_label": [
+            2,
+            2,
+            2
+          ],
+          "success_probability": 0.8333333333333334,
+          "word_error": 0.16666666666666663,
+          "per_label_error": [
+            0.5,
+            0.0,
+            0.0
+          ],
+          "standard_error": [
+            [
+              0.3535533905932738,
+              0.3535533905932738,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "confusion_intervals_95": [
+            [
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.34238022750665303,
+                1.0
+              ]
+            ]
+          ],
+          "success_interval_95": [
+            0.19563084978283377,
+            0.9768318733307142
+          ],
+          "word_error_interval_95": [
+            0.023168126669285805,
+            0.8043691502171663
+          ],
+          "per_label_error_intervals_95": [
+            [
+              0.09453120573423068,
+              0.9054687942657693
+            ],
+            [
+              0.0,
+              0.657619772493347
+            ],
+            [
+              0.0,
+              0.657619772493347
+            ]
+          ],
+          "unused_outcome_counts": [
+            0,
+            0,
+            0
+          ],
+          "unused_outcome_assignment": "all unused outcomes map to fixed label 0 and are counted in matrix",
+          "data_complete": true
+        },
+        "assumptions": {
+          "finite-shot uncertainty": "pointwise Wilson cells; Bonferroni row bounds for mean success",
+          "source": "cloud comparison conditional on ideal source; exact source-dependent one-way bounds not implemented",
+          "packing": "blocks share one backend run; no independence asserted for paired differences",
+          "restriction": "optimal one-way sequential, not every separable POVM or LOCC",
+          "synthesis": "ideal collective/textbook tie is not synthesis improvement",
+          "classical": "unrestricted classical two-bit labels transmit perfectly"
+        }
+      },
+      "word_errors": {
+        "collective": 0.0,
+        "textbook": 0.16666666666666663,
+        "deferred-sequential": 0.16666666666666663
+      }
+    },
+    {
+      "case_id": 1,
+      "construction_seed": 2026100900,
+      "sampling_seed": 2026111104,
+      "manifest_hash": "2d6f567fd30b9a5c48ef85e90787afb7c4a8d721abab1435f7d645dab59e6a77",
+      "recipe_hash": "989c7c764254a667e2ce67871fd78b08be27e33288889afae16128b304b35766",
+      "regime": {
+        "model": "aria",
+        "scale": 1.0
+      },
+      "draws_per_circuit": 2,
+      "analysis": {
+        "collective": {
+          "confusion_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.0,
+              0.5
+            ]
+          ],
+          "decoded_counts": [
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              2,
+              0
+            ],
+            [
+              1,
+              0,
+              1
+            ]
+          ],
+          "shots_per_label": [
+            2,
+            2,
+            2
+          ],
+          "success_probability": 0.8333333333333334,
+          "word_error": 0.16666666666666663,
+          "per_label_error": [
+            0.0,
+            0.0,
+            0.5
+          ],
+          "standard_error": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.3535533905932738,
+              0.0,
+              0.3535533905932738
+            ]
+          ],
+          "confusion_intervals_95": [
+            [
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ]
+            ]
+          ],
+          "success_interval_95": [
+            0.19563084978283377,
+            0.9768318733307142
+          ],
+          "word_error_interval_95": [
+            0.023168126669285805,
+            0.8043691502171663
+          ],
+          "per_label_error_intervals_95": [
+            [
+              0.0,
+              0.657619772493347
+            ],
+            [
+              0.0,
+              0.657619772493347
+            ],
+            [
+              0.09453120573423068,
+              0.9054687942657693
+            ]
+          ],
+          "unused_outcome_counts": [
+            0,
+            0,
+            0
+          ],
+          "unused_outcome_assignment": "all unused outcomes map to fixed label 0 and are counted in matrix",
+          "data_complete": true
+        },
+        "textbook": {
+          "confusion_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "decoded_counts": [
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ]
+          ],
+          "shots_per_label": [
+            2,
+            2,
+            2
+          ],
+          "success_probability": 0.5,
+          "word_error": 0.5,
+          "per_label_error": [
+            0.0,
+            0.5,
+            1.0
+          ],
+          "standard_error": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.3535533905932738,
+              0.3535533905932738,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "confusion_intervals_95": [
+            [
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ]
+          ],
+          "success_interval_95": [
+            0.10939948822605973,
+            0.8906005117739403
+          ],
+          "word_error_interval_95": [
+            0.10939948822605972,
+            0.8906005117739403
+          ],
+          "per_label_error_intervals_95": [
+            [
+              0.0,
+              0.657619772493347
+            ],
+            [
+              0.09453120573423068,
+              0.9054687942657693
+            ],
+            [
+              0.3423802275066531,
+              1.0
+            ]
+          ],
+          "unused_outcome_counts": [
+            1,
+            0,
+            1
+          ],
+          "unused_outcome_assignment": "all unused outcomes map to fixed label 0 and are counted in matrix",
+          "data_complete": true
+        },
+        "deferred-sequential": {
+          "confusion_matrix": [
+            [
+              0.5,
+              0.0,
+              0.5
+            ],
+            [
+              0.5,
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ]
+          ],
+          "decoded_counts": [
+            [
+              1,
+              0,
+              1
+            ],
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              2,
+              0
+            ]
+          ],
+          "shots_per_label": [
+            2,
+            2,
+            2
+          ],
+          "success_probability": 0.3333333333333333,
+          "word_error": 0.6666666666666667,
+          "per_label_error": [
+            0.5,
+            0.5,
+            1.0
+          ],
+          "standard_error": [
+            [
+              0.3535533905932738,
+              0.0,
+              0.3535533905932738
+            ],
+            [
+              0.3535533905932738,
+              0.3535533905932738,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "confusion_intervals_95": [
+            [
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ]
+            ],
+            [
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ]
+          ],
+          "success_interval_95": [
+            0.04633625333857142,
+            0.8674323851046545
+          ],
+          "word_error_interval_95": [
+            0.13256761489534552,
+            0.9536637466614286
+          ],
+          "per_label_error_intervals_95": [
+            [
+              0.09453120573423068,
+              0.9054687942657693
+            ],
+            [
+              0.09453120573423068,
+              0.9054687942657693
+            ],
+            [
+              0.3423802275066531,
+              1.0
+            ]
+          ],
+          "unused_outcome_counts": [
+            1,
+            1,
+            0
+          ],
+          "unused_outcome_assignment": "all unused outcomes map to fixed label 0 and are counted in matrix",
+          "data_complete": true
+        },
+        "assumptions": {
+          "finite-shot uncertainty": "pointwise Wilson cells; Bonferroni row bounds for mean success",
+          "source": "cloud comparison conditional on ideal source; exact source-dependent one-way bounds not implemented",
+          "packing": "blocks share one backend run; no independence asserted for paired differences",
+          "restriction": "optimal one-way sequential, not every separable POVM or LOCC",
+          "synthesis": "ideal collective/textbook tie is not synthesis improvement",
+          "classical": "unrestricted classical two-bit labels transmit perfectly"
+        }
+      },
+      "word_errors": {
+        "collective": 0.16666666666666663,
+        "textbook": 0.5,
+        "deferred-sequential": 0.6666666666666667
+      }
+    },
+    {
+      "case_id": 2,
+      "construction_seed": 2026100901,
+      "sampling_seed": 2026201105,
+      "manifest_hash": "9783c5f43524416e636c4032fb5a1e79fb47dfbaa54747bc0fdc1a4c3e659ab2",
+      "recipe_hash": "989c7c764254a667e2ce67871fd78b08be27e33288889afae16128b304b35766",
+      "regime": {
+        "model": "ideal",
+        "scale": 0.0
+      },
+      "draws_per_circuit": 2,
+      "analysis": {
+        "collective": {
+          "confusion_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "decoded_counts": [
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          "shots_per_label": [
+            2,
+            2,
+            2
+          ],
+          "success_probability": 1.0,
+          "word_error": 0.0,
+          "per_label_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "standard_error": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "confusion_intervals_95": [
+            [
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.34238022750665303,
+                1.0
+              ]
+            ]
+          ],
+          "success_interval_95": [
+            0.25869408467032207,
+            1.0
+          ],
+          "word_error_interval_95": [
+            0.0,
+            0.7413059153296779
+          ],
+          "per_label_error_intervals_95": [
+            [
+              0.0,
+              0.657619772493347
+            ],
+            [
+              0.0,
+              0.657619772493347
+            ],
+            [
+              0.0,
+              0.657619772493347
+            ]
+          ],
+          "unused_outcome_counts": [
+            0,
+            0,
+            0
+          ],
+          "unused_outcome_assignment": "all unused outcomes map to fixed label 0 and are counted in matrix",
+          "data_complete": true
+        },
+        "textbook": {
+          "confusion_matrix": [
+            [
+              0.5,
+              0.0,
+              0.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "decoded_counts": [
+            [
+              1,
+              0,
+              1
+            ],
+            [
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          "shots_per_label": [
+            2,
+            2,
+            2
+          ],
+          "success_probability": 0.8333333333333334,
+          "word_error": 0.16666666666666663,
+          "per_label_error": [
+            0.5,
+            0.0,
+            0.0
+          ],
+          "standard_error": [
+            [
+              0.3535533905932738,
+              0.0,
+              0.3535533905932738
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "confusion_intervals_95": [
+            [
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.34238022750665303,
+                1.0
+              ]
+            ]
+          ],
+          "success_interval_95": [
+            0.19563084978283377,
+            0.9768318733307142
+          ],
+          "word_error_interval_95": [
+            0.023168126669285805,
+            0.8043691502171663
+          ],
+          "per_label_error_intervals_95": [
+            [
+              0.09453120573423068,
+              0.9054687942657693
+            ],
+            [
+              0.0,
+              0.657619772493347
+            ],
+            [
+              0.0,
+              0.657619772493347
+            ]
+          ],
+          "unused_outcome_counts": [
+            0,
+            0,
+            0
+          ],
+          "unused_outcome_assignment": "all unused outcomes map to fixed label 0 and are counted in matrix",
+          "data_complete": true
+        },
+        "deferred-sequential": {
+          "confusion_matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.5,
+              0.5
+            ]
+          ],
+          "decoded_counts": [
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          "shots_per_label": [
+            2,
+            2,
+            2
+          ],
+          "success_probability": 0.8333333333333334,
+          "word_error": 0.16666666666666663,
+          "per_label_error": [
+            0.0,
+            0.0,
+            0.5
+          ],
+          "standard_error": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.3535533905932738,
+              0.3535533905932738
+            ]
+          ],
+          "confusion_intervals_95": [
+            [
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ]
+            ]
+          ],
+          "success_interval_95": [
+            0.19563084978283377,
+            0.9768318733307142
+          ],
+          "word_error_interval_95": [
+            0.023168126669285805,
+            0.8043691502171663
+          ],
+          "per_label_error_intervals_95": [
+            [
+              0.0,
+              0.657619772493347
+            ],
+            [
+              0.0,
+              0.657619772493347
+            ],
+            [
+              0.09453120573423068,
+              0.9054687942657693
+            ]
+          ],
+          "unused_outcome_counts": [
+            0,
+            0,
+            0
+          ],
+          "unused_outcome_assignment": "all unused outcomes map to fixed label 0 and are counted in matrix",
+          "data_complete": true
+        },
+        "assumptions": {
+          "finite-shot uncertainty": "pointwise Wilson cells; Bonferroni row bounds for mean success",
+          "source": "cloud comparison conditional on ideal source; exact source-dependent one-way bounds not implemented",
+          "packing": "blocks share one backend run; no independence asserted for paired differences",
+          "restriction": "optimal one-way sequential, not every separable POVM or LOCC",
+          "synthesis": "ideal collective/textbook tie is not synthesis improvement",
+          "classical": "unrestricted classical two-bit labels transmit perfectly"
+        }
+      },
+      "word_errors": {
+        "collective": 0.0,
+        "textbook": 0.16666666666666663,
+        "deferred-sequential": 0.16666666666666663
+      }
+    },
+    {
+      "case_id": 2,
+      "construction_seed": 2026100901,
+      "sampling_seed": 2026211104,
+      "manifest_hash": "9783c5f43524416e636c4032fb5a1e79fb47dfbaa54747bc0fdc1a4c3e659ab2",
+      "recipe_hash": "989c7c764254a667e2ce67871fd78b08be27e33288889afae16128b304b35766",
+      "regime": {
+        "model": "aria",
+        "scale": 1.0
+      },
+      "draws_per_circuit": 2,
+      "analysis": {
+        "collective": {
+          "confusion_matrix": [
+            [
+              0.5,
+              0.5,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5,
+              0.0
+            ]
+          ],
+          "decoded_counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "shots_per_label": [
+            2,
+            2,
+            2
+          ],
+          "success_probability": 0.16666666666666666,
+          "word_error": 0.8333333333333334,
+          "per_label_error": [
+            0.5,
+            1.0,
+            1.0
+          ],
+          "standard_error": [
+            [
+              0.3535533905932738,
+              0.3535533905932738,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.3535533905932738,
+              0.3535533905932738,
+              0.0
+            ]
+          ],
+          "confusion_intervals_95": [
+            [
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ]
+          ],
+          "success_interval_95": [
+            0.02316812666928571,
+            0.8043691502171662
+          ],
+          "word_error_interval_95": [
+            0.19563084978283385,
+            0.9768318733307143
+          ],
+          "per_label_error_intervals_95": [
+            [
+              0.09453120573423068,
+              0.9054687942657693
+            ],
+            [
+              0.3423802275066531,
+              1.0
+            ],
+            [
+              0.3423802275066531,
+              1.0
+            ]
+          ],
+          "unused_outcome_counts": [
+            0,
+            2,
+            1
+          ],
+          "unused_outcome_assignment": "all unused outcomes map to fixed label 0 and are counted in matrix",
+          "data_complete": true
+        },
+        "textbook": {
+          "confusion_matrix": [
+            [
+              0.5,
+              0.0,
+              0.5
+            ],
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "decoded_counts": [
+            [
+              1,
+              0,
+              1
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ]
+          ],
+          "shots_per_label": [
+            2,
+            2,
+            2
+          ],
+          "success_probability": 0.16666666666666666,
+          "word_error": 0.8333333333333334,
+          "per_label_error": [
+            0.5,
+            1.0,
+            1.0
+          ],
+          "standard_error": [
+            [
+              0.3535533905932738,
+              0.0,
+              0.3535533905932738
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "confusion_intervals_95": [
+            [
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ]
+            ],
+            [
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ]
+          ],
+          "success_interval_95": [
+            0.02316812666928571,
+            0.8043691502171662
+          ],
+          "word_error_interval_95": [
+            0.19563084978283385,
+            0.9768318733307143
+          ],
+          "per_label_error_intervals_95": [
+            [
+              0.09453120573423068,
+              0.9054687942657693
+            ],
+            [
+              0.3423802275066531,
+              1.0
+            ],
+            [
+              0.3423802275066531,
+              1.0
+            ]
+          ],
+          "unused_outcome_counts": [
+            0,
+            1,
+            1
+          ],
+          "unused_outcome_assignment": "all unused outcomes map to fixed label 0 and are counted in matrix",
+          "data_complete": true
+        },
+        "deferred-sequential": {
+          "confusion_matrix": [
+            [
+              0.5,
+              0.5,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.5,
+              0.5,
+              0.0
+            ]
+          ],
+          "decoded_counts": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              2,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "shots_per_label": [
+            2,
+            2,
+            2
+          ],
+          "success_probability": 0.5,
+          "word_error": 0.5,
+          "per_label_error": [
+            0.5,
+            0.0,
+            1.0
+          ],
+          "standard_error": [
+            [
+              0.3535533905932738,
+              0.3535533905932738,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.3535533905932738,
+              0.3535533905932738,
+              0.0
+            ]
+          ],
+          "confusion_intervals_95": [
+            [
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.6576197724933469
+              ],
+              [
+                0.34238022750665303,
+                1.0
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ],
+            [
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.09453120573423074,
+                0.9054687942657693
+              ],
+              [
+                0.0,
+                0.6576197724933469
+              ]
+            ]
+          ],
+          "success_interval_95": [
+            0.10939948822605973,
+            0.8906005117739403
+          ],
+          "word_error_interval_95": [
+            0.10939948822605972,
+            0.8906005117739403
+          ],
+          "per_label_error_intervals_95": [
+            [
+              0.09453120573423068,
+              0.9054687942657693
+            ],
+            [
+              0.0,
+              0.657619772493347
+            ],
+            [
+              0.3423802275066531,
+              1.0
+            ]
+          ],
+          "unused_outcome_counts": [
+            1,
+            0,
+            0
+          ],
+          "unused_outcome_assignment": "all unused outcomes map to fixed label 0 and are counted in matrix",
+          "data_complete": true
+        },
+        "assumptions": {
+          "finite-shot uncertainty": "pointwise Wilson cells; Bonferroni row bounds for mean success",
+          "source": "cloud comparison conditional on ideal source; exact source-dependent one-way bounds not implemented",
+          "packing": "blocks share one backend run; no independence asserted for paired differences",
+          "restriction": "optimal one-way sequential, not every separable POVM or LOCC",
+          "synthesis": "ideal collective/textbook tie is not synthesis improvement",
+          "classical": "unrestricted classical two-bit labels transmit perfectly"
+        }
+      },
+      "word_errors": {
+        "collective": 0.8333333333333334,
+        "textbook": 0.8333333333333334,
+        "deferred-sequential": 0.5
+      }
+    }
+  ],
+  "paired_statistics": {
+    "{\"model\": \"ideal\", \"scale\": 0.0}": {
+      "seq_minus_joint": [
+        0.16666666666666663,
+        0.16666666666666663
+      ],
+      "relative_textbook_margin": [
+        0.14999999999999997,
+        0.14999999999999997
+      ],
+      "bootstrap_seq_minus_joint": {
+        "mean": 0.16666666666666663,
+        "interval_95": [
+          0.16666666666666663,
+          0.16666666666666663
+        ],
+        "replicates": 2000,
+        "seed": 2026101100,
+        "resampling_unit": "generated instance"
+      },
+      "bootstrap_textbook_margin": {
+        "mean": 0.14999999999999997,
+        "interval_95": [
+          0.14999999999999997,
+          0.14999999999999997
+        ],
+        "replicates": 2000,
+        "seed": 2026101101,
+        "resampling_unit": "generated instance"
+      },
+      "permutation_seq_minus_joint": {
+        "mean": 0.16666666666666663,
+        "one_sided_p": 0.2542745725427457,
+        "replicates": 10000,
+        "seed": 2026101100
+      },
+      "permutation_textbook_margin": {
+        "mean": 0.14999999999999997,
+        "one_sided_p": 0.252974702529747,
+        "replicates": 10000,
+        "seed": 2026101101
+      }
+    },
+    "{\"model\": \"aria\", \"scale\": 1.0}": {
+      "seq_minus_joint": [
+        0.5000000000000001,
+        -0.33333333333333337
+      ],
+      "relative_textbook_margin": [
+        0.2833333333333334,
+        -0.08333333333333337
+      ],
+      "bootstrap_seq_minus_joint": {
+        "mean": 0.08333333333333337,
+        "interval_95": [
+          -0.33333333333333337,
+          0.5000000000000001
+        ],
+        "replicates": 2000,
+        "seed": 2026101100,
+        "resampling_unit": "generated instance"
+      },
+      "bootstrap_textbook_margin": {
+        "mean": 0.1,
+        "interval_95": [
+          -0.08333333333333337,
+          0.2833333333333334
+        ],
+        "replicates": 2000,
+        "seed": 2026101101,
+        "resampling_unit": "generated instance"
+      },
+      "permutation_seq_minus_joint": {
+        "mean": 0.08333333333333337,
+        "one_sided_p": 0.4981501849815019,
+        "replicates": 10000,
+        "seed": 2026101100
+      },
+      "permutation_textbook_margin": {
+        "mean": 0.1,
+        "one_sided_p": 0.5058494150584941,
+        "replicates": 10000,
+        "seed": 2026101101
+      }
+    }
+  },
+  "gate_decisions": null,
+  "operation_accounting": {
+    "submitted_shots": 8,
+    "packed_qubits": 21,
+    "note": "local tiny-block density approximation; native gate count/cost not asserted"
+  },
+  "science_verdict": null
+}

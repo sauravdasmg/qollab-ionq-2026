@@ -66,7 +66,7 @@ def test_demo_order_terminal_measurement_and_actual_probabilities(demo):
     for circuit,block in zip(circuits,manifest['ordered_blocks']):
         assert circuit.name == block['block_name']
         assert [op.operation.name for op in circuit.data[-block['width']:]] == ['measure']*block['width']
-        assert all(op.operation.name in {'rx','ry','rz','cx','measure'} for op in circuit.data)
+        assert all(op.operation.name in {'rx','ry','rz','cx','measure','barrier'} for op in circuit.data)
         probabilities = Statevector.from_instruction(circuit.remove_final_measurements(inplace=False)).probabilities()
         assert sum(probabilities) == pytest.approx(1,abs=1e-12)
         success = sum(p for i,p in enumerate(probabilities) if block['decoder'][i] == block['label'])

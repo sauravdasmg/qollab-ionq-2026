@@ -193,6 +193,7 @@ def make_demo(case: int = 0, recipe=None):
             receiver_compiled = _compile(receiver, selected)
             circuit = QuantumCircuit(width, width, name=name)
             circuit.compose(source_compiled, inplace=True)
+            circuit.barrier(label='receiver_start')
             circuit.compose(receiver_compiled, inplace=True)
             circuit.measure(range(width), range(width))
             circuits.append(circuit)

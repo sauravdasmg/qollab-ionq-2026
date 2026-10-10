@@ -1,0 +1,1 @@
+# Bundled only: Qiskit 2.5.2 / 2.x, NumPy, SciPy, Matplotlib; stdlib.

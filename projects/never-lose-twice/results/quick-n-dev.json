@@ -1,0 +1,2990 @@
+{
+  "assumptions": [
+    "independent local block noise/sampling; not observed packed cloud covariance",
+    "submitted operation-shots are not native gates/cost",
+    "product_control noisy circuit is diagnostic only"
+  ],
+  "configuration": {
+    "calibration_file_hash": null,
+    "calibration_power_file_hash": null,
+    "cases": [
+      {
+        "alpha": 0.7853981633974483,
+        "generation_seed": null,
+        "instance_id": "quick-0",
+        "sampling_seed": 13523901018485281925,
+        "theta": 0.39269908169872414
+      },
+      {
+        "alpha": 0.7833520884322974,
+        "generation_seed": 2026102900,
+        "instance_id": "quick-1",
+        "sampling_seed": 15690351688096076515,
+        "theta": 0.38125588702364926
+      },
+      {
+        "alpha": 0.7746552494419897,
+        "generation_seed": 2026102901,
+        "instance_id": "quick-2",
+        "sampling_seed": 7478561966211528662,
+        "theta": 0.37768475604546264
+      }
+    ],
+    "gate": null,
+    "independent_manifest": null,
+    "regimes": [
+      {
+        "config": null,
+        "id": "ideal"
+      },
+      {
+        "config": {
+          "hash": "86d9ab70f8be5fce95054026da530e2819f48b0ffcd52786bca871d563854cbf",
+          "model": "aria",
+          "one_qubit": 0.0005,
+          "origin": "local IonQ-like approximation; not official calibration",
+          "readout": 0.0,
+          "scale": 1.0,
+          "source_imbalance": 0.0,
+          "two_qubit": 0.007,
+          "version": "HN-pauli-v2"
+        },
+        "id": "aria-s1"
+      }
+    ],
+    "replicates": 2,
+    "schema": "HN-2",
+    "seed": 314159,
+    "selection_hash": null,
+    "shots": 128,
+    "sources": {
+      "core.py": "5b6944b91c5a25beda608e0e10fd2d92413f29d012b68cc822edd0858331c13e",
+      "experiments\\PLAN.md": "0e47dc1b7cb826437c922b78f4a7453ebcb916235feca064d607f58c2bbc6920",
+      "experiments\\noise.py": "021565307e7186f06510d13bd751c48b5272196d3e56cc40fd8adc6f1f34cb21",
+      "experiments\\run.py": "64faadb6884ccbd1b3e4cbdda3e7c526d89032c6ee955a0552e491f72926b4da",
+      "product_bounds.py": "479d0861d935cde73e0b7551d8dc57a0f1cc88b40f6e38ba04d5cd16f4694a08",
+      "strategies.py": "1916c29071773e77e7bf591ae2f05229d075847b117ec4ddf0a9c28840964cf7"
+    },
+    "suite": "quick",
+    "versions": {
+      "matplotlib": "3.11.2",
+      "numpy": "2.5.3",
+      "qiskit": "2.5.2",
+      "scipy": "1.18.1"
+    }
+  },
+  "configuration_hash": "ba8a3ade4bc639877d09f572a5eb15bd8c049b88f0cdacc7182f24b46c20f94b",
+  "failed_cases": [],
+  "finished_utc": "2026-10-10T00:30:29Z",
+  "gate_decision": null,
+  "instances": [
+    {
+      "case": {
+        "alpha": 0.7853981633974483,
+        "generation_seed": null,
+        "instance_id": "quick-0",
+        "sampling_seed": 13523901018485281925,
+        "theta": 0.39269908169872414
+      },
+      "certificate": {
+        "bound": {
+          "assumption": "independent test sources, product channels, and independent per-test noise",
+          "double_failure_lower_bound": 0.021446609406140408,
+          "loss_lower_bound": 0.02730447378232945,
+          "valid": true
+        },
+        "certificate": {
+          "certified": true,
+          "corrected_slack_eigenvalues": [
+            1.0000056338554941e-12,
+            0.25000000000100003,
+            0.3535533905942738,
+            0.6035533905942738
+          ],
+          "dual_feasible": true,
+          "dual_input_imag": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "dual_input_real": [
+            [
+              0.6035533905942738,
+              0.0
+            ],
+            [
+              0.0,
+              0.25000000000100003
+            ]
+          ],
+          "dual_slack_correction": 1.0000555111512312e-12,
+          "dual_slack_min_eigenvalue": -5.551115123125783e-17,
+          "dual_upper_bound": 0.8535533905952739,
+          "gap": 2.0000667788622195e-12,
+          "hermiticity": 0.0,
+          "minimum_eigenvalue": 0.0,
+          "primal_choi_imag": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "primal_choi_real": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "primal_eigenvalues": [
+            0.0,
+            0.0,
+            0.0,
+            2.0
+          ],
+          "primal_value": 0.8535533905932738,
+          "tensor_order": "output tensor input; unnormalized Choi",
+          "trace_preserving": 0.0,
+          "trace_residual": 0.0
+        },
+        "same_certificate_applies_to_tests": [
+          0,
+          1
+        ],
+        "status": "CERTIFIED"
+      },
+      "configuration": null,
+      "counts": [
+        {
+          "attained_product": {
+            "0000": 98,
+            "0001": 14,
+            "0010": 15,
+            "0011": 1
+          },
+          "optimized_joint": {
+            "0001": 73,
+            "0010": 55
+          },
+          "product_control": {
+            "0000": 25,
+            "0001": 7,
+            "0010": 2,
+            "0100": 5,
+            "0101": 28,
+            "0111": 1,
+            "1000": 5,
+            "1001": 2,
+            "1010": 26,
+            "1011": 4,
+            "1101": 3,
+            "1110": 1,
+            "1111": 19
+          },
+          "published_hedge": {
+            "0001": 68,
+            "0010": 60
+          }
+        },
+        {
+          "attained_product": {
+            "0000": 88,
+            "0001": 23,
+            "0010": 13,
+            "0011": 4
+          },
+          "optimized_joint": {
+            "0001": 66,
+            "0010": 62
+          },
+          "product_control": {
+            "0000": 18,
+            "0001": 2,
+            "0010": 6,
+            "0011": 2,
+            "0100": 6,
+            "0101": 25,
+            "0110": 1,
+            "0111": 3,
+            "1000": 2,
+            "1001": 2,
+            "1010": 27,
+            "1011": 6,
+            "1100": 1,
+            "1101": 6,
+            "1110": 3,
+            "1111": 18
+          },
+          "published_hedge": {
+            "0001": 65,
+            "0010": 63
+          }
+        }
+      ],
+      "exact_metrics": {
+        "attained_product": {
+          "f": 0.021446609406726234,
+          "loss": 0.027304473782995282,
+          "m": 1.7071067811865477
+        },
+        "optimized_joint": {
+          "f": 0.0,
+          "loss": 0.02,
+          "m": 1.0
+        },
+        "product_control": {
+          "f": 0.3285849570550447,
+          "loss": 0.3515138892431792,
+          "m": 0.8535533905932737
+        },
+        "published_hedge": {
+          "f": 0.0,
+          "loss": 0.02,
+          "m": 1.0
+        }
+      },
+      "failure": null,
+      "instance_id": "quick-0",
+      "manifest": {
+        "case_id": 0,
+        "decoding_maps": [
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          }
+        ],
+        "offsets": [
+          0,
+          4,
+          8,
+          12
+        ],
+        "ordered_blocks": [
+          "attained_product",
+          "published_hedge",
+          "optimized_joint",
+          "product_control"
+        ],
+        "ownership": {
+          "prover": [
+            2,
+            3
+          ],
+          "reference": [
+            0,
+            1
+          ]
+        },
+        "parameters": {
+          "alpha": 0.7853981633974483,
+          "identity": "quick-0",
+          "joint_phase": 3.141592653589793,
+          "lambda_selection": "predeclared; no development selection evidence",
+          "lambda_star": 0.02,
+          "local_rotation": 0.0,
+          "menu_lambda": [
+            0.005,
+            0.01,
+            0.02,
+            0.03,
+            0.04,
+            0.06
+          ],
+          "objective_evaluations_per_class_per_lambda": 256,
+          "optimized_status": "frozen candidate; optimization not yet evidenced",
+          "seed": null,
+          "theta": 0.39269908169872414
+        },
+        "recipe_hash": "5d2a4b15b934641276d333ae37f17c9c1535b60e050b67dc8c8f656c15d77124",
+        "recipe_identity": "quick-0",
+        "seed": null,
+        "smoke_control_ids": [
+          "product_control"
+        ],
+        "source_assumptions": [
+          "same alpha and theta for both tests",
+          "independent reference/prover source pairs",
+          "product factorization requires independent per-test noise",
+          "control ideal histogram is outcome-equivalent to fixed-output measure/prepare; not a noisy implementation of that channel",
+          "optimized_joint is a frozen candidate, not an optimality claim"
+        ],
+        "total_width": 16,
+        "widths": [
+          4,
+          4,
+          4,
+          4
+        ]
+      },
+      "manifest_hash": "8236b3634a8ca0ea12f97806079bf7ecd65e56c6bb0d286b88ddfb6d728b754c",
+      "paired_replicates": [
+        {
+          "attained_product": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0078125,
+            "loss": 0.01265625,
+            "m": 1.7578125
+          },
+          "optimized_joint": {
+            "double_failure_upper_if_zero": 0.028408053443543912,
+            "f": 0.0,
+            "loss": 0.02,
+            "m": 1.0
+          },
+          "product_control": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.234375,
+            "loss": 0.25515625,
+            "m": 0.9609375
+          },
+          "published_hedge": {
+            "double_failure_upper_if_zero": 0.028408053443543912,
+            "f": 0.0,
+            "loss": 0.02,
+            "m": 1.0
+          }
+        },
+        {
+          "attained_product": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.03125,
+            "loss": 0.038125,
+            "m": 1.65625
+          },
+          "optimized_joint": {
+            "double_failure_upper_if_zero": 0.028408053443543912,
+            "f": 0.0,
+            "loss": 0.02,
+            "m": 1.0
+          },
+          "product_control": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.328125,
+            "loss": 0.351875,
+            "m": 0.8125
+          },
+          "published_hedge": {
+            "double_failure_upper_if_zero": 0.028408053443543912,
+            "f": 0.0,
+            "loss": 0.02,
+            "m": 1.0
+          }
+        }
+      ],
+      "probabilities": {
+        "attained_product": [
+          0.7285533905932738,
+          0.125,
+          0.12500000000000003,
+          0.021446609406726234,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "optimized_joint": [
+          1.2811360055077058e-17,
+          0.5,
+          0.5000000000000001,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "product_control": [
+          0.18213834764831843,
+          0.03125000000000001,
+          0.03125,
+          0.005361652351681561,
+          0.03125000000000001,
+          0.18213834764831843,
+          0.005361652351681561,
+          0.03125,
+          0.03125,
+          0.005361652351681561,
+          0.18213834764831843,
+          0.03125000000000001,
+          0.005361652351681561,
+          0.03125,
+          0.03125000000000001,
+          0.18213834764831843
+        ],
+        "published_hedge": [
+          1.2811360055077058e-17,
+          0.5,
+          0.5000000000000001,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "regime": "ideal",
+      "resources": {
+        "games_per_arm": 256,
+        "max_simulated_qubits": 4,
+        "native_gate_cost": null,
+        "physical_packed_width": 16,
+        "submitted_gates_per_arm": {
+          "attained_product": {
+            "measurement": 4,
+            "one_qubit": 4,
+            "two_qubit": 4
+          },
+          "optimized_joint": {
+            "measurement": 4,
+            "one_qubit": 12,
+            "two_qubit": 5
+          },
+          "product_control": {
+            "measurement": 4,
+            "one_qubit": 4,
+            "two_qubit": 2
+          },
+          "published_hedge": {
+            "measurement": 4,
+            "one_qubit": 8,
+            "two_qubit": 5
+          }
+        },
+        "submitted_operation_shots": 11264
+      },
+      "sampling": {
+        "algorithm": "sha256(root,regime,rep,block)[:16]; numpy multinomial",
+        "arm_covariance": "zero by local independent-block model; not observed cloud covariance",
+        "replicates": 2,
+        "root_seed": 13523901018485281925,
+        "shots_per_arm_per_replicate": 128
+      },
+      "source": "mathematical reference"
+    },
+    {
+      "case": {
+        "alpha": 0.7853981633974483,
+        "generation_seed": null,
+        "instance_id": "quick-0",
+        "sampling_seed": 13523901018485281925,
+        "theta": 0.39269908169872414
+      },
+      "certificate": {
+        "reason": "quick mode forbids noisy SDP certification",
+        "status": "NOT_RUN"
+      },
+      "configuration": {
+        "hash": "86d9ab70f8be5fce95054026da530e2819f48b0ffcd52786bca871d563854cbf",
+        "model": "aria",
+        "one_qubit": 0.0005,
+        "origin": "local IonQ-like approximation; not official calibration",
+        "readout": 0.0,
+        "scale": 1.0,
+        "source_imbalance": 0.0,
+        "two_qubit": 0.007,
+        "version": "HN-pauli-v2"
+      },
+      "counts": [
+        {
+          "attained_product": {
+            "0000": 86,
+            "0001": 20,
+            "0010": 18,
+            "0011": 4
+          },
+          "optimized_joint": {
+            "0001": 66,
+            "0010": 57,
+            "0011": 1,
+            "0111": 1,
+            "1000": 1,
+            "1011": 2
+          },
+          "product_control": {
+            "0000": 20,
+            "0001": 2,
+            "0010": 5,
+            "0011": 3,
+            "0100": 5,
+            "0101": 18,
+            "0110": 2,
+            "0111": 2,
+            "1000": 2,
+            "1010": 29,
+            "1011": 5,
+            "1101": 4,
+            "1110": 5,
+            "1111": 26
+          },
+          "published_hedge": {
+            "0001": 63,
+            "0010": 63,
+            "0011": 1,
+            "1010": 1
+          }
+        },
+        {
+          "attained_product": {
+            "0000": 87,
+            "0001": 16,
+            "0010": 23,
+            "0011": 1,
+            "1011": 1
+          },
+          "optimized_joint": {
+            "0001": 59,
+            "0010": 65,
+            "0011": 1,
+            "0101": 1,
+            "0110": 2
+          },
+          "product_control": {
+            "0000": 24,
+            "0001": 3,
+            "0010": 1,
+            "0011": 1,
+            "0101": 25,
+            "0111": 1,
+            "1000": 8,
+            "1010": 25,
+            "1011": 4,
+            "1100": 1,
+            "1101": 4,
+            "1110": 4,
+            "1111": 27
+          },
+          "published_hedge": {
+            "0001": 57,
+            "0010": 67,
+            "0011": 1,
+            "1010": 1,
+            "1011": 1,
+            "1110": 1
+          }
+        }
+      ],
+      "exact_metrics": {
+        "attained_product": {
+          "f": 0.02430177346373518,
+          "loss": 0.03053738390233509,
+          "m": 1.6882194780700046
+        },
+        "optimized_joint": {
+          "f": 0.016431326575824388,
+          "loss": 0.03667970592536633,
+          "m": 0.9875810325229026
+        },
+        "product_control": {
+          "f": 0.33023435527540934,
+          "loss": 0.35322076361687615,
+          "m": 0.8506795829266592
+        },
+        "published_hedge": {
+          "f": 0.015621489324665798,
+          "loss": 0.03585685349961249,
+          "m": 0.9882317912526655
+        }
+      },
+      "failure": null,
+      "instance_id": "quick-0",
+      "manifest": {
+        "case_id": 0,
+        "decoding_maps": [
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          }
+        ],
+        "offsets": [
+          0,
+          4,
+          8,
+          12
+        ],
+        "ordered_blocks": [
+          "attained_product",
+          "published_hedge",
+          "optimized_joint",
+          "product_control"
+        ],
+        "ownership": {
+          "prover": [
+            2,
+            3
+          ],
+          "reference": [
+            0,
+            1
+          ]
+        },
+        "parameters": {
+          "alpha": 0.7853981633974483,
+          "identity": "quick-0",
+          "joint_phase": 3.141592653589793,
+          "lambda_selection": "predeclared; no development selection evidence",
+          "lambda_star": 0.02,
+          "local_rotation": 0.0,
+          "menu_lambda": [
+            0.005,
+            0.01,
+            0.02,
+            0.03,
+            0.04,
+            0.06
+          ],
+          "objective_evaluations_per_class_per_lambda": 256,
+          "optimized_status": "frozen candidate; optimization not yet evidenced",
+          "seed": null,
+          "theta": 0.39269908169872414
+        },
+        "recipe_hash": "5d2a4b15b934641276d333ae37f17c9c1535b60e050b67dc8c8f656c15d77124",
+        "recipe_identity": "quick-0",
+        "seed": null,
+        "smoke_control_ids": [
+          "product_control"
+        ],
+        "source_assumptions": [
+          "same alpha and theta for both tests",
+          "independent reference/prover source pairs",
+          "product factorization requires independent per-test noise",
+          "control ideal histogram is outcome-equivalent to fixed-output measure/prepare; not a noisy implementation of that channel",
+          "optimized_joint is a frozen candidate, not an optimality claim"
+        ],
+        "total_width": 16,
+        "widths": [
+          4,
+          4,
+          4,
+          4
+        ]
+      },
+      "manifest_hash": "8236b3634a8ca0ea12f97806079bf7ecd65e56c6bb0d286b88ddfb6d728b754c",
+      "paired_replicates": [
+        {
+          "attained_product": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.03125,
+            "loss": 0.0384375,
+            "m": 1.640625
+          },
+          "optimized_joint": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.03125,
+            "loss": 0.051875000000000004,
+            "m": 0.96875
+          },
+          "product_control": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.3671875,
+            "loss": 0.39140625,
+            "m": 0.7890625
+          },
+          "published_hedge": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0078125,
+            "loss": 0.02796875,
+            "m": 0.9921875
+          }
+        },
+        {
+          "attained_product": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.015625,
+            "loss": 0.02234375,
+            "m": 1.6640625
+          },
+          "optimized_joint": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0234375,
+            "loss": 0.04390625,
+            "m": 0.9765625
+          },
+          "product_control": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.328125,
+            "loss": 0.3509375,
+            "m": 0.859375
+          },
+          "published_hedge": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0234375,
+            "loss": 0.04390625,
+            "m": 0.9765625
+          }
+        }
+      ],
+      "probabilities": {
+        "attained_product": [
+          0.7125212515337396,
+          0.12530933147772683,
+          0.1253093314777269,
+          0.02203783890177948,
+          0.003139578011767947,
+          0.003139578011767947,
+          0.0005521497371902362,
+          0.0005521497371902362,
+          0.0031395780117679474,
+          0.0005521497371902363,
+          0.0031395780117679474,
+          0.0005521497371902363,
+          1.3833903298686422e-05,
+          1.3833903298686422e-05,
+          1.3833903298686422e-05,
+          1.3833903298686422e-05
+        ],
+        "optimized_joint": [
+          0.004012359098726983,
+          0.4845400106400718,
+          0.48454001064007174,
+          0.004012359098727008,
+          0.002989132669315013,
+          0.002249013853337548,
+          0.002249013853337548,
+          0.0029891326693150125,
+          0.0029891326693150116,
+          0.0022490138533375476,
+          0.0022490138533375476,
+          0.002989132669315012,
+          0.0004856686079480643,
+          0.0004856686079480643,
+          0.0004856686079480643,
+          0.0004856686079480643
+        ],
+        "product_control": [
+          0.18091393820206875,
+          0.03175595752959605,
+          0.03175595752959605,
+          0.005574146738739095,
+          0.03175595752959605,
+          0.18091393820206877,
+          0.005574146738739095,
+          0.03175595752959605,
+          0.03175595752959605,
+          0.005574146738739095,
+          0.18091393820206875,
+          0.03175595752959605,
+          0.005574146738739095,
+          0.03175595752959605,
+          0.03175595752959605,
+          0.18091393820206877
+        ],
+        "published_hedge": [
+          0.003853280577331388,
+          0.4853443664543881,
+          0.48534436645438817,
+          0.0038532805773314202,
+          0.002910199993390575,
+          0.002008048601222642,
+          0.0020080486012226417,
+          0.002910199993390575,
+          0.002910199993390575,
+          0.0020080486012226412,
+          0.0020080486012226412,
+          0.002910199993390575,
+          0.0004829278895269866,
+          0.0004829278895269866,
+          0.0004829278895269866,
+          0.0004829278895269866
+        ]
+      },
+      "regime": "aria-s1",
+      "resources": {
+        "games_per_arm": 256,
+        "max_simulated_qubits": 4,
+        "native_gate_cost": null,
+        "physical_packed_width": 16,
+        "submitted_gates_per_arm": {
+          "attained_product": {
+            "measurement": 4,
+            "one_qubit": 4,
+            "two_qubit": 4
+          },
+          "optimized_joint": {
+            "measurement": 4,
+            "one_qubit": 12,
+            "two_qubit": 5
+          },
+          "product_control": {
+            "measurement": 4,
+            "one_qubit": 4,
+            "two_qubit": 2
+          },
+          "published_hedge": {
+            "measurement": 4,
+            "one_qubit": 8,
+            "two_qubit": 5
+          }
+        },
+        "submitted_operation_shots": 11264
+      },
+      "sampling": {
+        "algorithm": "sha256(root,regime,rep,block)[:16]; numpy multinomial",
+        "arm_covariance": "zero by local independent-block model; not observed cloud covariance",
+        "replicates": 2,
+        "root_seed": 13523901018485281925,
+        "shots_per_arm_per_replicate": 128
+      },
+      "source": "local IonQ-like approximation"
+    },
+    {
+      "case": {
+        "alpha": 0.7833520884322974,
+        "generation_seed": 2026102900,
+        "instance_id": "quick-1",
+        "sampling_seed": 15690351688096076515,
+        "theta": 0.38125588702364926
+      },
+      "certificate": {
+        "bound": {
+          "assumption": "independent test sources, product channels, and independent per-test noise",
+          "double_failure_lower_bound": 0.02345597163044149,
+          "loss_lower_bound": 0.029582108635823133,
+          "valid": true
+        },
+        "certificate": {
+          "certified": true,
+          "corrected_slack_eigenvalues": [
+            1.0000056338554941e-12,
+            0.24162442504120255,
+            0.34536705541175855,
+            0.6052221498242564
+          ],
+          "dual_feasible": true,
+          "dual_input_imag": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "dual_input_real": [
+            [
+              0.6052221498242564,
+              0.0
+            ],
+            [
+              0.0,
+              0.24162442504120255
+            ]
+          ],
+          "dual_slack_correction": 1.0000416333634234e-12,
+          "dual_slack_min_eigenvalue": -4.163336342344337e-17,
+          "dual_upper_bound": 0.8468465748654589,
+          "gap": 1.999955756559757e-12,
+          "hermiticity": 0.0,
+          "minimum_eigenvalue": 0.0,
+          "primal_choi_imag": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "primal_choi_real": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "primal_eigenvalues": [
+            0.0,
+            0.0,
+            0.0,
+            2.0
+          ],
+          "primal_value": 0.8468465748634589,
+          "tensor_order": "output tensor input; unnormalized Choi",
+          "trace_preserving": 0.0,
+          "trace_residual": 0.0
+        },
+        "same_certificate_applies_to_tests": [
+          0,
+          1
+        ],
+        "status": "CERTIFIED"
+      },
+      "configuration": null,
+      "counts": [
+        {
+          "attained_product": {
+            "0000": 94,
+            "0001": 14,
+            "0010": 17,
+            "0011": 3
+          },
+          "optimized_joint": {
+            "0001": 66,
+            "0010": 62
+          },
+          "product_control": {
+            "0000": 26,
+            "0001": 1,
+            "0010": 3,
+            "0100": 2,
+            "0101": 26,
+            "0111": 3,
+            "1000": 3,
+            "1001": 1,
+            "1010": 26,
+            "1011": 5,
+            "1100": 1,
+            "1101": 2,
+            "1110": 5,
+            "1111": 24
+          },
+          "published_hedge": {
+            "0001": 64,
+            "0010": 64
+          }
+        },
+        {
+          "attained_product": {
+            "0000": 89,
+            "0001": 14,
+            "0010": 22,
+            "0011": 3
+          },
+          "optimized_joint": {
+            "0001": 64,
+            "0010": 64
+          },
+          "product_control": {
+            "0000": 15,
+            "0001": 3,
+            "0010": 6,
+            "0100": 3,
+            "0101": 28,
+            "0111": 6,
+            "1000": 2,
+            "1001": 1,
+            "1010": 26,
+            "1011": 3,
+            "1101": 6,
+            "1110": 5,
+            "1111": 24
+          },
+          "published_hedge": {
+            "0001": 65,
+            "0010": 63
+          }
+        }
+      ],
+      "exact_metrics": {
+        "attained_product": {
+          "f": 0.02345597163105416,
+          "loss": 0.029582108636515808,
+          "m": 1.6936931497269176
+        },
+        "optimized_joint": {
+          "f": 0.00019989805496300656,
+          "loss": 0.02019724886994703,
+          "m": 1.000132459250799
+        },
+        "product_control": {
+          "f": 0.32201241538787756,
+          "loss": 0.34471087050316246,
+          "m": 0.8650772442357542
+        },
+        "published_hedge": {
+          "f": 0.00019989805496300656,
+          "loss": 0.02019724886994703,
+          "m": 1.000132459250799
+        }
+      },
+      "failure": null,
+      "instance_id": "quick-1",
+      "manifest": {
+        "case_id": 0,
+        "decoding_maps": [
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          }
+        ],
+        "offsets": [
+          0,
+          4,
+          8,
+          12
+        ],
+        "ordered_blocks": [
+          "attained_product",
+          "published_hedge",
+          "optimized_joint",
+          "product_control"
+        ],
+        "ownership": {
+          "prover": [
+            2,
+            3
+          ],
+          "reference": [
+            0,
+            1
+          ]
+        },
+        "parameters": {
+          "alpha": 0.7833520884322974,
+          "identity": "quick-1",
+          "joint_phase": 3.141592653589793,
+          "lambda_selection": "predeclared; no development selection evidence",
+          "lambda_star": 0.02,
+          "local_rotation": 0.0,
+          "menu_lambda": [
+            0.005,
+            0.01,
+            0.02,
+            0.03,
+            0.04,
+            0.06
+          ],
+          "objective_evaluations_per_class_per_lambda": 256,
+          "optimized_status": "frozen candidate; optimization not yet evidenced",
+          "seed": 2026102900,
+          "theta": 0.38125588702364926
+        },
+        "recipe_hash": "dd18814ef8d274b26b57b0e0edfe13c1c6dd7cb4fb6c5a5a516c1f382b8d131d",
+        "recipe_identity": "quick-1",
+        "seed": 2026102900,
+        "smoke_control_ids": [
+          "product_control"
+        ],
+        "source_assumptions": [
+          "same alpha and theta for both tests",
+          "independent reference/prover source pairs",
+          "product factorization requires independent per-test noise",
+          "control ideal histogram is outcome-equivalent to fixed-output measure/prepare; not a noisy implementation of that channel",
+          "optimized_joint is a frozen candidate, not an optimality claim"
+        ],
+        "total_width": 16,
+        "widths": [
+          4,
+          4,
+          4,
+          4
+        ]
+      },
+      "manifest_hash": "bb40cbbf8002755dc4a7c64abfe3aaa5d8929b9f0bfb89dda0c48826b8e7634b",
+      "paired_replicates": [
+        {
+          "attained_product": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0234375,
+            "loss": 0.02921875,
+            "m": 1.7109375
+          },
+          "optimized_joint": {
+            "double_failure_upper_if_zero": 0.028408053443543912,
+            "f": 0.0,
+            "loss": 0.02,
+            "m": 1.0
+          },
+          "product_control": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.3203125,
+            "loss": 0.34265625,
+            "m": 0.8828125
+          },
+          "published_hedge": {
+            "double_failure_upper_if_zero": 0.028408053443543912,
+            "f": 0.0,
+            "loss": 0.02,
+            "m": 1.0
+          }
+        },
+        {
+          "attained_product": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0234375,
+            "loss": 0.03,
+            "m": 1.671875
+          },
+          "optimized_joint": {
+            "double_failure_upper_if_zero": 0.028408053443543912,
+            "f": 0.0,
+            "loss": 0.02,
+            "m": 1.0
+          },
+          "product_control": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.3515625,
+            "loss": 0.37625,
+            "m": 0.765625
+          },
+          "published_hedge": {
+            "double_failure_upper_if_zero": 0.028408053443543912,
+            "f": 0.0,
+            "loss": 0.02,
+            "m": 1.0
+          }
+        }
+      ],
+      "probabilities": {
+        "attained_product": [
+          0.7171491213579717,
+          0.12969745350548711,
+          0.1296974535054871,
+          0.02345597163105416,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "optimized_joint": [
+          0.00033235730576194,
+          0.4997338723196375,
+          0.4997338723196376,
+          0.00019989805496300656,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "product_control": [
+          0.18708965962363164,
+          0.030064655411477785,
+          0.030064655411477785,
+          0.004831285207473483,
+          0.02981960074077447,
+          0.18556470634199315,
+          0.0047919057770630085,
+          0.029819600740774478,
+          0.02981960074077448,
+          0.004791905777063009,
+          0.18556470634199318,
+          0.029819600740774478,
+          0.004752847325330642,
+          0.029576543491655137,
+          0.02957654349165514,
+          0.18405218283608818
+        ],
+        "published_hedge": [
+          0.00033235730576194,
+          0.4997338723196375,
+          0.4997338723196376,
+          0.00019989805496300656,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "regime": "ideal",
+      "resources": {
+        "games_per_arm": 256,
+        "max_simulated_qubits": 4,
+        "native_gate_cost": null,
+        "physical_packed_width": 16,
+        "submitted_gates_per_arm": {
+          "attained_product": {
+            "measurement": 4,
+            "one_qubit": 4,
+            "two_qubit": 4
+          },
+          "optimized_joint": {
+            "measurement": 4,
+            "one_qubit": 12,
+            "two_qubit": 5
+          },
+          "product_control": {
+            "measurement": 4,
+            "one_qubit": 4,
+            "two_qubit": 2
+          },
+          "published_hedge": {
+            "measurement": 4,
+            "one_qubit": 8,
+            "two_qubit": 5
+          }
+        },
+        "submitted_operation_shots": 11264
+      },
+      "sampling": {
+        "algorithm": "sha256(root,regime,rep,block)[:16]; numpy multinomial",
+        "arm_covariance": "zero by local independent-block model; not observed cloud covariance",
+        "replicates": 2,
+        "root_seed": 15690351688096076515,
+        "shots_per_arm_per_replicate": 128
+      },
+      "source": "mathematical reference"
+    },
+    {
+      "case": {
+        "alpha": 0.7833520884322974,
+        "generation_seed": 2026102900,
+        "instance_id": "quick-1",
+        "sampling_seed": 15690351688096076515,
+        "theta": 0.38125588702364926
+      },
+      "certificate": {
+        "reason": "quick mode forbids noisy SDP certification",
+        "status": "NOT_RUN"
+      },
+      "configuration": {
+        "hash": "86d9ab70f8be5fce95054026da530e2819f48b0ffcd52786bca871d563854cbf",
+        "model": "aria",
+        "one_qubit": 0.0005,
+        "origin": "local IonQ-like approximation; not official calibration",
+        "readout": 0.0,
+        "scale": 1.0,
+        "source_imbalance": 0.0,
+        "two_qubit": 0.007,
+        "version": "HN-pauli-v2"
+      },
+      "counts": [
+        {
+          "attained_product": {
+            "0000": 96,
+            "0001": 12,
+            "0010": 12,
+            "0011": 5,
+            "1000": 2,
+            "1010": 1
+          },
+          "optimized_joint": {
+            "0000": 1,
+            "0001": 54,
+            "0010": 69,
+            "0011": 2,
+            "0101": 1,
+            "1000": 1
+          },
+          "product_control": {
+            "0000": 30,
+            "0001": 4,
+            "0010": 2,
+            "0100": 7,
+            "0101": 16,
+            "0110": 1,
+            "0111": 2,
+            "1000": 6,
+            "1010": 26,
+            "1011": 4,
+            "1101": 2,
+            "1110": 1,
+            "1111": 27
+          },
+          "published_hedge": {
+            "0001": 68,
+            "0010": 57,
+            "0011": 1,
+            "0100": 1,
+            "0101": 1
+          }
+        },
+        {
+          "attained_product": {
+            "0000": 92,
+            "0001": 8,
+            "0010": 21,
+            "0011": 7
+          },
+          "optimized_joint": {
+            "0000": 1,
+            "0001": 70,
+            "0010": 52,
+            "0011": 2,
+            "0100": 1,
+            "1010": 2
+          },
+          "product_control": {
+            "0000": 31,
+            "0001": 1,
+            "0010": 5,
+            "0100": 4,
+            "0101": 21,
+            "0110": 2,
+            "0111": 5,
+            "1000": 3,
+            "1010": 24,
+            "1011": 3,
+            "1100": 1,
+            "1101": 5,
+            "1110": 5,
+            "1111": 18
+          },
+          "published_hedge": {
+            "0001": 60,
+            "0010": 62,
+            "0100": 1,
+            "0110": 1,
+            "0111": 1,
+            "1000": 1,
+            "1010": 1,
+            "1111": 1
+          }
+        }
+      ],
+      "exact_metrics": {
+        "attained_product": {
+          "f": 0.026402509073567785,
+          "loss": 0.03290204863554512,
+          "m": 1.6750230219011333
+        },
+        "optimized_joint": {
+          "f": 0.01659378582065886,
+          "loss": 0.036838806988265124,
+          "m": 0.987748941619687
+        },
+        "product_control": {
+          "f": 0.32369910243853384,
+          "loss": 0.3464569266733251,
+          "m": 0.8621087882604352
+        },
+        "published_hedge": {
+          "f": 0.015785361801888824,
+          "loss": 0.03601740216676087,
+          "m": 0.9883979817563976
+        }
+      },
+      "failure": null,
+      "instance_id": "quick-1",
+      "manifest": {
+        "case_id": 0,
+        "decoding_maps": [
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          }
+        ],
+        "offsets": [
+          0,
+          4,
+          8,
+          12
+        ],
+        "ordered_blocks": [
+          "attained_product",
+          "published_hedge",
+          "optimized_joint",
+          "product_control"
+        ],
+        "ownership": {
+          "prover": [
+            2,
+            3
+          ],
+          "reference": [
+            0,
+            1
+          ]
+        },
+        "parameters": {
+          "alpha": 0.7833520884322974,
+          "identity": "quick-1",
+          "joint_phase": 3.141592653589793,
+          "lambda_selection": "predeclared; no development selection evidence",
+          "lambda_star": 0.02,
+          "local_rotation": 0.0,
+          "menu_lambda": [
+            0.005,
+            0.01,
+            0.02,
+            0.03,
+            0.04,
+            0.06
+          ],
+          "objective_evaluations_per_class_per_lambda": 256,
+          "optimized_status": "frozen candidate; optimization not yet evidenced",
+          "seed": 2026102900,
+          "theta": 0.38125588702364926
+        },
+        "recipe_hash": "dd18814ef8d274b26b57b0e0edfe13c1c6dd7cb4fb6c5a5a516c1f382b8d131d",
+        "recipe_identity": "quick-1",
+        "seed": 2026102900,
+        "smoke_control_ids": [
+          "product_control"
+        ],
+        "source_assumptions": [
+          "same alpha and theta for both tests",
+          "independent reference/prover source pairs",
+          "product factorization requires independent per-test noise",
+          "control ideal histogram is outcome-equivalent to fixed-output measure/prepare; not a noisy implementation of that channel",
+          "optimized_joint is a frozen candidate, not an optimality claim"
+        ],
+        "total_width": 16,
+        "widths": [
+          4,
+          4,
+          4,
+          4
+        ]
+      },
+      "manifest_hash": "bb40cbbf8002755dc4a7c64abfe3aaa5d8929b9f0bfb89dda0c48826b8e7634b",
+      "paired_replicates": [
+        {
+          "attained_product": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0390625,
+            "loss": 0.04484375,
+            "m": 1.7109375
+          },
+          "optimized_joint": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.015625,
+            "loss": 0.03578125,
+            "m": 0.9921875
+          },
+          "product_control": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.2890625,
+            "loss": 0.31015625,
+            "m": 0.9453125
+          },
+          "published_hedge": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0078125,
+            "loss": 0.02796875,
+            "m": 0.9921875
+          }
+        },
+        {
+          "attained_product": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0546875,
+            "loss": 0.06140625,
+            "m": 1.6640625
+          },
+          "optimized_joint": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.015625,
+            "loss": 0.03578125,
+            "m": 0.9921875
+          },
+          "product_control": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.3046875,
+            "loss": 0.3259375,
+            "m": 0.9375
+          },
+          "published_hedge": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0234375,
+            "loss": 0.04390625,
+            "m": 0.9765625
+          }
+        }
+      ],
+      "probabilities": {
+        "attained_product": [
+          0.7014255309747012,
+          0.12985590679275327,
+          0.12985590679275313,
+          0.024040408830764932,
+          0.003115036591556156,
+          0.003115036591556156,
+          0.0005766911574020273,
+          0.0005766911574020273,
+          0.003115036591556155,
+          0.0005766911574020273,
+          0.003115036591556156,
+          0.0005766911574020273,
+          1.3833903298686419e-05,
+          1.383390329868642e-05,
+          1.383390329868642e-05,
+          1.383390329868642e-05
+        ],
+        "optimized_joint": [
+          0.004342727440345707,
+          0.4842842497433959,
+          0.48428424974339573,
+          0.004193512550460167,
+          0.0029957345571964603,
+          0.0022517590689054424,
+          0.0022470365175356086,
+          0.0029817629016676093,
+          0.00299573455719646,
+          0.0022470365175356094,
+          0.0022517590689054424,
+          0.0029817629016676093,
+          0.0004884064611786804,
+          0.0004856646493669987,
+          0.00048566464936699867,
+          0.0004829386718795798
+        ],
+        "product_control": [
+          0.18580789069896897,
+          0.03059410456653232,
+          0.030594104566532315,
+          0.005037456863144444,
+          0.030351454128366668,
+          0.18430094473634964,
+          0.004997503377582401,
+          0.030345979138795866,
+          0.030351454128366675,
+          0.0049975033775824015,
+          0.18430094473634964,
+          0.030345979138795862,
+          0.004957866774338546,
+          0.030105296653103866,
+          0.030105296653103856,
+          0.1828062204620866
+        ],
+        "published_hedge": [
+          0.0041833435582863815,
+          0.4850880941861624,
+          0.4850880941861622,
+          0.004035762132828319,
+          0.0029162174283556635,
+          0.0020113357053944936,
+          0.0020057032370244714,
+          0.0029032408184518077,
+          0.002916217428355662,
+          0.002005703237024472,
+          0.0020113357053944936,
+          0.0029032408184518077,
+          0.0004856566943925597,
+          0.0004829239337428748,
+          0.0004829239337428747,
+          0.00048020699622963796
+        ]
+      },
+      "regime": "aria-s1",
+      "resources": {
+        "games_per_arm": 256,
+        "max_simulated_qubits": 4,
+        "native_gate_cost": null,
+        "physical_packed_width": 16,
+        "submitted_gates_per_arm": {
+          "attained_product": {
+            "measurement": 4,
+            "one_qubit": 4,
+            "two_qubit": 4
+          },
+          "optimized_joint": {
+            "measurement": 4,
+            "one_qubit": 12,
+            "two_qubit": 5
+          },
+          "product_control": {
+            "measurement": 4,
+            "one_qubit": 4,
+            "two_qubit": 2
+          },
+          "published_hedge": {
+            "measurement": 4,
+            "one_qubit": 8,
+            "two_qubit": 5
+          }
+        },
+        "submitted_operation_shots": 11264
+      },
+      "sampling": {
+        "algorithm": "sha256(root,regime,rep,block)[:16]; numpy multinomial",
+        "arm_covariance": "zero by local independent-block model; not observed cloud covariance",
+        "replicates": 2,
+        "root_seed": 15690351688096076515,
+        "shots_per_arm_per_replicate": 128
+      },
+      "source": "local IonQ-like approximation"
+    },
+    {
+      "case": {
+        "alpha": 0.7746552494419897,
+        "generation_seed": 2026102901,
+        "instance_id": "quick-2",
+        "sampling_seed": 7478561966211528662,
+        "theta": 0.37768475604546264
+      },
+      "certificate": {
+        "bound": {
+          "assumption": "independent test sources, product channels, and independent per-test noise",
+          "double_failure_lower_bound": 0.022344215959188764,
+          "loss_lower_bound": 0.028323408675158205,
+          "valid": true
+        },
+        "certificate": {
+          "certified": true,
+          "corrected_slack_eigenvalues": [
+            1.0000056338554941e-12,
+            0.23788447958852899,
+            0.3426997461939766,
+            0.612635702512235
+          ],
+          "dual_feasible": true,
+          "dual_input_imag": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "dual_input_real": [
+            [
+              0.612635702512235,
+              0.0
+            ],
+            [
+              0.0,
+              0.23788447958852893
+            ]
+          ],
+          "dual_slack_correction": 1e-12,
+          "dual_slack_min_eigenvalue": -2.1145516070882338e-29,
+          "dual_upper_bound": 0.850520182100764,
+          "gap": 2.0000667788622195e-12,
+          "hermiticity": 0.0,
+          "minimum_eigenvalue": 0.0,
+          "primal_choi_imag": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "primal_choi_real": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "primal_eigenvalues": [
+            0.0,
+            0.0,
+            0.0,
+            2.0
+          ],
+          "primal_value": 0.8505201820987639,
+          "tensor_order": "output tensor input; unnormalized Choi",
+          "trace_preserving": 0.0,
+          "trace_residual": 0.0
+        },
+        "same_certificate_applies_to_tests": [
+          0,
+          1
+        ],
+        "status": "CERTIFIED"
+      },
+      "configuration": null,
+      "counts": [
+        {
+          "attained_product": {
+            "0000": 87,
+            "0001": 16,
+            "0010": 24,
+            "0011": 1
+          },
+          "optimized_joint": {
+            "0001": 66,
+            "0010": 62
+          },
+          "product_control": {
+            "0000": 21,
+            "0001": 2,
+            "0010": 9,
+            "0100": 5,
+            "0101": 23,
+            "0111": 5,
+            "1000": 3,
+            "1001": 1,
+            "1010": 24,
+            "1011": 3,
+            "1101": 8,
+            "1110": 5,
+            "1111": 19
+          },
+          "published_hedge": {
+            "0001": 70,
+            "0010": 58
+          }
+        },
+        {
+          "attained_product": {
+            "0000": 85,
+            "0001": 19,
+            "0010": 20,
+            "0011": 4
+          },
+          "optimized_joint": {
+            "0001": 66,
+            "0010": 62
+          },
+          "product_control": {
+            "0000": 22,
+            "0001": 4,
+            "0010": 7,
+            "0011": 1,
+            "0100": 3,
+            "0101": 25,
+            "0111": 4,
+            "1000": 5,
+            "1010": 22,
+            "1011": 4,
+            "1100": 1,
+            "1101": 3,
+            "1110": 4,
+            "1111": 23
+          },
+          "published_hedge": {
+            "0001": 71,
+            "0010": 57
+          }
+        }
+      ],
+      "exact_metrics": {
+        "attained_product": {
+          "f": 0.022344215959786688,
+          "loss": 0.028323408675836128,
+          "m": 1.701040364197528
+        },
+        "optimized_joint": {
+          "f": 0.00011166786953289766,
+          "loss": 0.02009335528371114,
+          "m": 1.0009156292910877
+        },
+        "product_control": {
+          "f": 0.3121615244127675,
+          "loss": 0.33451009123617764,
+          "m": 0.8825716588294934
+        },
+        "published_hedge": {
+          "f": 0.00011166786953289766,
+          "loss": 0.02009335528371114,
+          "m": 1.0009156292910877
+        }
+      },
+      "failure": null,
+      "instance_id": "quick-2",
+      "manifest": {
+        "case_id": 0,
+        "decoding_maps": [
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          }
+        ],
+        "offsets": [
+          0,
+          4,
+          8,
+          12
+        ],
+        "ordered_blocks": [
+          "attained_product",
+          "published_hedge",
+          "optimized_joint",
+          "product_control"
+        ],
+        "ownership": {
+          "prover": [
+            2,
+            3
+          ],
+          "reference": [
+            0,
+            1
+          ]
+        },
+        "parameters": {
+          "alpha": 0.7746552494419897,
+          "identity": "quick-2",
+          "joint_phase": 3.141592653589793,
+          "lambda_selection": "predeclared; no development selection evidence",
+          "lambda_star": 0.02,
+          "local_rotation": 0.0,
+          "menu_lambda": [
+            0.005,
+            0.01,
+            0.02,
+            0.03,
+            0.04,
+            0.06
+          ],
+          "objective_evaluations_per_class_per_lambda": 256,
+          "optimized_status": "frozen candidate; optimization not yet evidenced",
+          "seed": 2026102901,
+          "theta": 0.37768475604546264
+        },
+        "recipe_hash": "c712c269f98d55ab535699937a597593803ae843abcb18a165dae32359e592f0",
+        "recipe_identity": "quick-2",
+        "seed": 2026102901,
+        "smoke_control_ids": [
+          "product_control"
+        ],
+        "source_assumptions": [
+          "same alpha and theta for both tests",
+          "independent reference/prover source pairs",
+          "product factorization requires independent per-test noise",
+          "control ideal histogram is outcome-equivalent to fixed-output measure/prepare; not a noisy implementation of that channel",
+          "optimized_joint is a frozen candidate, not an optimality claim"
+        ],
+        "total_width": 16,
+        "widths": [
+          4,
+          4,
+          4,
+          4
+        ]
+      },
+      "manifest_hash": "cf548f6f2653285c7f93e56f94d8fcaff97ad764f75c7362eeb7ee335b2753f1",
+      "paired_replicates": [
+        {
+          "attained_product": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0078125,
+            "loss": 0.014374999999999999,
+            "m": 1.671875
+          },
+          "optimized_joint": {
+            "double_failure_upper_if_zero": 0.028408053443543912,
+            "f": 0.0,
+            "loss": 0.02,
+            "m": 1.0
+          },
+          "product_control": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.3203125,
+            "loss": 0.3434375,
+            "m": 0.84375
+          },
+          "published_hedge": {
+            "double_failure_upper_if_zero": 0.028408053443543912,
+            "f": 0.0,
+            "loss": 0.02,
+            "m": 1.0
+          }
+        },
+        {
+          "attained_product": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.03125,
+            "loss": 0.03859375,
+            "m": 1.6328125
+          },
+          "optimized_joint": {
+            "double_failure_upper_if_zero": 0.028408053443543912,
+            "f": 0.0,
+            "loss": 0.02,
+            "m": 1.0
+          },
+          "product_control": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.3125,
+            "loss": 0.3353125,
+            "m": 0.859375
+          },
+          "published_hedge": {
+            "double_failure_upper_if_zero": 0.028408053443543912,
+            "f": 0.0,
+            "loss": 0.02,
+            "m": 1.0
+          }
+        }
+      ],
+      "probabilities": {
+        "attained_product": [
+          0.7233845801573148,
+          0.1271356019414493,
+          0.12713560194144932,
+          0.022344215959786688,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "optimized_joint": [
+          0.001027297160620478,
+          0.49943051748492334,
+          0.49943051748492334,
+          0.00011166786953289766,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "product_control": [
+          0.19473318324226094,
+          0.03065006241893763,
+          0.030650062418937626,
+          0.00482417177516204,
+          0.029360779010182657,
+          0.1865418047433655,
+          0.004621244794274148,
+          0.029360779010182657,
+          0.029360779010182657,
+          0.004621244794274148,
+          0.1865418047433655,
+          0.029360779010182657,
+          0.004426853860917626,
+          0.0281257288256662,
+          0.028125728825666205,
+          0.17869499351644183
+        ],
+        "published_hedge": [
+          0.001027297160620478,
+          0.49943051748492334,
+          0.49943051748492334,
+          0.00011166786953289766,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "regime": "ideal",
+      "resources": {
+        "games_per_arm": 256,
+        "max_simulated_qubits": 4,
+        "native_gate_cost": null,
+        "physical_packed_width": 16,
+        "submitted_gates_per_arm": {
+          "attained_product": {
+            "measurement": 4,
+            "one_qubit": 4,
+            "two_qubit": 4
+          },
+          "optimized_joint": {
+            "measurement": 4,
+            "one_qubit": 12,
+            "two_qubit": 5
+          },
+          "product_control": {
+            "measurement": 4,
+            "one_qubit": 4,
+            "two_qubit": 2
+          },
+          "published_hedge": {
+            "measurement": 4,
+            "one_qubit": 8,
+            "two_qubit": 5
+          }
+        },
+        "submitted_operation_shots": 11264
+      },
+      "sampling": {
+        "algorithm": "sha256(root,regime,rep,block)[:16]; numpy multinomial",
+        "arm_covariance": "zero by local independent-block model; not observed cloud covariance",
+        "replicates": 2,
+        "root_seed": 7478561966211528662,
+        "shots_per_arm_per_replicate": 128
+      },
+      "source": "mathematical reference"
+    },
+    {
+      "case": {
+        "alpha": 0.7746552494419897,
+        "generation_seed": 2026102901,
+        "instance_id": "quick-2",
+        "sampling_seed": 7478561966211528662,
+        "theta": 0.37768475604546264
+      },
+      "certificate": {
+        "reason": "quick mode forbids noisy SDP certification",
+        "status": "NOT_RUN"
+      },
+      "configuration": {
+        "hash": "86d9ab70f8be5fce95054026da530e2819f48b0ffcd52786bca871d563854cbf",
+        "model": "aria",
+        "one_qubit": 0.0005,
+        "origin": "local IonQ-like approximation; not official calibration",
+        "readout": 0.0,
+        "scale": 1.0,
+        "source_imbalance": 0.0,
+        "two_qubit": 0.007,
+        "version": "HN-pauli-v2"
+      },
+      "counts": [
+        {
+          "attained_product": {
+            "0000": 88,
+            "0001": 15,
+            "0010": 22,
+            "0011": 2,
+            "0101": 1
+          },
+          "optimized_joint": {
+            "0000": 1,
+            "0001": 68,
+            "0010": 55,
+            "0101": 1,
+            "0111": 1,
+            "1000": 1,
+            "1001": 1
+          },
+          "product_control": {
+            "0000": 27,
+            "0001": 5,
+            "0010": 3,
+            "0011": 2,
+            "0100": 1,
+            "0101": 19,
+            "0110": 1,
+            "0111": 12,
+            "1000": 4,
+            "1001": 1,
+            "1010": 19,
+            "1011": 8,
+            "1101": 3,
+            "1110": 3,
+            "1111": 20
+          },
+          "published_hedge": {
+            "0000": 1,
+            "0001": 65,
+            "0010": 57,
+            "0110": 2,
+            "0111": 2,
+            "1001": 1
+          }
+        },
+        {
+          "attained_product": {
+            "0000": 93,
+            "0001": 11,
+            "0010": 19,
+            "0011": 3,
+            "0100": 1,
+            "0101": 1
+          },
+          "optimized_joint": {
+            "0000": 1,
+            "0001": 64,
+            "0010": 62,
+            "1011": 1
+          },
+          "product_control": {
+            "0000": 36,
+            "0001": 6,
+            "0010": 5,
+            "0100": 4,
+            "0101": 21,
+            "0111": 4,
+            "1000": 5,
+            "1010": 15,
+            "1011": 2,
+            "1101": 2,
+            "1110": 7,
+            "1111": 21
+          },
+          "published_hedge": {
+            "0001": 69,
+            "0010": 52,
+            "0011": 3,
+            "0111": 1,
+            "1000": 1,
+            "1010": 1,
+            "1011": 1
+          }
+        }
+      ],
+      "exact_metrics": {
+        "attained_product": {
+          "f": 0.025241062224056372,
+          "loss": 0.03159603661885059,
+          "m": 1.6822512802602891
+        },
+        "optimized_joint": {
+          "f": 0.01638092969505267,
+          "loss": 0.03660739837724023,
+          "m": 0.988676565890622
+        },
+        "product_control": {
+          "f": 0.31390426065951593,
+          "loss": 0.3363151244772099,
+          "m": 0.8794568091153003
+        },
+        "published_hedge": {
+          "f": 0.015576846564671704,
+          "loss": 0.035790476202632614,
+          "m": 0.9893185181019545
+        }
+      },
+      "failure": null,
+      "instance_id": "quick-2",
+      "manifest": {
+        "case_id": 0,
+        "decoding_maps": [
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "accepted_pair_outcome": "00",
+            "classical_bits": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "test_pass_cbits": [
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          }
+        ],
+        "offsets": [
+          0,
+          4,
+          8,
+          12
+        ],
+        "ordered_blocks": [
+          "attained_product",
+          "published_hedge",
+          "optimized_joint",
+          "product_control"
+        ],
+        "ownership": {
+          "prover": [
+            2,
+            3
+          ],
+          "reference": [
+            0,
+            1
+          ]
+        },
+        "parameters": {
+          "alpha": 0.7746552494419897,
+          "identity": "quick-2",
+          "joint_phase": 3.141592653589793,
+          "lambda_selection": "predeclared; no development selection evidence",
+          "lambda_star": 0.02,
+          "local_rotation": 0.0,
+          "menu_lambda": [
+            0.005,
+            0.01,
+            0.02,
+            0.03,
+            0.04,
+            0.06
+          ],
+          "objective_evaluations_per_class_per_lambda": 256,
+          "optimized_status": "frozen candidate; optimization not yet evidenced",
+          "seed": 2026102901,
+          "theta": 0.37768475604546264
+        },
+        "recipe_hash": "c712c269f98d55ab535699937a597593803ae843abcb18a165dae32359e592f0",
+        "recipe_identity": "quick-2",
+        "seed": 2026102901,
+        "smoke_control_ids": [
+          "product_control"
+        ],
+        "source_assumptions": [
+          "same alpha and theta for both tests",
+          "independent reference/prover source pairs",
+          "product factorization requires independent per-test noise",
+          "control ideal histogram is outcome-equivalent to fixed-output measure/prepare; not a noisy implementation of that channel",
+          "optimized_joint is a frozen candidate, not an optimality claim"
+        ],
+        "total_width": 16,
+        "widths": [
+          4,
+          4,
+          4,
+          4
+        ]
+      },
+      "manifest_hash": "cf548f6f2653285c7f93e56f94d8fcaff97ad764f75c7362eeb7ee335b2753f1",
+      "paired_replicates": [
+        {
+          "attained_product": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.015625,
+            "loss": 0.0221875,
+            "m": 1.671875
+          },
+          "optimized_joint": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.015625,
+            "loss": 0.03578125,
+            "m": 0.9921875
+          },
+          "product_control": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.390625,
+            "loss": 0.41421875,
+            "m": 0.8203125
+          },
+          "published_hedge": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0390625,
+            "loss": 0.059687500000000004,
+            "m": 0.96875
+          }
+        },
+        {
+          "attained_product": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0234375,
+            "loss": 0.029375,
+            "m": 1.703125
+          },
+          "optimized_joint": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0078125,
+            "loss": 0.0278125,
+            "m": 1.0
+          },
+          "product_control": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.28125,
+            "loss": 0.30125,
+            "m": 1.0
+          },
+          "published_hedge": {
+            "double_failure_upper_if_zero": null,
+            "f": 0.0390625,
+            "loss": 0.05984375,
+            "m": 0.9609375
+          }
+        }
+      ],
+      "probabilities": {
+        "attained_product": [
+          0.7074923424843454,
+          0.12737633971067133,
+          0.12737633971067142,
+          0.022932731485284415,
+          0.0031284789675638807,
+          0.0031284789675638807,
+          0.0005632487813943015,
+          0.0005632487813943015,
+          0.0031284789675638815,
+          0.0005632487813943013,
+          0.003128478967563881,
+          0.0005632487813943013,
+          1.383390329868642e-05,
+          1.3833903298686419e-05,
+          1.3833903298686419e-05,
+          1.3833903298686417e-05
+        ],
+        "optimized_joint": [
+          0.0050574955856746715,
+          0.48399277690802767,
+          0.48399277690802794,
+          0.004061690075867182,
+          0.0030257230622946505,
+          0.0022622873893138576,
+          0.0022368678926800185,
+          0.002951414701016596,
+          0.00302572306229465,
+          0.002236867892680018,
+          0.0022622873893138585,
+          0.0029514147010165966,
+          0.0005002300147400395,
+          0.00048555800668011325,
+          0.00048555800668011336,
+          0.0004713284036919915
+        ],
+        "product_control": [
+          0.1933610697748165,
+          0.031188338355774822,
+          0.03118833835577483,
+          0.005030549585431503,
+          0.02991177402394562,
+          0.18526722240311327,
+          0.004824645054801997,
+          0.02988283435374041,
+          0.029911774023945622,
+          0.004824645054801996,
+          0.18526722240311325,
+          0.029882834353740395,
+          0.00462716836590504,
+          0.028659705374094648,
+          0.028659705374094648,
+          0.17751217314290532
+        ],
+        "published_hedge": [
+          0.004895364666626164,
+          0.48479607512161527,
+          0.4847960751216154,
+          0.003907779153582384,
+          0.0029439226906330523,
+          0.0020238965721026984,
+          0.001993735715741527,
+          0.0028749422107491587,
+          0.0029439226906330515,
+          0.0019937357157415263,
+          0.002023896572102699,
+          0.0028749422107491583,
+          0.0004974414051583381,
+          0.00048281736640486947,
+          0.0004828173664048695,
+          0.0004686354201398695
+        ]
+      },
+      "regime": "aria-s1",
+      "resources": {
+        "games_per_arm": 256,
+        "max_simulated_qubits": 4,
+        "native_gate_cost": null,
+        "physical_packed_width": 16,
+        "submitted_gates_per_arm": {
+          "attained_product": {
+            "measurement": 4,
+            "one_qubit": 4,
+            "two_qubit": 4
+          },
+          "optimized_joint": {
+            "measurement": 4,
+            "one_qubit": 12,
+            "two_qubit": 5
+          },
+          "product_control": {
+            "measurement": 4,
+            "one_qubit": 4,
+            "two_qubit": 2
+          },
+          "published_hedge": {
+            "measurement": 4,
+            "one_qubit": 8,
+            "two_qubit": 5
+          }
+        },
+        "submitted_operation_shots": 11264
+      },
+      "sampling": {
+        "algorithm": "sha256(root,regime,rep,block)[:16]; numpy multinomial",
+        "arm_covariance": "zero by local independent-block model; not observed cloud covariance",
+        "replicates": 2,
+        "root_seed": 7478561966211528662,
+        "shots_per_arm_per_replicate": 128
+      },
+      "source": "local IonQ-like approximation"
+    }
+  ],
+  "machine": "Windows-11-10.0.26300-SP0",
+  "primary_local_decisions": null,
+  "projected_power": null,
+  "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+  "resource_ledger": {
+    "cloud_attempts_preregistered": 18,
+    "cloud_attempts_used": 0,
+    "entries": 6,
+    "independent_games": 3,
+    "replicates_per_entry": 2,
+    "shots_per_arm_per_replicate": 128
+  },
+  "schema_version": "HN-2",
+  "science_verdict": "NONE: implementation handoff; independent verification and Qollab evidence required",
+  "selection": null,
+  "source": "local IonQ-like approximation",
+  "started_utc": "2026-10-10T00:30:29Z",
+  "status": "COMPLETE",
+  "suite": "quick",
+  "versions": {
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.3",
+    "qiskit": "2.5.2",
+    "scipy": "1.18.1"
+  }
+}

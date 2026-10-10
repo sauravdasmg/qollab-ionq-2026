@@ -47,10 +47,10 @@ def validate_args(a):
         if not a.output_dir.name.lower().startswith("quick-") and a.output_dir != ROOT / "results":
             raise ValueError("quick output directory must have a quick- prefix")
         return
-    if a.suite == "fresh" and not a.independent_manifest:
-        raise ValueError("--suite fresh requires --independent-manifest PATH")
-    if a.suite != "fresh" and a.independent_manifest:
-        raise ValueError("--independent-manifest is only valid with --suite fresh")
+    if a.suite in ("frozen", "fresh") and not a.independent_manifest:
+        raise ValueError("--suite frozen/fresh requires --independent-manifest PATH")
+    if a.suite == "development" and a.independent_manifest:
+        raise ValueError("--independent-manifest is only valid with --suite frozen or fresh")
     if a.gate and a.suite != "development":
         raise ValueError("--gate g1 requires --suite development")
     if a.draws is not None and a.draws <= 0 or a.shots <= 0:
