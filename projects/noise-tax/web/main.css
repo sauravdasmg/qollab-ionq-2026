@@ -84,10 +84,11 @@ h1 {
   grid-template-columns: minmax(0, 1fr) 320px;
   grid-template-areas:
     "controls sidebar"
-    "cards sidebar";
+    "cards sidebar"
+    "details details";
   /* Sidebar is taller than controls + cards: give the extra height to the cards row so the
      charts sit directly under the noise slider (human test 2026-10-11). */
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
   gap: 1rem;
   align-items: start;
 }
@@ -613,7 +614,23 @@ footer p {
 @media (max-width: 900px) {
   .nt-main {
     grid-template-columns: 1fr;
-    grid-template-areas: "controls" "cards" "sidebar";
+    grid-template-areas: "controls" "cards" "details" "sidebar";
     grid-template-rows: none;
   }
+  .details {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
+/* Gate costs, label legend and recorded receipts sit under the charts (human test 2026-10-11):
+   two panels side by side, receipts full width in columns, so nothing needs a long scroll. */
+.details {
+  grid-area: details;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  min-width: 0;
+}
+.details-wide { grid-column: 1 / -1; }
+.details-wide .anchor-list { columns: 3 300px; column-gap: 1.5rem; }
+.details-wide .anchor-list li { break-inside: avoid; margin-bottom: 0.5rem; }

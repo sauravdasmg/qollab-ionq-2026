@@ -95,7 +95,27 @@
       </div>
     </section>
 
-    <aside class="sidebar" aria-label="Circuit, gates and provenance">
+    <section class="details" aria-label="Gate costs, labels and recorded receipts">
+      <section class="sidebar-panel details-panel">
+        <h3>Which gates cost most on IonQ</h3>
+        <p class="secondary" id="gate-summary">Loading&hellip;</p>
+        <ul class="gate-facts" id="gate-facts"></ul>
+      </section>
+
+      <section class="sidebar-panel details-panel">
+        <h3>LIVE vs RECORDED vs LOCAL MODEL</h3>
+        <p class="secondary">Every number on this page carries one of these labels.</p>
+        <p class="secondary">W crossings are DETERMINISTIC for the specified depolarizing model and frame family. Their grid brackets are numerical resolution. Calibration sensitivity varies two-qubit infidelity by +/-0.001 with fitted one-qubit infidelity unchanged; it is a scenario range. N uses a paired-instance bootstrap interval and a width target of 0.30. Recorded IonQ points show CLOUD SAMPLING binomial bounds. These sources do not quantify remote pulse-model mismatch.</p>
+        <dl class="label-list" id="label-legend"></dl>
+      </section>
+
+      <section class="sidebar-panel details-panel details-wide">
+        <h3>RECORDED IonQ receipts</h3>
+        <ul class="anchor-list" id="anchor-receipts"></ul>
+      </section>
+    </section>
+
+    <aside class="sidebar" aria-label="Meaning and circuit">
       <section class="sidebar-panel">
         <h3>Meaning</h3>
         <p id="meaning-text">Noise charges a tax on every quantum advantage; here is where the bill exceeds the gain.</p>
@@ -110,23 +130,6 @@
         <pre class="circuit-text" id="circuit-text" tabindex="0" aria-label="Selected game's circuit as text">Loading&hellip;</pre>
       </section>
 
-      <section class="sidebar-panel">
-        <h3>Which gates cost most on IonQ</h3>
-        <p class="secondary" id="gate-summary">Loading&hellip;</p>
-        <ul class="gate-facts" id="gate-facts"></ul>
-      </section>
-
-      <section class="sidebar-panel">
-        <h3>LIVE vs RECORDED vs LOCAL MODEL</h3>
-        <p class="secondary">Every number on this page carries one of these labels.</p>
-        <p class="secondary">W crossings are DETERMINISTIC for the specified depolarizing model and frame family. Their grid brackets are numerical resolution. Calibration sensitivity varies two-qubit infidelity by +/-0.001 with fitted one-qubit infidelity unchanged; it is a scenario range. N uses a paired-instance bootstrap interval and a width target of 0.30. Recorded IonQ points show CLOUD SAMPLING binomial bounds. These sources do not quantify remote pulse-model mismatch.</p>
-        <dl class="label-list" id="label-legend"></dl>
-      </section>
-
-      <section class="sidebar-panel">
-        <h3>RECORDED IonQ receipts</h3>
-        <ul class="anchor-list" id="anchor-receipts"></ul>
-      </section>
     </aside>
   </main>
 
