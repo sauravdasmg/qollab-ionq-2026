@@ -101,7 +101,7 @@ AI assistance: AgentMesh routing to OpenCode free models and OpenAI Codex models
 `circuit_pack.py` is a packing helper written during the hackathon build window (Oct 9-11, 2026). It packs several small circuits onto disjoint qubits of one circuit for Qollab's one-job-per-run IonQ interface and splits the measured counts back per block. Each of our entries (Entanglement Court, The Noise Tax, Eyes-Free) ships its own version of this helper with the same purpose; the files differ in detail. Eyes-Free's version is specific to its phase-major GHZ batches. GHZ phase recipes, frequency-blind fitting, browser audio/speech, receipts, UI, and evidence/decoder protocol are specific to Eyes-Free. Libraries: Qiskit 2.x (Apache-2.0), NumPy (BSD-3-Clause), SciPy (BSD-3-Clause), Matplotlib (PSF-based licence), and Python standard library. No Aer. Qollab runtime documentation and hackathon rules were consulted; no Qollab template code is claimed as reused.
 
 **Theme tag:** Quantum Unlocked  
-**MIT licence:** included as `LICENSE`  
+**MIT licence:** included as [LICENSE](https://github.com/sauravdasmg/qollab-ionq-2026/blob/main/projects/eyes-free/LICENSE)  
 **Repository:** https://github.com/sauravdasmg/qollab-ionq-2026  
 **Demo video:** https://youtu.be/npBzjaA9mCc  
 This effort is supported by Qollab & IonQ.
