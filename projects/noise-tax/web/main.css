@@ -85,6 +85,9 @@ h1 {
   grid-template-areas:
     "controls sidebar"
     "cards sidebar";
+  /* Sidebar is taller than controls + cards: give the extra height to the cards row so the
+     charts sit directly under the noise slider (human test 2026-10-11). */
+  grid-template-rows: auto 1fr;
   gap: 1rem;
   align-items: start;
 }
@@ -611,5 +614,6 @@ footer p {
   .nt-main {
     grid-template-columns: 1fr;
     grid-template-areas: "controls" "cards" "sidebar";
+    grid-template-rows: none;
   }
 }
