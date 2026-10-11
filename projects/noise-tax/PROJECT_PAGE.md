@@ -24,13 +24,12 @@ Both LOCAL MODEL suites ship in `nt_curves.py`; top-level `recorded_local.py` co
 | forte-1 | 1.141 / 1.141 | 1.062–1.233 | 0.339 [0.200, 0.475] | 0.243 [0.125, 0.375] |
 | forte-enterprise-1 | 0.684 / 0.684 | 0.655–0.716 | 0.200 [0.100, 0.300] | 0.144 [0.050, 0.225] |
 
-Upload `frozen-curves.png`, `fresh-curves.png`, and `frozen-anchors.png` from repository `results/figures/` as top-level Qollab page assets; the image links below use these flattened names.
 
-![Frozen local-model curves. Alt text: W and N panels each show three frozen curves; solid, dashed, and dotted identify Aria, Forte, and Forte Enterprise. W shaded ranges are calibration sensitivity; N shows the Aria bootstrap band and crossover interval. No cloud anchors appear here.](frozen-curves.png)
+![Frozen local-model curves. Alt text: W and N panels each show three frozen curves; solid, dashed, and dotted identify Aria, Forte, and Forte Enterprise. W shaded ranges are calibration sensitivity; N shows the Aria bootstrap band and crossover interval. No cloud anchors appear here.](https://raw.githubusercontent.com/sauravdasmg/Qollab/main/projects/noise-tax/results/figures/frozen-curves.png)
 
-![Fresh local-model curves. Alt text: Three fresh curves use solid/dashed/dotted for Aria/Forte/Forte Enterprise; W shading shows calibration sensitivity and N the Aria bootstrap band and crossover interval.](fresh-curves.png)
+![Fresh local-model curves. Alt text: Three fresh curves use solid/dashed/dotted for Aria/Forte/Forte Enterprise; W shading shows calibration sensitivity and N the Aria bootstrap band and crossover interval.](https://raw.githubusercontent.com/sauravdasmg/Qollab/main/projects/noise-tax/results/figures/fresh-curves.png)
 
-![Archival recorded anchors. Alt text: Six earlier case-0 W/N receipts on Aria, Forte, and Forte Enterprise are shown with cloud sampling bounds beside frozen local s=1 predictions; these are not T-slot receipts or a cloud noise sweep.](frozen-anchors.png)
+![Archival recorded anchors. Alt text: Six earlier case-0 W/N receipts on Aria, Forte, and Forte Enterprise are shown with cloud sampling bounds beside frozen local s=1 predictions; these are not T-slot receipts or a cloud noise sweep.](https://raw.githubusercontent.com/sauravdasmg/Qollab/main/projects/noise-tax/results/figures/frozen-anchors.png)
 
 **RECORDED** Qollab IonQ simulator slots T01-T08 (2026-10-10 UTC) show W signed advantages from +0.002 to +0.011 and N advantages from -0.035 to -0.022. They are discrete anchors, not a cloud crossover; per-slot outcomes and reproduction settings follow below.
 
@@ -49,7 +48,7 @@ On 2026-10-10 UTC, slots T01-T08 ran the W double-trine suite (T01, T03, T05, T0
 | T07 | W: joint vs ideal one-way (fixed fresh corroboration) | aria-1 | 1,000 per label | +0.011 |
 | T08 | N: published hedge vs attained product (fixed fresh corroboration) | aria-1 | 4,000 per arm | -0.022 |
 
-Positive W favors the joint measurement over the ideal one-way reference. Negative N means the attained product strategy has lower fixed-prize loss than the published hedge. These are discrete simulator anchors, not a cloud noise sweep or threshold. Reproduce each run by selecting **IonQ Aria 1**, setting **Slot=Txx** and **Shots=1000** for W or **Shots=4000** for N, then running the project; the slot selects the recorded noise model shown above (including Forte 1 on T05/T06). All raw `RECORD_JSON` lines for these eight valid runs are in [`recorded_ionq.py`](recorded_ionq.py), with the compact index and outcomes in [`evidence_summary.json`](evidence_summary.json); both files are included in this project. Original Qollab console exports are retained under `results/exports/`.
+Slot runs need the Python version of this project (`main.py` as the entry point; `uploads/noise-tax.zip` in the repository); the published web page runs the default demo only. Positive W favors the joint measurement over the ideal one-way reference. Negative N means the attained product strategy has lower fixed-prize loss than the published hedge. These are discrete simulator anchors, not a cloud noise sweep or threshold. Reproduce each run by selecting **IonQ Aria 1**, setting **Slot=Txx** and **Shots=1000** for W or **Shots=4000** for N, then running the project; the slot selects the recorded noise model shown above (including Forte 1 on T05/T06). All raw `RECORD_JSON` lines for these eight valid runs are in [`recorded_ionq.py`](recorded_ionq.py), with the compact index and outcomes in [`evidence_summary.json`](evidence_summary.json); both files are included in this project. Original Qollab console exports are retained under `results/exports/`.
 
 **Deviations and superseded runs:** the campaign provenance and evidence summary report no Noise Tax cloud deviations or superseded runs. T07/T08 are fixed-seed fresh corroboration and are additional runs, not replacements. No Entanglement Court preparation-noise deviation applies to this project.
 
