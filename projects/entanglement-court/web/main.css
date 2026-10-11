@@ -53,6 +53,9 @@ body {
   font-size: 16px;
   line-height: 1.5;
   display: grid;
+  /* minmax(0, 1fr): the page never grows wider than the window (human test 2026-10-11:
+     content overflowed to the right at 100% zoom, leaving an empty band on the left). */
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "header"
@@ -126,7 +129,7 @@ header .seal::after {
 main {
   grid-area: main;
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: minmax(0, 1fr) 320px;
   grid-template-areas:
     "courtroom sidebar";
   gap: 1.5rem;
@@ -209,7 +212,7 @@ main {
 .docket-body {
   padding: 1.5rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 1.5rem;
 }
 
@@ -782,7 +785,7 @@ main {
 
 .sidebar-panel .comparison {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.75rem;
 }
 
@@ -805,6 +808,7 @@ main {
 .sidebar-panel .comparison .col.recorded h4 { color: #4A4238; }
 
 .sidebar-panel .comparison .value {
+  overflow-wrap: anywhere;
   font-family: 'Consolas', monospace;
   font-size: 0.9rem;
   color: #1F1A14;
@@ -1009,7 +1013,7 @@ select {
 /* Responsive */
 @media (max-width: 1024px) {
   main {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "courtroom"
       "sidebar";
@@ -1022,7 +1026,7 @@ select {
 
   .sidebar-panel {
     flex: 1;
-    min-width: 300px;
+    min-width: min(300px, 100%);
   }
 }
 
@@ -1117,3 +1121,8 @@ select {
   background: #FFFFFF;
   color: #1F1A14;
 }
+
+/* Keep wide content inside its column: tables and charts scroll within their box. */
+.courtroom, .sidebar { min-width: 0; }
+.courtroom table, .sidebar table { max-width: 100%; }
+.histogram-table, .parity-table { width: 100%; table-layout: fixed; }
