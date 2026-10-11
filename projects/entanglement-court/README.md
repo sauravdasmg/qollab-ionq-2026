@@ -127,4 +127,4 @@ AI tools used during the build window: AgentMesh routing to OpenCode free models
 This effort is supported by Qollab & IonQ.
 
 **Repository:** https://github.com/sauravdasmg/Qollab  
-**Demo video:** [[VIDEO LINK]]
+**Demo video:** https://youtu.be/dVbXgx0EbbE

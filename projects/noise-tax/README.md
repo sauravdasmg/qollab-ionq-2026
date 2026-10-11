@@ -155,7 +155,7 @@ The web source provides native range/select/button controls, associated labels, 
 
 **Repository:** https://github.com/sauravdasmg/Qollab
 
-**Demo video:** [[VIDEO LINK]]
+**Demo video:** https://youtu.be/-vbi4atEZaM
 
 ## Licence
 

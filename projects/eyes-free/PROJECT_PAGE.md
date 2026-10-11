@@ -7,7 +7,7 @@ Explore a measured GHZ parity fringe as a chart, a screen-reader-ready receipt, 
 **Run it (judges):** open the published JS page, select the built-in simulator, keep defaults and press **Run**. Choose a fringe and press **Play**; inspect the parity chart, fitted numbers in text and table, and full fit details. Web Audio and speech were verified on Qollab in an unrelated capability probe on 2026-10-05. WAV download requires `sendFile`; the observed Python fallback had no download bridge. About one second is a local Python emulation timing, not browser loading time.
 
 **RECORDED (Qollab IonQ simulator, 2026-10-10, aria-1, 1,000 shots per phase):** frozen and fresh sweeps recovered frequencies near 1, 2, and 4 in all six fits.  
-Theme: **Quantum Unlocked** · [Repository](https://github.com/sauravdasmg/Qollab) · [Video]([[VIDEO LINK]])
+Theme: **Quantum Unlocked** · [Repository](https://github.com/sauravdasmg/Qollab) · [Video](https://youtu.be/npBzjaA9mCc)
 
 ## Summary
 
@@ -103,7 +103,7 @@ AI assistance: AgentMesh routing to OpenCode free models and OpenAI Codex models
 **Theme tag:** Quantum Unlocked  
 **MIT licence:** included as `LICENSE`  
 **Repository:** https://github.com/sauravdasmg/Qollab  
-**Demo video:** [[VIDEO LINK]]  
+**Demo video:** https://youtu.be/npBzjaA9mCc  
 This effort is supported by Qollab & IonQ.
 
 ### Publication and provenance

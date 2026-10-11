@@ -115,4 +115,4 @@ AI tools: AgentMesh routing to OpenCode free models, OpenAI Codex models, and Cl
 This effort is supported by Qollab & IonQ.
 
 **Repository:** https://github.com/sauravdasmg/Qollab  
-**Video:** [[VIDEO LINK]]
+**Video:** https://youtu.be/dVbXgx0EbbE

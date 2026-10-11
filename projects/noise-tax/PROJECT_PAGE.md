@@ -96,4 +96,4 @@ The output directories must be new and empty; choose new names for subsequent ru
 **Attribution:** This effort is supported by Qollab & IonQ.
 
 **Repository:** https://github.com/sauravdasmg/Qollab  
-**Video:** [[VIDEO LINK]]
+**Video:** https://youtu.be/-vbi4atEZaM
