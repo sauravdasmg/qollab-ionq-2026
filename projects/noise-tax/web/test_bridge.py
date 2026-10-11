@@ -278,7 +278,7 @@ def test_run_demo_ionq_pack_path():
 
 
 def test_circuit_text():
-    for game, expected in (('W', 'Two Whispers'), ('N', 'Never Lose Twice')):
+    for game, expected in (('W', 'Game W (double-trine)'), ('N', 'Game N (hedging)')):
         info = tax_bridge.get_circuit_text(game)
         assert info['title'] == expected
         assert len(info['stages']) >= 3

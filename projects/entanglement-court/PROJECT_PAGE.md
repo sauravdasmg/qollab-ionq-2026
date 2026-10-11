@@ -4,7 +4,7 @@ Entanglement Court turns a subtle quantum question into a courtroom challenge: c
 
 **Result:** local-model graph certification was 0.50/0.50 in ideal simulation and 0.42/0.43 in the Aria-like model; RECORDED Qollab IonQ Aria 1 results certified 12/12 easy cases and abstained on all 12 near-threshold cases (200 shots, 2026-10-10). The product and biseparable controls had zero false certificates in the local campaign summary.
 
-**Run it (judges): Built-in simulator, default settings, press Run, about 4 s (local runner, 2026-10-10; 3.49-3.79 s, not a browser timing); then inspect the matched Z histograms and conditional witness receipt.**
+**Run it (judges): Built-in simulator, default settings, press Run, about 8 s on Qollab (7.93 s measured on the Qollab built-in simulator, Python version, 2026-10-11 UTC; 3.49-3.79 s on the local runner); then inspect the matched Z histograms and conditional witness receipt.**
 
 ## The problem
 
@@ -67,7 +67,7 @@ For the Qollab page, upload `figures/frozen.png`, `figures/fresh.png` and `figur
 
 ## How to run (and replicate)
 
-**Judging run:** select Qollab's Built-in simulator, keep the default form settings, and press Run. Check the paired Z exhibits and whether the finite-shot witness receipt is conditional or inconclusive. The measured built-in default runtime is about 4 s (local runner, 2026-10-10; 3.49-3.79 s, not a browser timing).
+**Judging run:** select Qollab's Built-in simulator, keep the default form settings, and press Run. Check the paired Z exhibits and whether the finite-shot witness receipt is conditional or inconclusive. The measured built-in default runtime is about 8 s on Qollab (7.93 s measured on the Qollab built-in simulator, Python version, 2026-10-11 UTC; 3.49-3.79 s on the local runner).
 
 **IonQ simulator:** follow the version-specific instructions above. Current cloud slots use four witness blocks with ancillas (24 wires); default anchor and legacy jobs use six four-wire blocks.
 

@@ -29,7 +29,25 @@ import whispers_core as w
 import hedging_core as n
 import hedging_strategies as hs
 import product_bounds as pb
-import noise_channel as nc
+import json as _json
+from qiskit import transpile as _transpile
+from calibration_snapshot import PARAMETER_TEXT as _PARAMETER_TEXT
+
+# Same compile settings as noise_channel.compile_circuit (basis from the shipped calibration
+# snapshot, optimization_level=1, seed 1234). noise_channel itself is not imported here: its
+# repository-path lookup fails in Qollab's shallow upload folder (2026-10-10).
+_CALIBRATION = _json.loads(_PARAMETER_TEXT)
+_MODEL_KEYS = {'aria-1': 'ionq-aria', 'forte-1': 'ionq-forte', 'forte-enterprise-1': 'ionq-forte-enterprise'}
+
+
+def _compile_circuit(circuit, model):
+    compiled = _transpile(circuit, basis_gates=_CALIBRATION[_MODEL_KEYS[model]]['basis'],
+                          optimization_level=1, seed_transpiler=1234)
+    before = [i.operation.label for i in circuit.data if i.operation.name == 'barrier']
+    after = [i.operation.label for i in compiled.data if i.operation.name == 'barrier']
+    if before != after:
+        raise ValueError('compiler changed stage barriers')
+    return compiled
 import nt_curves
 from recorded_parser import summarize_record
 import recorded_ionq
@@ -51,7 +69,7 @@ _CURVE_CACHE = {}
 
 GAMES = {
     'W': {
-        'title': 'Two Whispers',
+        'title': 'Game W (double-trine)',
         'subtitle': 'read both qubits together vs one at a time',
         'positive': 'quantum joint recipe wins',
         'negative': 'one-way reference wins',
@@ -59,7 +77,7 @@ GAMES = {
         'reference': 'analytic optimal one-way ideal-source bound (noiseless reference)',
     },
     'N': {
-        'title': 'Never Lose Twice',
+        'title': 'Game N (hedging)',
         'subtitle': 'published hedge vs attained product',
         'positive': 'quantum hedge wins',
         'negative': 'product strategy wins (also a quantum strategy)',
@@ -382,7 +400,7 @@ def get_gate_costs(game='W'):
     for model in ('aria-1', 'forte-1'):
         totals = {}
         for circuit in circuits:
-            for name, value in dict(nc.compile_circuit(circuit, model).count_ops()).items():
+            for name, value in dict(_compile_circuit(circuit, model).count_ops()).items():
                 if name in ('measure', 'barrier'):
                     continue
                 totals[name] = totals.get(name, 0) + int(value)

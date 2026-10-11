@@ -3,7 +3,7 @@
 Entanglement Court is a small interactive courtroom for testing graph-state entanglement evidence.
 It pairs an entangled graph state with a separable product state that has the same ideal Z-basis distribution.
 **Result:** local-model graph certification was 0.50/0.50 in ideal simulation and 0.42/0.43 in the Aria-like model; RECORDED Qollab IonQ Aria 1 results certified 12/12 easy cases and abstained on all 12 near-threshold cases (200 shots, 2026-10-10).
-**Run it (judges): built-in simulator, default settings, press Run, about 4 s (local runner, 2026-10-10; 3.49-3.79 s, not a browser timing); then check the matched Z exhibits and the conditional witness receipt.**
+**Run it (judges): built-in simulator, default settings, press Run, about 8 s on Qollab (7.93 s measured on the Qollab built-in simulator, Python version, 2026-10-11 UTC; 3.49-3.79 s on the local runner); then check the matched Z exhibits and the conditional witness receipt.**
 
 ## Summary
 
@@ -76,7 +76,7 @@ Repository image links retain `figures/` paths. For publication, upload the thre
 
 ### Built-in simulator
 
-Open the project in Qollab, select **Built-in simulator**, leave the form at its defaults, and press **Run**. Review the paired Z histograms, the two stabilizer exhibits, and the receipt's trusted-measurement condition. The current local-runner built-in default measurement is about 4 s (3.49-3.79 s on 2026-10-10); main.py prints the elapsed time at the end of each run.
+Open the project in Qollab, select **Built-in simulator**, leave the form at its defaults, and press **Run**. Review the paired Z histograms, the two stabilizer exhibits, and the receipt's trusted-measurement condition. The built-in default run took 7.93 s on Qollab (Python version, 2026-10-11 UTC) and 3.49-3.79 s on the local runner (2026-10-10); main.py prints the elapsed time at the end of each run.
 
 ### IonQ simulator slots
 
