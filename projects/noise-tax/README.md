@@ -153,7 +153,7 @@ The web source provides native range/select/button controls, associated labels, 
 
 **Theme tag:** Quantum Unlocked.
 
-**Repository:** https://github.com/sauravdasmg/Qollab
+**Repository:** https://github.com/sauravdasmg/qollab-ionq-2026
 
 **Demo video:** https://youtu.be/-vbi4atEZaM
 

@@ -6,7 +6,7 @@ LOCAL MODEL: the saved frozen suite preserved both values within the preregister
 Those are local calibrated-noise simulations, not live Qollab or device results.
 **Run it (judges):** open the published JS page, choose the built-in simulator, keep defaults and press **Run**. Choose a fringe, then press **Play**; inspect its parity chart, fitted numbers in text and table, and full fit details. Browser Web Audio and speech were verified by an unrelated Qollab capability probe on 2026-10-05. WAV download requires `sendFile`; the observed Python fallback run did not receive it. The roughly one-second timing is local Python emulation, not browser loading time.
 RECORDED (Qollab IonQ simulator, 2026-10-10, aria-1, 1,000 shots per phase): the frozen and fresh sweeps recovered frequencies near 1, 2, and 4 in all six fits.
-Theme: Quantum Unlocked · MIT · [Repository](https://github.com/sauravdasmg/Qollab) · [Demo video](https://youtu.be/npBzjaA9mCc)
+Theme: Quantum Unlocked · MIT · [Repository](https://github.com/sauravdasmg/qollab-ionq-2026) · [Demo video](https://youtu.be/npBzjaA9mCc)
 This effort is supported by Qollab & IonQ.
 
 ## Summary
@@ -115,7 +115,7 @@ The semantic text receipt is the primary nonvisual route and includes values, un
 - **Platform materials:** Qollab runtime documentation and hackathon rules informed the integration; no Qollab project template code is claimed as reused.
 
 **Theme:** Quantum Unlocked  
-**Repository:** https://github.com/sauravdasmg/Qollab  
+**Repository:** https://github.com/sauravdasmg/qollab-ionq-2026  
 **Demo video:** https://youtu.be/npBzjaA9mCc  
 **Licence:** MIT (see `LICENSE`).  
 This effort is supported by Qollab & IonQ.

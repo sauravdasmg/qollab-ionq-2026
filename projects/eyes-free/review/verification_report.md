@@ -159,7 +159,7 @@ All README/PROJECT_PAGE numbers were traced to a shipped file or to `results/`.
 | Theme tag | "Quantum Unlocked" | Present |
 | Accessibility notes | README:105-107; PAGE:93-95 | Present |
 | Four judging-criteria summaries | README:98-103; PAGE:86-91 | Present |
-| Repo link | https://github.com/sauravdasmg/Qollab | Present (public access not tested) |
+| Repo link | https://github.com/sauravdasmg/qollab-ionq-2026 | Present (public access not tested) |
 | Video | `[[VIDEO LINK]]` remains | Allowed human step |
 
 ## 7. STYLE (non-blocking)

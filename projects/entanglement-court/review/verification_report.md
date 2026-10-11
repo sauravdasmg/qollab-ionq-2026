@@ -186,7 +186,7 @@ campaign.py:24-25 optionally reads repository manifests when present locally; an
 | Theme | Quantum Unlocked in R123/P112. Actual live tag remains human-only. |
 | Judging-criteria summary | All four criteria covered at R108-113/P97-102. OK. |
 | Accessibility | R115-117/P104-106 include keyboard/text/color/audio/caption provisions; companion source has native controls, focus styles, ARIA status/labels and keyboard handlers. Browser/screen-reader acceptance not run here. Development alt text remains F1. |
-| Repository | https://github.com/sauravdasmg/Qollab at R129/P117. Link supplied; public visibility and final published revision remain human checks. |
+| Repository | https://github.com/sauravdasmg/qollab-ionq-2026 at R129/P117. Link supplied; public visibility and final published revision remain human checks. |
 | Video | [[VIDEO LINK]] at R130/P118 is explicitly permitted for this task. Human step. |
 | Recorded reproduction and saved result inclusion | Version-specific settings plus top-level complete cloud records and compact local statistics are present. HTML/full local sources correctly identified as repository archives. OK. |
 | Logged-out run, final Qollab publication, page image rendering | Not performed by this worker. Historical exports do not prove final-package logged-out acceptance. Human steps, not manufactured claim failures. |

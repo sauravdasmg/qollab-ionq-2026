@@ -25,11 +25,11 @@ Both LOCAL MODEL suites ship in `nt_curves.py`; top-level `recorded_local.py` co
 | forte-enterprise-1 | 0.684 / 0.684 | 0.655–0.716 | 0.200 [0.100, 0.300] | 0.144 [0.050, 0.225] |
 
 
-![Frozen local-model curves. Alt text: W and N panels each show three frozen curves; solid, dashed, and dotted identify Aria, Forte, and Forte Enterprise. W shaded ranges are calibration sensitivity; N shows the Aria bootstrap band and crossover interval. No cloud anchors appear here.](https://raw.githubusercontent.com/sauravdasmg/Qollab/main/projects/noise-tax/results/figures/frozen-curves.png)
+![Frozen local-model curves. Alt text: W and N panels each show three frozen curves; solid, dashed, and dotted identify Aria, Forte, and Forte Enterprise. W shaded ranges are calibration sensitivity; N shows the Aria bootstrap band and crossover interval. No cloud anchors appear here.](https://raw.githubusercontent.com/sauravdasmg/qollab-ionq-2026/main/projects/noise-tax/results/figures/frozen-curves.png)
 
-![Fresh local-model curves. Alt text: Three fresh curves use solid/dashed/dotted for Aria/Forte/Forte Enterprise; W shading shows calibration sensitivity and N the Aria bootstrap band and crossover interval.](https://raw.githubusercontent.com/sauravdasmg/Qollab/main/projects/noise-tax/results/figures/fresh-curves.png)
+![Fresh local-model curves. Alt text: Three fresh curves use solid/dashed/dotted for Aria/Forte/Forte Enterprise; W shading shows calibration sensitivity and N the Aria bootstrap band and crossover interval.](https://raw.githubusercontent.com/sauravdasmg/qollab-ionq-2026/main/projects/noise-tax/results/figures/fresh-curves.png)
 
-![Archival recorded anchors. Alt text: Six earlier case-0 W/N receipts on Aria, Forte, and Forte Enterprise are shown with cloud sampling bounds beside frozen local s=1 predictions; these are not T-slot receipts or a cloud noise sweep.](https://raw.githubusercontent.com/sauravdasmg/Qollab/main/projects/noise-tax/results/figures/frozen-anchors.png)
+![Archival recorded anchors. Alt text: Six earlier case-0 W/N receipts on Aria, Forte, and Forte Enterprise are shown with cloud sampling bounds beside frozen local s=1 predictions; these are not T-slot receipts or a cloud noise sweep.](https://raw.githubusercontent.com/sauravdasmg/qollab-ionq-2026/main/projects/noise-tax/results/figures/frozen-anchors.png)
 
 **RECORDED** Qollab IonQ simulator slots T01-T08 (2026-10-10 UTC) show W signed advantages from +0.002 to +0.011 and N advantages from -0.035 to -0.022. They are discrete anchors, not a cloud crossover; per-slot outcomes and reproduction settings follow below.
 
@@ -95,5 +95,5 @@ The output directories must be new and empty; choose new names for subsequent ru
 
 **Attribution:** This effort is supported by Qollab & IonQ.
 
-**Repository:** https://github.com/sauravdasmg/Qollab  
+**Repository:** https://github.com/sauravdasmg/qollab-ionq-2026  
 **Video:** https://youtu.be/-vbi4atEZaM

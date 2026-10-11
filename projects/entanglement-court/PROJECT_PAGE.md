@@ -49,15 +49,15 @@ Complete receipts ship at top level in `recorded_ionq.py`; its `EXPORT_INDEX` ma
 
 Deviation and superseded runs: C02-C07 omitted the declared per-wire preparation phase-flip channel; they are retained only as easy results, with p < 0.015 and the deviation labeled in each receipt. The first C08-C13 runs (13:37-13:42 UTC) also omitted this channel and are superseded; they remain in the exports and receipt archive labeled superseded, and are excluded from the near-threshold outcome above. Corrected C08-C13 reruns at 15:05-15:08 UTC used the ancilla phase-flip channel. C14-C25 also used that channel. In corrected runs, independent per-wire phase flips are implemented by measured ancillas that are marginalized; the added RY/CZ gates themselves incur simulator noise. All cloud witness claims remain conditional on trusted measurement rotations and readout; systematic measurement error is not bounded here.
 
-![Static LOCAL MODEL chart from saved frozen aggregates at 100 shots/block: 24 cases, ideal device channel versus Aria-like scale 1; easy cases certify more often than near-threshold cases. Deliberate preparation noise remains in both series.](https://raw.githubusercontent.com/sauravdasmg/Qollab/main/projects/entanglement-court/figures/frozen.png)
+![Static LOCAL MODEL chart from saved frozen aggregates at 100 shots/block: 24 cases, ideal device channel versus Aria-like scale 1; easy cases certify more often than near-threshold cases. Deliberate preparation noise remains in both series.](https://raw.githubusercontent.com/sauravdasmg/qollab-ionq-2026/main/projects/entanglement-court/figures/frozen.png)
 
 *Alt text: Static LOCAL MODEL chart from saved frozen aggregates at 100 shots/block: 24 cases, ideal device channel versus Aria-like scale 1; easy cases certify more often than near-threshold cases. Deliberate preparation noise remains in both series.*
 
-![Static LOCAL MODEL chart from saved fresh aggregates at 100 shots/block: 20 cases, ideal device channel versus Aria-like scale 1; easy cases certify more often than near-threshold cases. Deliberate preparation noise remains in both series.](https://raw.githubusercontent.com/sauravdasmg/Qollab/main/projects/entanglement-court/figures/fresh.png)
+![Static LOCAL MODEL chart from saved fresh aggregates at 100 shots/block: 20 cases, ideal device channel versus Aria-like scale 1; easy cases certify more often than near-threshold cases. Deliberate preparation noise remains in both series.](https://raw.githubusercontent.com/sauravdasmg/qollab-ionq-2026/main/projects/entanglement-court/figures/fresh.png)
 
 *Alt text: Static LOCAL MODEL chart from saved fresh aggregates at 100 shots/block: 20 cases, ideal device channel versus Aria-like scale 1; easy cases certify more often than near-threshold cases. Deliberate preparation noise remains in both series.*
 
-![Static LOCAL MODEL chart from saved development aggregates at 100 shots/block: four development cases, ideal device channel (all 1.000) versus Aria-like scale 1 (0.974, 0.969, 0.956, 0.966; mean 0.966), 1,000 draws per case. This is a bar chart, not an interactive web screenshot.](https://raw.githubusercontent.com/sauravdasmg/Qollab/main/projects/entanglement-court/figures/development.png)
+![Static LOCAL MODEL chart from saved development aggregates at 100 shots/block: four development cases, ideal device channel (all 1.000) versus Aria-like scale 1 (0.974, 0.969, 0.956, 0.966; mean 0.966), 1,000 draws per case. This is a bar chart, not an interactive web screenshot.](https://raw.githubusercontent.com/sauravdasmg/qollab-ionq-2026/main/projects/entanglement-court/figures/development.png)
 
 *Alt text: Static LOCAL MODEL chart from saved development aggregates at 100 shots/block: four development cases, ideal device channel (all 1.000) versus Aria-like scale 1 (0.974, 0.969, 0.956, 0.966; mean 0.966), 1,000 draws per case. This is a bar chart, not an interactive web screenshot.*
 
@@ -114,5 +114,5 @@ AI tools: AgentMesh routing to OpenCode free models, OpenAI Codex models, and Cl
 
 This effort is supported by Qollab & IonQ.
 
-**Repository:** https://github.com/sauravdasmg/Qollab  
+**Repository:** https://github.com/sauravdasmg/qollab-ionq-2026  
 **Video:** https://youtu.be/dVbXgx0EbbE
