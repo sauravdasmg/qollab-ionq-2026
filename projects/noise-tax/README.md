@@ -141,7 +141,7 @@ The web source provides native range/select/button controls, associated labels, 
 
 ## Disclosure
 
-**AI tools:** AgentMesh routing (including OpenCode free models), OpenAI Codex models, and Claude Code were used during development and documentation. Work was produced during the hackathon window.
+**AI tools:** AgentMesh routing (including OpenCode free models), OpenAI Codex models, and Claude Code were used during development and documentation. The demo-video voiceover is AI-generated with Microsoft neural text-to-speech (voice en-US-AndrewNeural, via the open-source edge-tts tool). Work was produced during the hackathon window.
 
 **Reused code:** `circuit_pack.py` is a packing helper written during the hackathon build window (Oct 9-11, 2026). It packs several small circuits onto disjoint qubits of one circuit for Qollab's one-job-per-run IonQ interface and splits the measured counts back per block. Each of our entries (Entanglement Court, The Noise Tax, Eyes-Free) ships its own version of this helper with the same purpose; the files differ in detail. The Noise Tax's version was imported from the retired Two Whispers build-window entry. `whispers_core.py`, `hedging_core.py`, `hedging_strategies.py`, and `product_bounds.py` were adapted in-window from the retired Two Whispers / Never Lose Twice build-window code (same author/team, Oct 9-10 UTC). The shared noise channel, crossover analysis, cloud slots, and UI are new in the merged entry. `reuse_sources.json` records the source hashes, import timestamps, and the reused synthesis, noise-analysis, receipt, calibration, and emulator references.
 
